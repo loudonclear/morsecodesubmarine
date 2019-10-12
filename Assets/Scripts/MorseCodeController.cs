@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class MorseCodeController : MonoBehaviour
 {
     public Text morseCodeText;
+    public Text decodedText;
 
-    public float shortThreshold = 0.1f;
+    public float timeUnit = 0.1f;
 
     [Range(1, 20000)]
     public float frequency1 = 500;
@@ -15,16 +16,63 @@ public class MorseCodeController : MonoBehaviour
     [Range(1, 20000)]
     public float frequency2 = 500;
 
-    public float sampleRate = 44100;
-    public float waveLengthInSeconds = 2.0f;
+    private float sampleRate;
+    public float waveLengthInSeconds = 5.0f;
 
     private AudioSource audioSource;
     int timeIndex = 0;
     private float inputTime;
+    private float pauseTime;
+    private bool typed = false;
+
+    private static string dot = ".";
+    private static string dash = "-";
+
+    Dictionary<string, char> decoder = new Dictionary<string, char>() {
+        {string.Concat(dot, dash), 'a'},
+        {string.Concat(dash, dot, dot, dot), 'b'},
+        {string.Concat(dash, dot, dash, dot), 'c'},
+        {string.Concat(dash, dot, dot), 'd'},
+        {dot.ToString(), 'e'},
+        {string.Concat(dot, dot, dash, dot), 'f'},
+        {string.Concat(dash, dash, dot), 'g'},
+        {string.Concat(dot, dot, dot, dot), 'h'},
+        {string.Concat(dot, dot), 'i'},
+        {string.Concat(dot, dash, dash, dash), 'j'},
+        {string.Concat(dash, dot, dash), 'k'},
+        {string.Concat(dot, dash, dot, dot), 'l'},
+        {string.Concat(dash, dash), 'm'},
+        {string.Concat(dash, dot), 'n'},
+        {string.Concat(dash, dash, dash), 'o'},
+        {string.Concat(dot, dash, dash, dot), 'p'},
+        {string.Concat(dash, dash, dot, dash), 'q'},
+        {string.Concat(dot, dash, dot), 'r'},
+        {string.Concat(dot, dot, dot), 's'},
+        {string.Concat(dash), 't'},
+        {string.Concat(dot, dot, dash), 'u'},
+        {string.Concat(dot, dot, dot, dash), 'v'},
+        {string.Concat(dot, dash, dash), 'w'},
+        {string.Concat(dash, dot, dot, dash), 'x'},
+        {string.Concat(dash, dot, dash, dash),'y'},
+        {string.Concat(dash, dash, dot, dot), 'z'},
+        {string.Concat(dash, dash, dash, dash, dash),'0'},
+        {string.Concat(dot, dash, dash, dash, dash), '1'},
+        {string.Concat(dot, dot, dash, dash, dash), '2'},
+        {string.Concat(dot, dot, dot, dash, dash), '3'},
+        {string.Concat(dot, dot, dot, dot, dash), '4'},
+        {string.Concat(dot, dot, dot, dot, dot), '5'},
+        {string.Concat(dash, dot, dot, dot, dot), '6'},
+        {string.Concat(dash, dash, dot, dot, dot), '7'},
+        {string.Concat(dash, dash, dash, dot, dot), '8'},
+        {string.Concat(dash, dash, dash, dash, dot), '9'}
+    };
 
     void Start()
     {
         morseCodeText.text = "";
+        decodedText.text = "";
+
+        sampleRate = AudioSettings.outputSampleRate;
 
         audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.playOnAwake = false;
@@ -41,23 +89,50 @@ public class MorseCodeController : MonoBehaviour
                 audioSource.Play();
                 inputTime = Time.time;
             }
+
+            pauseTime = Time.time;
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
             if (audioSource.isPlaying)
             {
-                timeIndex = 0;  //resets timer before playing sound
+                //timeIndex = 0;  //resets timer before playing sound
                 audioSource.Stop();
 
-                if (Time.time <= inputTime + shortThreshold)
+                if (Time.time <= inputTime + timeUnit)
                 {
-                    morseCodeText.text += ".";
+                    morseCodeText.text += dot;
                 } else
                 {
-                    morseCodeText.text += "-";
+                    morseCodeText.text += dash;
                 }
+
+                pauseTime = Time.time;
+                typed = true;
             }
+        }
+
+        if (typed && Time.time > pauseTime + 3 * timeUnit && Time.time <= pauseTime + 7 * timeUnit)
+        {
+            // New character
+            char c = '?';
+            if (decoder.TryGetValue(morseCodeText.text, out c))
+            {
+                morseCodeText.text = "";
+                decodedText.text += c.ToString();
+            } else
+            {
+                morseCodeText.text = "";
+                decodedText.text += "?";
+            }
+            
+            typed = false;
+            
+        } else if (Time.time > pauseTime + 7 * timeUnit)
+        {
+            // Space between words
+            typed = false;
         }
     }
 
