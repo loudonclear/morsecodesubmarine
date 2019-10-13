@@ -8,6 +8,8 @@ public class EventIncidentsSystem : MonoBehaviour
     // Start is called before the first frame update
 
     public Text evenMessageText;
+    public Text playerInfo;
+    public Text inputInfo;
 
     Hashtable myEventsTable = new Hashtable();
 
@@ -16,8 +18,10 @@ public class EventIncidentsSystem : MonoBehaviour
     float timeSinceLastIncident = 0.0f;
     float timeForNextIncident = 0.0f;
     float timeInCurrentIncident = 0.0f;
-    float waitTime = 3.0f;
-
+    float timeForNextEvent = 5.0f;
+    int playerHealth = 10;
+    float lastRandom = 0;
+    int countRandom = 0;
     
     State currentState = State.noevent;
     GameEvent currentEvent = null;
@@ -34,20 +38,49 @@ public class EventIncidentsSystem : MonoBehaviour
         myEventsTable.Add(EventConstants.MONSTER_EVENT, new MonsterEvent());
         myEventsTable.Add(EventConstants.FIRE_EVENT, new FireEvent());
         myEventsTable.Add(EventConstants.PRESSURE_EVENT, new PressureEvent());
-        evenMessageText.text = "HELLO WORLD";
+        //evenMessageText.text = "HELLO WORLD";
+        playerInfo.text  = "Player HP: " + playerHealth;
+        inputInfo.text = "";
     }
 
     // Update is called once per frame
     void Update()
     {
-        timeSinceLastIncident += Time.deltaTime;
-        if (timeSinceLastIncident > waitTime)
+        playerInfo.text = "Player HP: " + playerHealth;
+        if (currentState == State.noevent)
         {
-            if (currentState == State.noevent)
+            timeSinceLastIncident += Time.deltaTime;
+            if (timeSinceLastIncident > timeForNextEvent)
             {
                 // fire an incident
                 float maxEvent = (float)State.maxEvent;
-                int whichEvent = (int)Random.Range(0.0f, maxEvent - 1.0f);
+                int whichEvent = -1;
+                while (true)
+                {
+                    
+                    whichEvent = (int)Random.Range(1.0f, maxEvent - 1.0f);
+                    if (lastRandom == whichEvent
+                        && countRandom < 2)
+                    {
+                        countRandom++;
+                        break;
+                    }
+                    else if (lastRandom == whichEvent && countRandom == 2)
+                    {
+                        countRandom = 0;
+                        lastRandom = 0;
+                        whichEvent = 3;
+                        break;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                
+
+                lastRandom = whichEvent;
+                //whichEvent = 3;
                 switch (whichEvent)
                 {
                     case 1:
@@ -62,9 +95,61 @@ public class EventIncidentsSystem : MonoBehaviour
                     default:
                         break;
                 }
+                timeSinceLastIncident = 0;
+                if (currentEvent == null)
+                {
+                    Debug.Log("ERROR HERE");
+                }
+                else {
+                    currentEvent.startEvent();
+                }
 
-                currentEvent.startEvent();
+                currentState = State.running;
             }
+            else {
+                evenMessageText.text = "Time For Next Event in " + (int)(6 - timeSinceLastIncident);
+            }
+        }
+        else {
+
+            if(currentEvent != null)
+            {
+                if (currentEvent.currentSubState == GameEvent.SubState.end)
+                {
+                    timeSinceLastIncident += Time.deltaTime;
+                    if (timeSinceLastIncident > timeForNextEvent)
+                    {
+                        if (!currentEvent.succeed)
+                        {
+                            playerHealth -= currentEvent.damage;
+                        }
+                        currentEvent = null;
+                        currentState = State.noevent;
+                        timeSinceLastIncident = 0;
+                        inputInfo.text = "";
+                    }
+
+                }
+                else {
+
+                    if (Input.anyKeyDown)
+                    {
+                        foreach (char c in Input.inputString)
+                        {
+                            if(c >= 'a'  && c <= 'z')
+                            inputInfo.text += c;
+
+                        }
+                        
+                    }
+                    
+                    currentEvent.updateEvent(Time.deltaTime);
+
+                    evenMessageText.text = currentEvent.getEventMessage();
+                }
+                
+            }
+            
         }
     }
 

@@ -4,29 +4,81 @@ using UnityEngine;
 
 public class PressureEvent : GameEvent
 {
-
+    private Event currentEvent;
     public PressureEvent()
     {
         eventName = EventConstants.PRESSURE_EVENT;
+        damage = 1;
     }
 
     public override void endEvent()
     {
-        throw new System.NotImplementedException();
-    }
+        if (currentEvent.codeCompleted)
+        {
+            eventMessage = "Well Done, You avoided attack";
+            succeed = true;
+        }
+        else
+        {
+            eventMessage = "Player Receives " + damage + " damage";
+            succeed = false;
+        }
+        currentEvent = null;
+        timeInEvent = 0;
 
-    public override string sendEventMessage()
-    {
-        throw new System.NotImplementedException();
+        currentSubState = SubState.end;
     }
-
+    
     public override void startEvent()
     {
-        throw new System.NotImplementedException();
+        eventMessage = "This is a " + eventName;
+
+        if (currentEvent == null)
+        {
+            KeyCode[] codes = new KeyCode[3] { KeyCode.P, KeyCode.P, KeyCode.P };
+            currentEvent = new Event(codes);
+        }
+        currentSubState = SubState.init;
     }
 
-    public override void updateEvent()
+    public override void updateEvent(float deltaTime)
     {
-        throw new System.NotImplementedException();
+        if (currentSubState == SubState.init)
+        {
+            timeInEvent += deltaTime;
+            if (timeInEvent >= timeToStartTheEvent)
+            {
+                currentSubState = SubState.running;
+                timeInEvent = 0;
+            }
+            else
+            {
+                eventMessage = "This is a " + eventName + ", Begins in " + (int)(6 - timeInEvent);
+            }
+
+        }
+
+
+
+        if (currentEvent != null && currentSubState == SubState.running)
+        {
+            timeInEvent += deltaTime;
+
+            eventMessage = "Press P x 3 " + "\n to avoid damage \n " + (int)(timeEndEvet - timeInEvent);
+
+            if (timeInEvent >= timeEndEvet)
+            {
+                this.endEvent();
+                return;
+            }
+
+            currentEvent.Update(deltaTime);
+            if (currentEvent.codeCompleted)
+            {
+                this.endEvent();
+                return;
+            }
+        }
+
     }
 }

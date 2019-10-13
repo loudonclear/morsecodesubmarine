@@ -2,17 +2,52 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Event 
+public class Event
 {
-    // Start is called before the first frame update
-    void Start()
+    private float myAllowedDelay = 1f;
+    private KeyCode[] myActions;
+    private int myIndex = 0;
+    private float myDelayTimer;
+
+    public bool codeCompleted = false;
+
+    public Event(KeyCode[] actions )
     {
-        
+        this.myActions = actions;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update(float deltaTime)
     {
-        
+        myDelayTimer += deltaTime;
+        if (myDelayTimer > myAllowedDelay)
+        {
+            ResetCodeInput();
+        }
+
+        if (Input.anyKeyDown)
+        {
+            //Debug.Log("Event::GOT KEY");
+            if (Input.GetKeyDown(myActions[myIndex]))
+            {
+                myIndex++;
+                myDelayTimer = 0f;
+            }
+            else
+            {
+                ResetCodeInput();
+            }
+        }
+
+        if (myIndex == myActions.Length)
+        {
+            ResetCodeInput();
+            codeCompleted = true;
+        }
+    }
+
+    public void  ResetCodeInput()
+    {
+        myIndex = 0;
+        myDelayTimer = 0f;
     }
 }

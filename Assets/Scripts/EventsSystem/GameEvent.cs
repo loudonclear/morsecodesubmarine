@@ -4,35 +4,48 @@ using UnityEngine;
 
 public static class EventConstants
 {
-    public const string MONSTER_EVENT = "MONSTER_EVENT";
-    public const string FIRE_EVENT = "FIRE_EVENT";
-    public const string PRESSURE_EVENT = "PRESURE_EVENT";
+    public const string MONSTER_EVENT = "MONSTER EVENT";
+    public const string FIRE_EVENT = "FIRE EVENT";
+    public const string PRESSURE_EVENT = "PRESURE EVENT";
 }
 
-public abstract class GameEvent 
+public  class GameEvent
 {
     // Start is called before the first frame update
+
+    public enum SubState { noevent = 0, init, running, end, maxEvent };
 
     protected float timeInEvent = 0.0f;
 
     protected float timeEndEvet = 6.0f;
 
+    protected float timeToStartTheEvent = 6.0f;
+
     protected string eventName;
 
     protected string eventMessage;
 
-    public abstract void startEvent();
+    public int damage = 0 ;
 
-    public abstract void updateEvent();
+    public bool succeed = false;
 
-    public abstract void endEvent();
+    public SubState currentSubState;
+
+    public virtual void startEvent() { }
+
+    public virtual void updateEvent(float deltaTime) { }
+
+    public virtual void endEvent() { }
 
     public string getEventName()
     {
         return this.eventName;
     }
 
-    public abstract string sendEventMessage();
+    public virtual string getEventMessage()
+    {
+        return eventMessage;
+    }
     
 
 
