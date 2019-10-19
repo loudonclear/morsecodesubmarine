@@ -10,5 +10,6 @@ public class Action
     public string actionMessage { get; set; }
     public KeyCode[] actionCodes { get; set; }
     public ActionResult actionResult { get; set; }
+    public string messageToSuccess { get; set; }
 }
 

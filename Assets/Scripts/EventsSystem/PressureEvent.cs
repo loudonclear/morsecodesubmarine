@@ -11,7 +11,9 @@ public class PressureEvent : GameEvent
         this.damage = 1;
         defaultAction = new Action();
         defaultAction.actionCodes = new KeyCode[3] { KeyCode.P, KeyCode.P, KeyCode.P };
-        defaultAction.actionMessage = "Press P x 3 " + "\n to avoid damage \n ";// + (int)(timeEndEvet - timeInEvent);
+        //defaultAction.actionMessage = "Press P x 3 " + "\n to avoid damage \n ";// + (int)(timeEndEvet - timeInEvent);
+        defaultAction.actionMessage = "Waiting for command" + "\n to avoid damage \n ";// + (int)(timeEndEvet - timeInEvent);
+        defaultAction.messageToSuccess = "ppp";
         ActionResult result = new ActionResult();
         result.damage = this.damage;
         result.succcesMessage = "Well Done, You avoided attack";

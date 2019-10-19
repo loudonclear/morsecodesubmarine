@@ -7,11 +7,22 @@ public class EventIncidentsSystem : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    struct editorActionToEvent
+    {
+        int id;
+        string command;
+    };
+
     public Text evenMessageText;
     public Text playerInfo;
     public Text inputInfo;
 
+    public List<int> eventsId;
+    public List<string> eventsActionResolved;
+    
+
     public List<GameEvent> gameEvents = new List<GameEvent>();
+    private Queue<string> receivedCommands = new Queue<string>();
 
     Hashtable myEventsTable = new Hashtable();
 
@@ -28,6 +39,8 @@ public class EventIncidentsSystem : MonoBehaviour
     State currentState = State.noevent;
     GameEvent currentEvent = null;
 
+    public bool enableTimer = true;
+
     public EventIncidentsSystem()
     {
     
@@ -37,11 +50,21 @@ public class EventIncidentsSystem : MonoBehaviour
 
     void Start()
     {
-        myEventsTable.Add(EventConstants.MONSTER_EVENT, new MonsterEvent());
-        myEventsTable.Add(EventConstants.FIRE_EVENT, new FireEvent());
-        myEventsTable.Add(EventConstants.PRESSURE_EVENT, new PressureEvent());
-        //evenMessageText.text = "HELLO WORLD";
-        playerInfo.text  = "Player HP: " + playerHealth;
+        /*if (eventsId.Count == eventsActionResolved.Count)
+        {
+            for (int i = 0; i < eventsId.Count; i++)
+            {
+                
+            }
+        }*/
+
+        
+         myEventsTable.Add(EventConstants.MONSTER_EVENT, new MonsterEvent());
+         myEventsTable.Add(EventConstants.FIRE_EVENT, new FireEvent());
+         myEventsTable.Add(EventConstants.PRESSURE_EVENT, new PressureEvent());
+        
+        
+        playerInfo.text = "Player HP: " + playerHealth;
         inputInfo.text = "";
     }
 
@@ -82,7 +105,7 @@ public class EventIncidentsSystem : MonoBehaviour
                 
 
                 lastRandom = whichEvent;
-                whichEvent = 3;
+               // whichEvent = 3;
                 switch (whichEvent)
                 {
                     case 1:
@@ -142,9 +165,20 @@ public class EventIncidentsSystem : MonoBehaviour
                             inputInfo.text += c;
 
                         }
-                        
+                        if (Input.GetKeyDown(KeyCode.Return))
+                        {
+                           // Debug.Log("Return key was pressed.");
+                            string code = inputInfo.text;
+                            resolveCode(code);
+                            inputInfo.text = "";
+                        }
+
                     }
-                    
+
+                    if (currentEvent.receivedCode != "" && receivedCommands.Count != 0)
+                    {
+                        currentEvent.receivedCode = receivedCommands.Dequeue();
+                    }
                     currentEvent.updateEvent(Time.deltaTime);
 
                     evenMessageText.text = currentEvent.getEventMessage();
@@ -155,9 +189,13 @@ public class EventIncidentsSystem : MonoBehaviour
         }
     }
 
-    /*public resolveCode(KeyCode[])
+    public void resolveCode(string interpretedCode)
     {
-
-    }*/
+        if (interpretedCode != "")
+        {
+            receivedCommands.Enqueue(interpretedCode);
+        }
+        
+    }
     
 }
