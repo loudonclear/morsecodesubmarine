@@ -1,25 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class speedcontroller : MonoBehaviour
 {
 
-    [Range(0.0f, 100.0f)]
+    [Range(0.0f, 1.0f)]
     public float speedpercent = 0.0f;
-   
-    //void Start()
-    //{
-    //    transform.rotation = new Vector3(0f, 0f, 149f);
-    //}
+
+    public float minTemperature = 0.0f;
+    public float maxTemperature = 1.0f;
+
+    private RectTransform rectTransform;
+
+    void Start()
+    {
+        rectTransform = GetComponent<RectTransform>();
+        Vector2 size = GetComponent<RectTransform>().sizeDelta;
+        Vector2 pixelPivot = GetComponent<Image>().sprite.pivot;
+        Vector2 percentPivot = new Vector2(pixelPivot.x / size.x, pixelPivot.y / size.y);
+        GetComponent<RectTransform>().pivot = percentPivot;
+    }
 
     void Update()
     {
-        //transform.position += (transform.rotation*Pivot);
-        
-        transform.rotation = Quaternion.AngleAxis(speedpercent * -3.6f, Vector3.forward);
- 
-        //transform.position -= (transform.rotation*Pivot);
-       
+        rectTransform.rotation = Quaternion.AngleAxis(Mathf.Lerp(minTemperature, maxTemperature, speedpercent), Vector3.forward);
     }
 }
