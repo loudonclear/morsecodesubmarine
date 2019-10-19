@@ -42,6 +42,10 @@ public  class GameEvent
     protected Action defaultAction;
     public Action myAction { get; set; }
 
+    public bool enableTimer = false;
+
+    public string receivedCode { get; set; }
+
 
     public virtual void startEvent() {
         eventMessage = "This is a " + eventName;
@@ -73,17 +77,33 @@ public  class GameEvent
 
         if (currentEvent != null && currentSubState == SubState.running)
         {
-            timeInEvent += deltaTime;
 
+            if (!enableTimer)
+            {
+                timeEndEvet = 999;
+                timeInEvent = 0;
+            }
+            else {
+                timeInEvent += deltaTime;
+            }
+            
+            
             eventMessage = currentEvent.myAction.actionMessage + (int)(timeEndEvet - timeInEvent);
-
+            
             if (timeInEvent >= timeEndEvet)
             {
-                this.endEvent();
-                return;
+                // end the event by time
+               this.endEvent();
+               return;
             }
 
-            currentEvent.Update(deltaTime);
+            // end the game by received code
+            if (receivedCode != "")
+            {
+                currentEvent.checkCode(receivedCode);
+            }
+            
+            //currentEvent.Update(deltaTime);
             if (currentEvent.codeCompleted)
             {
                 this.endEvent();
@@ -106,7 +126,7 @@ public  class GameEvent
         }
         currentEvent = null;
         timeInEvent = 0;
-
+        receivedCode = "";
         currentSubState = SubState.end;
     }
 

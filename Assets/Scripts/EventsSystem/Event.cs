@@ -25,7 +25,7 @@ public class Event
     public void Update(float deltaTime)
     {
         myDelayTimer += deltaTime;
-        if (myDelayTimer > myAllowedDelay)
+        if ( myDelayTimer > myAllowedDelay)
         {
             ResetCodeInput();
         }
@@ -55,5 +55,14 @@ public class Event
     {
         myIndex = 0;
         myDelayTimer = 0f;
+    }
+
+    public void checkCode(string currentMessage)
+    {
+        if (myAction.messageToSuccess == currentMessage)
+        {
+            codeCompleted = true;
+        }
+
     }
 }
