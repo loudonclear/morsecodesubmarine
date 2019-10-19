@@ -13,7 +13,7 @@ public  class GameEvent
 {
     // Start is called before the first frame update
 
-    private Queue<Action> myListOfActions = new Queue<Action>();
+    
     protected Event currentEvent;
 
     public enum SubState { noevent = 0, init, running, end, maxEvent };
@@ -40,7 +40,7 @@ public  class GameEvent
     protected string defaultFailMesasage;
 
     protected Action defaultAction;
-    
+    public Action myAction { get; set; }
 
 
     public virtual void startEvent() {
@@ -48,14 +48,7 @@ public  class GameEvent
 
         if (currentEvent == null)
         {
-            if (myListOfActions.Count == 0)
-            {
-                currentEvent = new Event(defaultAction);
-            }
-            else {
-                currentEvent.myAction = myListOfActions.Dequeue();
-            }
-            
+           currentEvent = new Event(myAction == null ? defaultAction: myAction);        
         }
         currentSubState = SubState.init;
     }

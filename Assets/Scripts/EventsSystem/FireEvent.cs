@@ -23,6 +23,13 @@ public class FireEvent : GameEvent
         
     }
 
+    public FireEvent(Action action)
+    {
+        this.damage = 3;
+        defaultAction = action;
+        eventName = EventConstants.FIRE_EVENT;
+    }
+
     /*public override void endEvent()
     {
         if (currentEvent.codeCompleted)

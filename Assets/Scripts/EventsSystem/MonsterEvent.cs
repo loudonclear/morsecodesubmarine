@@ -23,24 +23,31 @@ public class MonsterEvent : GameEvent
 
     }
 
-   /* public override void endEvent()
+    public MonsterEvent(Action action)
     {
-        if (currentEvent.codeCompleted)
-        {
-            eventMessage = "Well Done, You avoided attack";
-            succeed = true;
-        }
-        else {
-            eventMessage = "Player Receives " + damage + " damage";
-            succeed = false;
-        }
-        currentEvent = null;
-        timeInEvent = 0;
+        this.damage = 3;
+        defaultAction = action;
+        eventName = EventConstants.MONSTER_EVENT;
+    }
 
-        currentSubState = SubState.end;
+    /* public override void endEvent()
+     {
+         if (currentEvent.codeCompleted)
+         {
+             eventMessage = "Well Done, You avoided attack";
+             succeed = true;
+         }
+         else {
+             eventMessage = "Player Receives " + damage + " damage";
+             succeed = false;
+         }
+         currentEvent = null;
+         timeInEvent = 0;
+
+         currentSubState = SubState.end;
 
 
-    }*/
+     }*/
 
     /*public override void startEvent()
     {
