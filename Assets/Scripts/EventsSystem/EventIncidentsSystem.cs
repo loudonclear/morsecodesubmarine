@@ -80,7 +80,7 @@ public class EventIncidentsSystem : MonoBehaviour
                 
 
                 lastRandom = whichEvent;
-                //whichEvent = 3;
+                whichEvent = 3;
                 switch (whichEvent)
                 {
                     case 1:

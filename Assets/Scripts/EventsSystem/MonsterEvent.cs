@@ -5,16 +5,25 @@ using UnityEngine;
 public class MonsterEvent : GameEvent
 {
 
-    private Event currentEvent;
-   
-
+    
     public MonsterEvent()
     {
+        
+        this.damage = 3;
+        defaultAction = new Action();
+        defaultAction.actionCodes = new KeyCode[3] { KeyCode.M, KeyCode.M, KeyCode.M };
+        defaultAction.actionMessage = "Press M x 3 " + "\n to avoid damage \n ";// + (int)(timeEndEvet - timeInEvent);
+        ActionResult result = new ActionResult();
+        result.damage = this.damage;
+        result.succcesMessage = "Well Done, You avoided attack";
+        result.failMessage = "Player Receives " + damage + " damage";
+        defaultAction.actionResult = result;
+
         eventName = EventConstants.MONSTER_EVENT;
-        damage = 3;
+
     }
 
-    public override void endEvent()
+   /* public override void endEvent()
     {
         if (currentEvent.codeCompleted)
         {
@@ -31,9 +40,9 @@ public class MonsterEvent : GameEvent
         currentSubState = SubState.end;
 
 
-    }
+    }*/
 
-    public override void startEvent()
+    /*public override void startEvent()
     {
         eventMessage = "This is a " + eventName;
 
@@ -43,9 +52,9 @@ public class MonsterEvent : GameEvent
             currentEvent = new Event(codes);
         }
         currentSubState = SubState.init;
-    }
+    }*/
 
-    public override void updateEvent(float deltaTime)
+    /*public override void updateEvent(float deltaTime)
     {
 
         if (currentSubState == SubState.init)
@@ -85,6 +94,6 @@ public class MonsterEvent : GameEvent
         }
 
 
-    }
+    }*/
 
 }

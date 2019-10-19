@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class FireEvent : GameEvent
 {
-    private Event currentEvent;
+    
 
     public FireEvent()
     {
+        this.damage = 2;
+        defaultAction = new Action();
+        defaultAction.actionCodes = new KeyCode[3] { KeyCode.F, KeyCode.F, KeyCode.F };
+        defaultAction.actionMessage = "Press F x 3 " + "\n to avoid damage \n ";// + (int)(timeEndEvet - timeInEvent);
+        ActionResult result = new ActionResult();
+        result.damage = this.damage;
+        result.succcesMessage = "Well Done, You avoided attack";
+        result.failMessage = "Player Receives " + damage + " damage";
+        defaultAction.actionResult = result;
+
         eventName = EventConstants.FIRE_EVENT;
-        damage = 2;
+        
+        
     }
 
-    public override void endEvent()
+    /*public override void endEvent()
     {
         if (currentEvent.codeCompleted)
         {
@@ -28,21 +39,21 @@ public class FireEvent : GameEvent
         timeInEvent = 0;
 
         currentSubState = SubState.end;
-    }
+    }*/
 
-    public override void startEvent()
+    /*public override void startEvent()
     {
         eventMessage = "This is a " + eventName;
 
         if (currentEvent == null)
         {
-            KeyCode[] codes = new KeyCode[3] { KeyCode.F, KeyCode.F, KeyCode.F };
-            currentEvent = new Event(codes);
+            
+            currentEvent = new Event(codes, this.damage, "Well Done, You avoided attack", "Player Receives " + damage + " damage");
         }
         currentSubState = SubState.init;
-    }
+    }*/
 
-    public override void updateEvent(float deltaTime)
+    /*public override void updateEvent(float deltaTime)
     {
         if (currentSubState == SubState.init)
         {
@@ -81,6 +92,6 @@ public class FireEvent : GameEvent
             }
         }
 
-    }
+    }*/
 }
 

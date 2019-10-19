@@ -5,15 +5,21 @@ using UnityEngine;
 public class Event
 {
     private float myAllowedDelay = 1f;
-    private KeyCode[] myActions;
+    public Action myAction { get; set; }
+    public ActionResult myActionResult { get; set; }
     private int myIndex = 0;
     private float myDelayTimer;
 
     public bool codeCompleted = false;
 
-    public Event(KeyCode[] actions )
+    public Event()
     {
-        this.myActions = actions;
+
+    }
+
+    public Event(Action action)
+    {
+        myAction = action;
     }
 
     public void Update(float deltaTime)
@@ -27,7 +33,7 @@ public class Event
         if (Input.anyKeyDown)
         {
             //Debug.Log("Event::GOT KEY");
-            if (Input.GetKeyDown(myActions[myIndex]))
+            if (Input.GetKeyDown(myAction.actionCodes[myIndex]))
             {
                 myIndex++;
                 myDelayTimer = 0f;
@@ -38,7 +44,7 @@ public class Event
             }
         }
 
-        if (myIndex == myActions.Length)
+        if (myIndex == myAction.actionCodes.Length)
         {
             ResetCodeInput();
             codeCompleted = true;

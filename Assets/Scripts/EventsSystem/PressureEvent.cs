@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class PressureEvent : GameEvent
 {
-    private Event currentEvent;
+ 
     public PressureEvent()
     {
+
+        this.damage = 1;
+        defaultAction = new Action();
+        defaultAction.actionCodes = new KeyCode[3] { KeyCode.P, KeyCode.P, KeyCode.P };
+        defaultAction.actionMessage = "Press P x 3 " + "\n to avoid damage \n ";// + (int)(timeEndEvet - timeInEvent);
+        ActionResult result = new ActionResult();
+        result.damage = this.damage;
+        result.succcesMessage = "Well Done, You avoided attack";
+        result.failMessage = "Player Receives " + damage + " damage";
+        defaultAction.actionResult = result;
         eventName = EventConstants.PRESSURE_EVENT;
-        damage = 1;
+        
     }
 
-    public override void endEvent()
+   /* public override void endEvent()
     {
         if (currentEvent.codeCompleted)
         {
@@ -27,9 +37,9 @@ public class PressureEvent : GameEvent
         timeInEvent = 0;
 
         currentSubState = SubState.end;
-    }
+    }*/
     
-    public override void startEvent()
+   /* public override void startEvent()
     {
         eventMessage = "This is a " + eventName;
 
@@ -39,9 +49,9 @@ public class PressureEvent : GameEvent
             currentEvent = new Event(codes);
         }
         currentSubState = SubState.init;
-    }
+    }*/
 
-    public override void updateEvent(float deltaTime)
+    /*public override void updateEvent(float deltaTime)
     {
         if (currentSubState == SubState.init)
         {
@@ -80,5 +90,5 @@ public class PressureEvent : GameEvent
             }
         }
 
-    }
+    }*/
 }
