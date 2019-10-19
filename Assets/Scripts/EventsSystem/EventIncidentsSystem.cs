@@ -21,7 +21,7 @@ public class EventIncidentsSystem : MonoBehaviour
     public List<string> eventsActionResolved;
     
 
-    public List<GameEvent> gameEvents = new List<GameEvent>();
+    public Queue<GameEvent> gameEvents = new Queue<GameEvent>();
     private Queue<string> receivedCommands = new Queue<string>();
 
     Hashtable myEventsTable = new Hashtable();
@@ -50,13 +50,69 @@ public class EventIncidentsSystem : MonoBehaviour
 
     void Start()
     {
-        /*if (eventsId.Count == eventsActionResolved.Count)
+        if (eventsId.Count == eventsActionResolved.Count)
         {
             for (int i = 0; i < eventsId.Count; i++)
             {
-                
+                int evetnType = eventsId[i];
+                string eventResolveCommand = eventsActionResolved[i];
+
+                switch (evetnType)
+                {
+                    case 1:
+                        {
+                            Action action = new Action();
+                            action.actionCodes = new KeyCode[3] { KeyCode.M, KeyCode.M, KeyCode.M };
+                            //defaultAction.actionMessage = "Press M x 3 " + "\n to avoid damage \n ";// + (int)(timeEndEvet - timeInEvent);
+                            action.actionMessage = "Waiting for command" + "\n to avoid damage \n ";// + (int)(timeEndEvet - timeInEvent);
+                            action.messageToSuccess = eventResolveCommand;
+                            ActionResult result = new ActionResult();
+                            result.damage = 3;
+                            result.succcesMessage = "Well Done, You avoided attack";
+                            result.failMessage = "Player Receives " + 3 + " damage";
+                            action.actionResult = result;
+                            gameEvents.Enqueue(new MonsterEvent(action));
+                        }
+                        
+                        break;
+                    case 2:
+                        {
+                            Action action = new Action();
+                            action.actionCodes = new KeyCode[3] { KeyCode.M, KeyCode.M, KeyCode.M };
+                            //defaultAction.actionMessage = "Press M x 3 " + "\n to avoid damage \n ";// + (int)(timeEndEvet - timeInEvent);
+                            action.actionMessage = "Waiting for command" + "\n to avoid damage \n ";// + (int)(timeEndEvet - timeInEvent);
+                            action.messageToSuccess = eventResolveCommand;
+                            ActionResult result = new ActionResult();
+                            result.damage = 2;
+                            result.succcesMessage = "Well Done, You avoided attack";
+                            result.failMessage = "Player Receives " + 2 + " damage";
+                            action.actionResult = result;
+                            gameEvents.Enqueue(new FireEvent(action));
+                        }
+                        
+                        break;
+                    case 3:
+                        {
+                            Action action = new Action();
+                            action.actionCodes = new KeyCode[3] { KeyCode.M, KeyCode.M, KeyCode.M };
+                            //defaultAction.actionMessage = "Press M x 3 " + "\n to avoid damage \n ";// + (int)(timeEndEvet - timeInEvent);
+                            action.actionMessage = "Waiting for command" + "\n to avoid damage \n ";// + (int)(timeEndEvet - timeInEvent);
+                            action.messageToSuccess = eventResolveCommand;
+                            ActionResult result = new ActionResult();
+                            result.damage = 1;
+                            result.succcesMessage = "Well Done, You avoided attack";
+                            result.failMessage = "Player Receives " + 1 + " damage";
+                            action.actionResult = result;
+                            gameEvents.Enqueue(new PressureEvent(action));
+                        }
+                        
+                        break;
+                    default:
+                        break;
+                }
+
             }
-        }*/
+        }
 
         
          myEventsTable.Add(EventConstants.MONSTER_EVENT, new MonsterEvent());
@@ -77,59 +133,67 @@ public class EventIncidentsSystem : MonoBehaviour
             timeSinceLastIncident += Time.deltaTime;
             if (timeSinceLastIncident > timeForNextEvent)
             {
-                // fire an incident
-                float maxEvent = (float)State.maxEvent;
-                int whichEvent = -1;
-                while (true)
+                // fire a random incident
+                if (gameEvents.Count == 0)
                 {
-                    
-                    whichEvent = (int)Random.Range(1.0f, maxEvent - 1.0f);
-                    if (lastRandom == whichEvent
-                        && countRandom < 2)
+                    float maxEvent = (float)State.maxEvent;
+                    int whichEvent = -1;
+                    while (true)
                     {
-                        countRandom++;
-                        break;
+                        whichEvent = (int)Random.Range(1.0f, maxEvent - 1.0f);
+                        if (lastRandom == whichEvent
+                            && countRandom < 2)
+                        {
+                            countRandom++;
+                            break;
+                        }
+                        else if (lastRandom == whichEvent && countRandom == 2)
+                        {
+                            countRandom = 0;
+                            lastRandom = 0;
+                            whichEvent = 3;
+                            break;
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
-                    else if (lastRandom == whichEvent && countRandom == 2)
-                    {
-                        countRandom = 0;
-                        lastRandom = 0;
-                        whichEvent = 3;
-                        break;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                
 
-                lastRandom = whichEvent;
-               // whichEvent = 3;
-                switch (whichEvent)
-                {
-                    case 1:
-                        currentEvent = (GameEvent)myEventsTable[EventConstants.MONSTER_EVENT];
-                        break;
-                    case 2:
-                        currentEvent = (GameEvent)myEventsTable[EventConstants.FIRE_EVENT];
-                        break;
-                    case 3:
-                        currentEvent = (GameEvent)myEventsTable[EventConstants.PRESSURE_EVENT];
-                        break;
-                    default:
-                        break;
+
+                    lastRandom = whichEvent;
+                    // whichEvent = 3;
+                    switch (whichEvent)
+                    {
+                        case 1:
+                            currentEvent = (GameEvent)myEventsTable[EventConstants.MONSTER_EVENT];
+                            break;
+                        case 2:
+                            currentEvent = (GameEvent)myEventsTable[EventConstants.FIRE_EVENT];
+                            break;
+                        case 3:
+                            currentEvent = (GameEvent)myEventsTable[EventConstants.PRESSURE_EVENT];
+                            break;
+                        default:
+                            break;
+                    }
+                   
                 }
+                else {
+                    currentEvent = gameEvents.Dequeue();
+                }
+
                 timeSinceLastIncident = 0;
                 if (currentEvent == null)
                 {
                     Debug.Log("ERROR HERE");
                 }
-                else {
+                else
+                {
                     currentEvent.startEvent();
                 }
-
                 currentState = State.running;
+
             }
             else {
                 evenMessageText.text = "Time For Next Event in " + (int)(6 - timeSinceLastIncident);
