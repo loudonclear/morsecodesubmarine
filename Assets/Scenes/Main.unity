@@ -673,6 +673,7 @@ GameObject:
   - component: {fileID: 2001395846}
   - component: {fileID: 2001395847}
   - component: {fileID: 2001395849}
+  - component: {fileID: 2001395848}
   m_Layer: 0
   m_Name: MorseCodeMachine
   m_TagString: Untagged
@@ -709,9 +710,23 @@ MonoBehaviour:
   morseCodeText: {fileID: 444925938}
   decodedText: {fileID: 2066560946}
   timeUnit: 0.2
+  unitsBetweenCharacters: 3
+  unitsBetweenCommands: 7
   frequency1: 400
   frequency2: 444
   waveLengthInSeconds: 2
+--- !u!114 &2001395848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001395845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4eb055e20f2c64b97dce4a68677d17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &2001395849
 AudioSource:
   m_ObjectHideFlags: 0
