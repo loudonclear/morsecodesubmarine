@@ -11,6 +11,8 @@ public class EventIncidentsSystem : MonoBehaviour
     public Text playerInfo;
     public Text inputInfo;
 
+    public List<GameEvent> gameEvents = new List<GameEvent>();
+
     Hashtable myEventsTable = new Hashtable();
 
     enum State { noevent = 0 ,init , running, end, maxEvent };
@@ -80,7 +82,7 @@ public class EventIncidentsSystem : MonoBehaviour
                 
 
                 lastRandom = whichEvent;
-                //whichEvent = 3;
+                whichEvent = 3;
                 switch (whichEvent)
                 {
                     case 1:
@@ -153,6 +155,9 @@ public class EventIncidentsSystem : MonoBehaviour
         }
     }
 
+    /*public resolveCode(KeyCode[])
+    {
 
+    }*/
     
 }

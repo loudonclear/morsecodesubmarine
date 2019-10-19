@@ -13,6 +13,9 @@ public  class GameEvent
 {
     // Start is called before the first frame update
 
+    
+    protected Event currentEvent;
+
     public enum SubState { noevent = 0, init, running, end, maxEvent };
 
     protected float timeInEvent = 0.0f;
@@ -25,17 +28,87 @@ public  class GameEvent
 
     protected string eventMessage;
 
+    protected string eventActionMessage;
+
     public int damage = 0 ;
 
     public bool succeed = false;
 
     public SubState currentSubState;
 
-    public virtual void startEvent() { }
+    protected string defaultSuccessMesasage = "Well Done, You avoided attack";
+    protected string defaultFailMesasage;
 
-    public virtual void updateEvent(float deltaTime) { }
+    protected Action defaultAction;
+    public Action myAction { get; set; }
 
-    public virtual void endEvent() { }
+
+    public virtual void startEvent() {
+        eventMessage = "This is a " + eventName;
+
+        if (currentEvent == null)
+        {
+           currentEvent = new Event(myAction == null ? defaultAction: myAction);        
+        }
+        currentSubState = SubState.init;
+    }
+
+    public virtual void updateEvent(float deltaTime) {
+        if (currentSubState == SubState.init)
+        {
+            timeInEvent += deltaTime;
+            if (timeInEvent >= timeToStartTheEvent)
+            {
+                currentSubState = SubState.running;
+                timeInEvent = 0;
+            }
+            else
+            {
+                eventMessage = "This is a " + eventName + ", Begins in " + (int)(6 - timeInEvent);
+            }
+
+        }
+
+
+
+        if (currentEvent != null && currentSubState == SubState.running)
+        {
+            timeInEvent += deltaTime;
+
+            eventMessage = currentEvent.myAction.actionMessage + (int)(timeEndEvet - timeInEvent);
+
+            if (timeInEvent >= timeEndEvet)
+            {
+                this.endEvent();
+                return;
+            }
+
+            currentEvent.Update(deltaTime);
+            if (currentEvent.codeCompleted)
+            {
+                this.endEvent();
+                return;
+            }
+        }
+    }
+
+    public virtual void endEvent() {
+
+        if (currentEvent.codeCompleted)
+        {
+            eventMessage = currentEvent.myAction.actionResult.succcesMessage;
+            succeed = true;
+        }
+        else
+        {
+            eventMessage = currentEvent.myAction.actionResult.failMessage;
+            succeed = false;
+        }
+        currentEvent = null;
+        timeInEvent = 0;
+
+        currentSubState = SubState.end;
+    }
 
     public string getEventName()
     {
