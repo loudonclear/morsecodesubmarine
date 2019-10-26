@@ -4,14 +4,14 @@ using UnityEngine;
 
 public abstract class AIState 
 {
-    protected Monster monster;
+    protected MonsterAI monster;
 
     public abstract void Tick();
 
     public virtual void OnStateEnter() { }
     public virtual void OnStateExit() { }
 
-    public AIState(Monster character)
+    public AIState(MonsterAI character)
     {
         this.monster = character;
     }
