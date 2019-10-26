@@ -27,7 +27,7 @@ public class ChasePlayer : AIState
             monster.moveTowards(submarine.transform.position);
         }
         //throw new System.NotImplementedException();
-        if (!monster.playerInRangeOfVision(submarine))
+        if (!monster.playerInRangeOfVision())
         {
             monster.setState(new UnAware(monster,0, this.lastDirection));
         }
