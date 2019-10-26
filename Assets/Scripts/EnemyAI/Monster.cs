@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    public float moveSpeed = 1.0f;
-    public float radioOfVision = 1.0f;
+    public float moveSpeed ;
+    public float radioOfVision ;
     private AIState currentState;
 
     // Start is called before the first frame update
     void Start()
     {
+       
         setState(new UnAware(this));
     }
 
