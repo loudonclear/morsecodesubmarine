@@ -4,29 +4,30 @@ using UnityEngine;
 
 public class CommandInterpreter : MonoBehaviour
 {
-    public static Dictionary<string, string> basicCommands = new Dictionary<string, string>() {
-        {"p", "Port"},
-        {"s", "Starboard"},
-        {"a", "Accelerate"},
-        {"d", "Deccelerate"},
-        {"o", "EnginesOff"},
-        {"f", "Fire"} };
+    private string[] commandFunctions = new string[] { "Port", "Starboard", "Accelerate", "Deccelerate", "EnginesOff", "Fire" };
+    [NamedArrayAttribute(new string[] { "Port", "Starboard", "Accelerate", "Deccelerate", "EnginesOff", "Fire" })]
+    public string[] morseCodeCommands = new string[] { "p", "s", "a", "d", "o", "f" };
 
-    private Dictionary<string, string> commands;
+    public Dictionary<string, string> commandDictionary;
 
     public void Start()
     {
-        commands = basicCommands;
+        commandDictionary = new Dictionary<string, string>();
+        for (int i = 0; i < morseCodeCommands.Length; i++)
+        {
+            commandDictionary.Add(morseCodeCommands[i], commandFunctions[i]);
+        }
     }
 
     public void InterpretCommand(string command)
     {
         string function;
-        if (commands.TryGetValue(command, out function)) {
+        if (commandDictionary.TryGetValue(command, out function)) {
             Invoke(function, 0f);
         }
     }
 
+    // TODO: Attach all commands to other scripts
     private void Starboard()
     {
         Debug.Log("Moving starboard");
@@ -56,6 +57,4 @@ public class CommandInterpreter : MonoBehaviour
     {
         Debug.Log("Firing");
     }
-
-
 }
