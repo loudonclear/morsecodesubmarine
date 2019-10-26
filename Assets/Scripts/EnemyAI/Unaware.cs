@@ -12,13 +12,20 @@ public class UnAware : AIState
     // This returns the GameObject named Hand.
     GameObject submarine = null;
 
-    public UnAware(Monster monster) : base(monster)
+    public UnAware(MonsterAI monster) : base(monster)
     {
+
     }
 
+    public UnAware(MonsterAI monster,float lastTimer, int lastDirection) : base(monster)
+    {
+        this.timer = lastTimer;
+        this.currentDirection = lastDirection;
+    }
+    
     public override void OnStateEnter()
     {
-        nextDestination = direction * currentDirection;
+        this.nextDestination = direction * currentDirection;
         submarine = GameObject.Find("mysubmarine");
     }
 
@@ -31,14 +38,14 @@ public class UnAware : AIState
         {
             if(monster.playerInRangeOfVision(submarine))
             {
-                monster.setState(new ChasePlayer(monster));
+                monster.setState(new ChasePlayer(monster,this.timer,this.currentDirection));
             }
         }
 
 
 
-        timer += Time.deltaTime;
-        if (timer >= wanderTime)
+        this.timer += Time.deltaTime;
+        if (this.timer >= wanderTime)
         {
             selectDestination();
             timer = 0;
@@ -47,7 +54,7 @@ public class UnAware : AIState
 
     private void selectDestination()
     {
-        currentDirection *= -1;
-        nextDestination = direction * currentDirection;
+        this.currentDirection *= -1;
+        this.nextDestination = this.direction * this.currentDirection;
     }
 }

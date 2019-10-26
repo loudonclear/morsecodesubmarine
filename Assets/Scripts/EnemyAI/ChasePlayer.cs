@@ -5,10 +5,13 @@ using UnityEngine;
 public class ChasePlayer : AIState
 {
     GameObject submarine = null;
+    float lastTimer;
+    int lastDirection;
 
-    public ChasePlayer(Monster monster) : base(monster)
+    public ChasePlayer(MonsterAI monster,float lastTimer, int lastDirection) : base(monster)
     {
-
+        this.lastTimer = lastTimer;
+        this.lastDirection = lastDirection;
     }
 
     public override void OnStateEnter()
@@ -26,7 +29,7 @@ public class ChasePlayer : AIState
         //throw new System.NotImplementedException();
         if (!monster.playerInRangeOfVision(submarine))
         {
-            monster.setState(new UnAware(monster));
+            monster.setState(new UnAware(monster,0, this.lastDirection));
         }
 
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster : MonoBehaviour
+public class MonsterAI : MonoBehaviour
 {
     public float moveSpeed ;
     public float radioOfVision ;
