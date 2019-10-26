@@ -781,8 +781,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2001395846}
   - component: {fileID: 2001395847}
-  - component: {fileID: 2001395849}
   - component: {fileID: 2001395848}
+  - component: {fileID: 2001395849}
   m_Layer: 0
   m_Name: MorseCodeMachine
   m_TagString: Untagged
@@ -836,6 +836,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d4eb055e20f2c64b97dce4a68677d17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  morseCodeCommands:
+  - p
+  - s
+  - a
+  - d
+  - o
+  - f
 --- !u!82 &2001395849
 AudioSource:
   m_ObjectHideFlags: 0
