@@ -9,7 +9,7 @@ public class AIBehaviourScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetState(new ChasePlayer(new GameObject()));
+        //SetState(new ChasePlayer(new GameObject()));
     }
 
     // Update is called once per frame

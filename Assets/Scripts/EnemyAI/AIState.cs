@@ -4,15 +4,15 @@ using UnityEngine;
 
 public abstract class AIState 
 {
-    protected GameObject character;
+    protected Monster monster;
 
     public abstract void Tick();
 
     public virtual void OnStateEnter() { }
     public virtual void OnStateExit() { }
 
-    public AIState(GameObject character)
+    public AIState(Monster character)
     {
-        this.character = character;
+        this.monster = character;
     }
 }

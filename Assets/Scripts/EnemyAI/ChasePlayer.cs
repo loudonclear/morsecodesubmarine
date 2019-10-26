@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class ChasePlayer : AIState
 {
-    public ChasePlayer(GameObject character) : base(character)
+    GameObject submarine = null;
+
+    public ChasePlayer(Monster monster) : base(monster)
     {
+
+    }
+
+    public override void OnStateEnter()
+    {
+        submarine = GameObject.Find("mysubmarine");
     }
 
     public override void Tick()
     {
-        throw new System.NotImplementedException();
+
+        if (submarine != null)
+        {
+            monster.moveTowards(submarine.transform.position);
+        }
+        //throw new System.NotImplementedException();
     }
 
     
