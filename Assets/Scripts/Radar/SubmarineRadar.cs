@@ -11,20 +11,9 @@ public class SubmarineRadar : MonoBehaviour
 
     private HashSet<GameObject> seen = new HashSet<GameObject>();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
     void Update()
     {
         sweepAngle += sweepSpeed * Time.deltaTime;
-    }
-
-    private void FixedUpdate()
-    {
-         
     }
 
     private void createGameObjectAtPositionDelta(Vector3 delta, GameObject obj) {
@@ -35,19 +24,18 @@ public class SubmarineRadar : MonoBehaviour
     {
         Vector3 positionDelta = collider.transform.position - submarine.transform.position;
         float angle = Vector3.Angle(positionDelta, transform.forward) * (positionDelta.x < 0 ? -1 : 1);
-        float sweepAngleModded = this.sweepAngle % 360 - 180;
+        this.sweepAngle = sweepAngle % 360;
+        float sweepAngleModded = this.sweepAngle - 180;
         GameObject seenObject = collider.gameObject;
 
         if(angle < sweepAngleModded && angle > sweepAngleModded - this.sweepRange && !seen.Contains(seenObject)) {
             seen.Add(seenObject);
 
-            Debug.Log("Angle " + sweepAngle + " " + angle.ToString());
             createGameObjectAtPositionDelta(positionDelta, blip);
         }
         else if(!(angle < sweepAngleModded && angle > sweepAngleModded - this.sweepRange)) {
             seen.Remove(seenObject);
         }
-
 
     }
 }

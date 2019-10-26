@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class CommandInterpreter : MonoBehaviour
 {
-    private string[] commandFunctions = new string[] { "Port", "Starboard", "Accelerate", "Deccelerate", "EnginesOff", "Fire" };
-    [NamedArrayAttribute(new string[] { "Port", "Starboard", "Accelerate", "Deccelerate", "EnginesOff", "Fire" })]
+    private string[] commandFunctions = new string[] { "Port", "Starboard", "Accelerate", "Decelerate", "EnginesOff", "Fire" };
+    [NamedArrayAttribute(new string[] { "Port", "Starboard", "Accelerate", "Decelerate", "EnginesOff", "Fire" })]
     public string[] morseCodeCommands = new string[] { "p", "s", "a", "d", "o", "f" };
 
     public Dictionary<string, string> commandDictionary;
+
+    public SubmarineMovement submarineMovement;
 
     public void Start()
     {
@@ -30,27 +32,27 @@ public class CommandInterpreter : MonoBehaviour
     // TODO: Attach all commands to other scripts
     private void Starboard()
     {
-        Debug.Log("Moving starboard");
+        submarineMovement.Starboard();
     }
 
     private void Port()
     {
-        Debug.Log("Moving to port");
+        submarineMovement.Port();
     }
 
     private void Accelerate()
     {
-        Debug.Log("Accelerating");
+        submarineMovement.Accelerate();
     }
 
     private void Decelerate()
     {
-        Debug.Log("Decelerating");
+        submarineMovement.Decelerate();
     }
 
     private void EnginesOff()
     {
-        Debug.Log("Engines off");
+        submarineMovement.EnginesOff();
     }
 
     private void Fire()
