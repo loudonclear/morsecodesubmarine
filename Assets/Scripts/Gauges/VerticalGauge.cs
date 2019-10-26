@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class gaugecontroller : MonoBehaviour
+public class VerticalGauge : MonoBehaviour
 {
     [Range(0.0f, 1.0f)]
     public float gaugeheight = 1.0f;
@@ -21,4 +21,5 @@ public class gaugecontroller : MonoBehaviour
     {
         rectTransform.localPosition = Vector2.Lerp(minPosition, maxPosition, gaugeheight);
     }
+
 }

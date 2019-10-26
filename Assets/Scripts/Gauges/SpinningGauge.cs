@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class speedcontroller : MonoBehaviour
+public class SpinningGauge : MonoBehaviour
 {
-
     [Range(0.0f, 1.0f)]
     public float speedpercent = 0.0f;
 
