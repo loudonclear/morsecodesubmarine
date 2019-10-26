@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,21 +8,106 @@ public class MonsterAI : MonoBehaviour
     public float moveSpeed ;
     public float radioOfVision ;
     private AIState currentState;
+    GameObject submarine = null;
+
+    public float wanderTime;
+    private float wanderTimer = 0;
+
+    public float visionWeigth;
+    public float distanceWeigth;
+    public float noiseWeigth;
+
+    public float maximumChance;
+    public float maximumChancePercentage ;
+    private float currentNoise = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-       
+       // Debug.DrawLine(Vector3.zero, new Vector3(5, 0, 0), Color.white, 2.5f);
+        submarine = GameObject.Find("mysubmarine");
         setState(new UnAware(this));
+
+        int lowerCount = 0;
+        int middleCount = 0;
+        int higherCount = 0;
+
+        /*for (int i = 0; i < 10000; i++)
+        {
+            float number = UnityEngine.Random.Range(0.0f, 1.0f);
+            if (number < 0.025)
+            {
+                lowerCount++;
+            }
+            else if (number >= 0.475 && number < 0.525)
+            {
+                middleCount++;
+            }
+            else if (number >= 0.9975)
+            {
+                higherCount++;
+            }
+            
+        }*/
+
+        //Debug.Log("higherCount " + lowerCount);
+        //Debug.Log("middleCount" + middleCount);
+        //Debug.Log("higherCount" + higherCount);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown("n"))
+        {
+            currentNoise++;
+        }
+        if (Input.GetKeyDown("m"))
+        {
+            if (currentNoise > 0)
+            {
+                currentNoise--;
+            }
+        }
+
+
         if (currentState != null)
         {
-            currentState.Tick();
+          currentState.Tick();
         }
+
+    
+    }
+
+    public bool chanceToDetectPlayer()
+    {
+
+        Debug.Log("chanceToDetectPlayer");
+        if (submarine != null)
+        {
+            /*float chanceOfDistance = ((1 / distanceFromPlayer() ) * this.distanceWeigth) / this.maximumChance;
+            float chanceOfVision = (this.radioOfVision * this.visionWeigth) / this.maximumChance;
+            float chanceOfNoise = (this.currentNoise * this.noiseWeigth) / this.maximumChance;*/
+
+            float chanceOfDistance = this.distanceWeigth;
+            float chanceOfVision =  this.visionWeigth;
+            float chanceOfNoise = this.noiseWeigth;
+
+            float totalChance = chanceOfDistance * chanceOfVision * chanceOfNoise;
+            float randomNumber = UnityEngine.Random.Range(0.0f, 1.0f);
+
+            //Debug.Log("randomNumber: "+ randomNumber+", totalChance: " + totalChance);
+
+            if (totalChance < randomNumber  )
+            {
+              //  Debug.Log( "EVENT TRIGGERS");
+                return true;
+            }
+
+            return false;
+        }
+
+        return false;
     }
 
     public void setState(AIState state)
@@ -59,15 +145,23 @@ public class MonsterAI : MonoBehaviour
         return (destination - transform.position).normalized;
     }
 
-    public bool playerInRangeOfVision(GameObject submarine)
+    public bool playerInRangeOfVision()
+    {
+        if (submarine != null) {
+           
+            if ( distanceFromPlayer() < Mathf.Pow(radioOfVision, 2))
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    private float distanceFromPlayer()
     {
         Vector3 center = transform.position;
-        if (Mathf.Pow(submarine.transform.position.x - center.x,2) 
-            + Mathf.Pow(submarine.transform.position.y - center.y, 2) < Mathf.Pow(radioOfVision,2))
-        {
-            return true;
-        }
-
-        return false;
+        return Mathf.Pow(submarine.transform.position.x - center.x, 2)
+                + Mathf.Pow(submarine.transform.position.y - center.y, 2);
     }
 }

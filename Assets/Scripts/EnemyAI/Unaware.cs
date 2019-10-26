@@ -9,6 +9,8 @@ public class UnAware : AIState
     private Vector3 nextDestination;
     private float timer = 0f;
     private float wanderTime = 5f;
+    private float randomAwarenessTime = 5f;
+    private float randomAwarenessTimer = 0f;
     // This returns the GameObject named Hand.
     GameObject submarine = null;
 
@@ -36,7 +38,7 @@ public class UnAware : AIState
 
         if (submarine != null)
         {
-            if(monster.playerInRangeOfVision(submarine))
+            if(monster.playerInRangeOfVision())
             {
                 monster.setState(new ChasePlayer(monster,this.timer,this.currentDirection));
             }
@@ -45,10 +47,22 @@ public class UnAware : AIState
 
 
         this.timer += Time.deltaTime;
+        this.randomAwarenessTimer += Time.deltaTime;
+
+
         if (this.timer >= wanderTime)
         {
             selectDestination();
             timer = 0;
+        }
+
+        if (this.randomAwarenessTimer >= randomAwarenessTime)
+        {
+            if (monster.chanceToDetectPlayer())
+            {
+                monster.setState(new RandomChasePlayer(monster));
+            }
+            this.randomAwarenessTimer = 0;
         }
     }
 

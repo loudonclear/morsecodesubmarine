@@ -483,3 +483,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1
   radioOfVision: 3
+  wanderTime: 3
+  visionWeigth: 0.25
+  distanceWeigth: 1
+  noiseWeigth: 0.5
+  maximumChance: 0
+  maximumChancePercentage: 0
