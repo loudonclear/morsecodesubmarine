@@ -21,16 +21,24 @@ public class MonsterAI : MonoBehaviour
     public float maximumChancePercentage ;
     private float currentNoise = 0;
 
+    public List<Vector3> spawnPositions;
+
+    public float minAngle;
+    public float maxAngle;
+
     // Start is called before the first frame update
     void Start()
     {
-       // Debug.DrawLine(Vector3.zero, new Vector3(5, 0, 0), Color.white, 2.5f);
+        
         submarine = GameObject.Find("mysubmarine");
-        setState(new UnAware(this));
 
-        int lowerCount = 0;
-        int middleCount = 0;
-        int higherCount = 0;
+        Debug.DrawLine(transform.position, submarine.transform.position, Color.red, 2.5f);
+
+        setState(new SpawnState(this));
+
+        //int lowerCount = 0;
+        //int middleCount = 0;
+        //int higherCount = 0;
 
         /*for (int i = 0; i < 10000; i++)
         {
@@ -58,7 +66,13 @@ public class MonsterAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown("n"))
+        if (submarine != null)
+        {
+            Debug.DrawLine(transform.position, submarine.transform.position, Color.red, 10.5f);
+        }
+        
+
+        if (Input.GetKeyDown("n"))
         {
             currentNoise++;
         }
@@ -163,5 +177,10 @@ public class MonsterAI : MonoBehaviour
         Vector3 center = transform.position;
         return Mathf.Pow(submarine.transform.position.x - center.x, 2)
                 + Mathf.Pow(submarine.transform.position.y - center.y, 2);
+    }
+
+    public List<Vector3> getSpawnPositions()
+    {
+        return spawnPositions;
     }
 }
