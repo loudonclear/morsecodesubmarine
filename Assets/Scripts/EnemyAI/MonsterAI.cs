@@ -32,7 +32,7 @@ public class MonsterAI : MonoBehaviour
         
         submarine = GameObject.Find("mysubmarine");
 
-        Debug.DrawLine(transform.position, submarine.transform.position, Color.red, 2.5f);
+      //  Debug.DrawLine(transform.position, submarine.transform.position, Color.red, 2.5f);
 
         setState(new SpawnState(this));
 
@@ -68,7 +68,7 @@ public class MonsterAI : MonoBehaviour
     {
         if (submarine != null)
         {
-            Debug.DrawLine(transform.position, submarine.transform.position, Color.red, 10.5f);
+           // Debug.DrawLine(transform.position, submarine.transform.position, Color.red, 2.5f);
         }
         
 

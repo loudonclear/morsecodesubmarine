@@ -32,15 +32,17 @@ class SpawnState : AIState
 
             float direcitonVector = (float)Math.Atan(center.transform.position.y - monster.transform.position.y / center.transform.position.x - monster.transform.position.x);
 
+            float minAngle = monster.minAngle * (float)Math.PI / 180;
+            float maxAngle = monster.maxAngle * (float)Math.PI / 180;
 
 
-            float movementAngle = UnityEngine.Random.Range( monster.minAngle, monster.maxAngle);
+            float movementAngle = UnityEngine.Random.Range(direcitonVector - minAngle, direcitonVector +maxAngle);
 
             direcitonVector += movementAngle;
 
             Vector3 newDirection = new Vector3(
-                (float)Math.Cos(Math.PI * movementAngle/ 180) * directionToCenter.x - (float)Math.Sin(Math.PI * movementAngle / 180) * directionToCenter.y,
-                (float)Math.Sin(Math.PI * movementAngle / 180) * directionToCenter.x + (float)Math.Cos(Math.PI * movementAngle / 180) * directionToCenter.y,
+                (float)Math.Cos( movementAngle) * directionToCenter.x - (float)Math.Sin( movementAngle ) * directionToCenter.y,
+                (float)Math.Sin( movementAngle ) * directionToCenter.x + (float)Math.Cos( movementAngle ) * directionToCenter.y,
                 0);
 
             newDirection = newDirection.normalized;
