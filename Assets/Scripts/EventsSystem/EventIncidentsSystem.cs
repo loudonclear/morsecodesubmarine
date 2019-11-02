@@ -32,7 +32,6 @@ public class EventIncidentsSystem : MonoBehaviour
     float timeForNextIncident = 0.0f;
     float timeInCurrentIncident = 0.0f;
     float timeForNextEvent = 5.0f;
-    int playerHealth = 10;
     float lastRandom = 0;
     int countRandom = 0;
     
@@ -40,6 +39,8 @@ public class EventIncidentsSystem : MonoBehaviour
     GameEvent currentEvent = null;
 
     public bool enableTimer = true;
+
+    public SubmarineEntity submarine;
 
     public EventIncidentsSystem()
     {
@@ -114,20 +115,22 @@ public class EventIncidentsSystem : MonoBehaviour
             }
         }
 
-        
+
          myEventsTable.Add(EventConstants.MONSTER_EVENT, new MonsterEvent());
          myEventsTable.Add(EventConstants.FIRE_EVENT, new FireEvent());
          myEventsTable.Add(EventConstants.PRESSURE_EVENT, new PressureEvent());
-        
-        
-        playerInfo.text = "Player HP: " + playerHealth;
+
+
+        playerInfo.text = "Hull Integrity: " + (submarine.currentHullHealth / SubmarineEntity.HULL_HEALTH * 100).ToString("F1") + "%\n" +
+                            "Temperature: " + System.Math.Round(submarine.temperature, 1) + " °F";
         inputInfo.text = "";
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerInfo.text = "Player HP: " + playerHealth;
+        playerInfo.text = "Hull Integrity: " + (submarine.currentHullHealth / SubmarineEntity.HULL_HEALTH * 100).ToString("F1") + "%\n" +
+                            "Temperature: " + submarine.temperature.ToString("F1") + " °F";
         if (currentState == State.noevent)
         {
             timeSinceLastIncident += Time.deltaTime;
@@ -210,7 +213,7 @@ public class EventIncidentsSystem : MonoBehaviour
                     {
                         if (!currentEvent.succeed)
                         {
-                            playerHealth -= currentEvent.damage;
+                            submarine.currentHullHealth -= currentEvent.damage;
                         }
                         currentEvent = null;
                         currentState = State.noevent;
