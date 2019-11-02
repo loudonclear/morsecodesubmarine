@@ -14,6 +14,7 @@ public class SubmarineRadar : MonoBehaviour
     void Update()
     {
         sweepAngle += sweepSpeed * Time.deltaTime;
+        this.sweepAngle = sweepAngle % 360;
     }
 
     private void createGameObjectAtPositionDelta(Vector3 delta, GameObject obj) {
@@ -24,7 +25,6 @@ public class SubmarineRadar : MonoBehaviour
     {
         Vector3 positionDelta = collider.transform.position - submarine.transform.position;
         float angle = Vector3.Angle(positionDelta, transform.forward) * (positionDelta.x < 0 ? -1 : 1);
-        this.sweepAngle = sweepAngle % 360;
         float sweepAngleModded = this.sweepAngle - 180;
         GameObject seenObject = collider.gameObject;
 

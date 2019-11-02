@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class SpinningGauge : MonoBehaviour
 {
     [Range(0.0f, 1.0f)]
-    public float speedpercent = 0.0f;
+    public float percent = 0.0f;
 
-    public float minTemperature = 0.0f;
-    public float maxTemperature = 1.0f;
+    public float min = 0.0f;
+    public float max = 1.0f;
 
     private RectTransform rectTransform;
 
@@ -24,6 +24,6 @@ public class SpinningGauge : MonoBehaviour
 
     void Update()
     {
-        rectTransform.rotation = Quaternion.AngleAxis(Mathf.Lerp(minTemperature, maxTemperature, speedpercent), Vector3.forward);
+        rectTransform.rotation = Quaternion.AngleAxis(Mathf.Lerp(min, max, percent), Vector3.forward);
     }
 }
