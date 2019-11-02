@@ -5,7 +5,6 @@ using UnityEngine;
 public class SubmarineMovement : MonoBehaviour
 {
     private FlankSpeed desiredSpeed;
-    private bool engineOn;
     private Rigidbody rb;
 
     public const float maxThrust = 1.5f;
@@ -18,10 +17,13 @@ public class SubmarineMovement : MonoBehaviour
     public const float turningSpeed = 0.01f;
     public const float turnDelta = 45.0f;
 
+    public VerticalGauge depthGauge;
+    public SpinningGauge speedGauge;
+
     void Start()
     {
         desiredSpeed = FlankSpeed.OFF;
-        engineOn = true;
+        speedGauge.percent = (float)desiredSpeed / 5;
         rb = GetComponent<Rigidbody>();
 
         desiredAngle = 0;
@@ -42,16 +44,22 @@ public class SubmarineMovement : MonoBehaviour
     public void Accelerate()
     {
         desiredSpeed = (FlankSpeed)Mathf.Clamp((int)(desiredSpeed + 1), 0, (int)FlankSpeed.EMERGENCY);
+
+        speedGauge.percent = (float)desiredSpeed / 5;
     }
 
     public void Decelerate()
     {
         desiredSpeed = (FlankSpeed)Mathf.Clamp((int)(desiredSpeed - 1), 0, (int)FlankSpeed.EMERGENCY);
+ 
+        speedGauge.percent = (float)desiredSpeed / 5;
     }
 
     public void EnginesOff()
     {
         desiredSpeed = 0;
+
+        speedGauge.percent = (float)desiredSpeed / 5;
     }
 
     private void FixedUpdate()
@@ -84,6 +92,14 @@ public class SubmarineMovement : MonoBehaviour
             //rigidbody.AddTorque(torqueForce * Vector3.up, ForceMode.Force);
 
             rb.rotation = Quaternion.Lerp(rb.rotation, Quaternion.LookRotation(Vector3.down, desiredVector), turningSpeed);
+        }
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("Obstacle"))
+        {
+            Destroy(collider.gameObject);
         }
     }
 }

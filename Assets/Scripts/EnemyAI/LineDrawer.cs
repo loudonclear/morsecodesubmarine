@@ -21,8 +21,8 @@ public class LineDrawer : MonoBehaviour
     {
      
         line.positionCount = 2;
-        monster = (MonsterAI)GameObject.Find("myMonster").GetComponent<MonsterAI>();
-
+        monster = (MonsterAI)GameObject.FindGameObjectWithTag("monster").GetComponent<MonsterAI>();
+        
     }
 
     // Update is called once per frame
