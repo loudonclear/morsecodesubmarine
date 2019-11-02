@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 [RequireComponent(typeof(CommandInterpreter))]
 public class MorseCodeController : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class MorseCodeController : MonoBehaviour
     public float waveLengthInSeconds = 5.0f;
 
     private AudioSource audioSource;
+    
     int timeIndex = 0;
     private float inputTime;
     private float pauseTime;
@@ -74,6 +76,7 @@ public class MorseCodeController : MonoBehaviour
 
     void Start()
     {
+
         commandInterpreter = GetComponent<CommandInterpreter>(); 
         morseCodeText.text = "";
         decodedText.text = "";
@@ -81,6 +84,8 @@ public class MorseCodeController : MonoBehaviour
         sampleRate = AudioSettings.outputSampleRate;
 
         audioSource = gameObject.GetComponent<AudioSource>();
+        gameManager managerScript = GameObject.FindGameObjectWithTag("audio").GetComponent<gameManager>();
+        audioSource.volume = managerScript.volume;
         audioSource.playOnAwake = false;
         audioSource.spatialBlend = 0; //force 2D sound
         audioSource.Stop();

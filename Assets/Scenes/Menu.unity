@@ -418,7 +418,7 @@ GameObject:
   - component: {fileID: 391184336}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: audio
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -432,9 +432,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 391184335}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7665b41189634ed18be13495dcfa69e, type: 3}
+  m_Script: {fileID: 11500000, guid: c726f794e7a654e269e8ae280bcae299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volume: 1
 --- !u!4 &391184337
 Transform:
   m_ObjectHideFlags: 0
@@ -1615,7 +1616,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volumeSlider: {fileID: 38302991}
-  volumeAudio: {fileID: 0}
 --- !u!1 &1537991987
 GameObject:
   m_ObjectHideFlags: 0
