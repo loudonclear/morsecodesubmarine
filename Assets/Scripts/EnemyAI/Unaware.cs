@@ -42,13 +42,14 @@ public class UnAware : AIState
     public override void Tick()
     {
         
-        monster.moveTo(nextDestination);
+        monster.moveTo(this.nextDestination);
 
         if (submarine != null)
         {
             if(monster.playerInRangeOfVision())
             {
-                monster.setState(new ChasePlayer(monster,this.timer,this.currentDirection));
+                // monster.setState(new ChasePlayer(monster,this.timer,this.currentDirection));
+                monster.setState(new ChasePlayer(monster, this.timer, this.nextDestination));
             }
         }
 
