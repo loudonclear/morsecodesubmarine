@@ -18,9 +18,6 @@ public class RadarSweeper : MonoBehaviour
     {
         this.transform.RotateAround(radar.transform.position, new Vector3(0, 1, 0), radar.sweepAngle - lastAngle);
         lastAngle = radar.sweepAngle;
-            /*.Rotate(
-            rotatePointAroundAxis(this.transform.position, 0, radar.transform.up),
-            Space.World);*/
     }
 
     Vector3 rotatePointAroundAxis(Vector3 point, float angle, Vector3 axis)
