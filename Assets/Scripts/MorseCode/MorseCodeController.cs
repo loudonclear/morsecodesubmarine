@@ -76,7 +76,6 @@ public class MorseCodeController : MonoBehaviour
 
     void Start()
     {
-
         commandInterpreter = GetComponent<CommandInterpreter>(); 
         morseCodeText.text = "";
         decodedText.text = "";
@@ -84,8 +83,15 @@ public class MorseCodeController : MonoBehaviour
         sampleRate = AudioSettings.outputSampleRate;
 
         audioSource = gameObject.GetComponent<AudioSource>();
-        gameManager managerScript = GameObject.FindGameObjectWithTag("audio").GetComponent<gameManager>();
-        audioSource.volume = managerScript.volume;
+        if (GameObject.FindGameObjectWithTag("GameManager") != null)
+        {
+            gameManager managerScript = GameObject.FindGameObjectWithTag("GameManager").GetComponent<gameManager>();
+            audioSource.volume = managerScript.volume;
+        } else
+        {
+            audioSource.volume = 1;
+        }
+        
         audioSource.playOnAwake = false;
         audioSource.spatialBlend = 0; //force 2D sound
         audioSource.Stop();
