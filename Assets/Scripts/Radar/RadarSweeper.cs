@@ -18,4 +18,5 @@ public class RadarSweeper : MonoBehaviour
         lastAngle = radar.sweepAngle;
         this.transform.position = new Vector3(this.transform.position.x, 0, this.transform.position.z);
     }
+
 }

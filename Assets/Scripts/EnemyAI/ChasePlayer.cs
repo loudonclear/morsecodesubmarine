@@ -6,9 +6,9 @@ public class ChasePlayer : AIState
 {
     GameObject submarine = null;
     float lastTimer;
-    int lastDirection;
+    Vector3 lastDirection;
 
-    public ChasePlayer(MonsterAI monster,float lastTimer, int lastDirection) : base(monster)
+    public ChasePlayer(MonsterAI monster,float lastTimer, Vector3 lastDirection) : base(monster)
     {
         this.lastTimer = lastTimer;
         this.lastDirection = lastDirection;
@@ -29,7 +29,7 @@ public class ChasePlayer : AIState
         //throw new System.NotImplementedException();
         if (!monster.playerInRangeOfVision())
         {
-            monster.setState(new UnAware(monster,0, this.lastDirection));
+            monster.setState(new UnAware(monster, this.lastDirection));
         }
 
     }
