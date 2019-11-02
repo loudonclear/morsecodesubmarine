@@ -26,6 +26,8 @@ public class MonsterAI : MonoBehaviour
     public float minAngle;
     public float maxAngle;
 
+    private bool isVisible;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +36,7 @@ public class MonsterAI : MonoBehaviour
 
       //  Debug.DrawLine(transform.position, submarine.transform.position, Color.red, 2.5f);
 
-        setState(new SpawnState(this));
+        setState(new SelectDirectionState(this));
 
         //int lowerCount = 0;
         //int middleCount = 0;
@@ -182,5 +184,20 @@ public class MonsterAI : MonoBehaviour
     public List<Vector3> getSpawnPositions()
     {
         return spawnPositions;
+    }
+
+    void OnBecameVisible()
+    {
+        isVisible = true;
+    }
+
+    void OnBecameInvisible()
+    {
+        isVisible = false;
+    }
+
+    public bool getIsVisible()
+    {
+        return isVisible;
     }
 }

@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-class SpawnState : AIState
+class SelectDirectionState : AIState
 {
-    
 
-    public SpawnState(MonsterAI monster):base(monster)
+    private int startPosition = -1;
+    private int endPosition = -1;
+
+    public SelectDirectionState(MonsterAI monster):base(monster)
     {
 
     }
@@ -22,27 +24,33 @@ class SpawnState : AIState
         {
             Debug.Log("HERE");
             int numPossiblePositions = monster.getSpawnPositions().Count;
-            Vector3 spawnPosition = monster.getSpawnPositions().
-                ElementAt((int)UnityEngine.Random.Range(0.0f, numPossiblePositions));
+           ;
 
-            monster.transform.Translate(spawnPosition);
+
+
+            Vector3 startSpawnPosition = monster.getSpawnPositions().
+                ElementAt((int)UnityEngine.Random.Range(0.0f, numPossiblePositions));
+              
+
+            monster.transform.position = startSpawnPosition;
 
 
             Vector3 directionToCenter = center.transform.position - monster.transform.position;
+            //directionToCenter;
 
-            float direcitonVector = (float)Math.Atan(center.transform.position.y - monster.transform.position.y / center.transform.position.x - monster.transform.position.x);
+            //float directionVectorAngle =  (float)Math.Atan(directionToCenter.y  / directionToCenter.x  );
 
             float minAngle = monster.minAngle * (float)Math.PI / 180;
             float maxAngle = monster.maxAngle * (float)Math.PI / 180;
 
 
-            float movementAngle = UnityEngine.Random.Range(direcitonVector - minAngle, direcitonVector +maxAngle);
+            float movementAngle = UnityEngine.Random.Range(  minAngle, maxAngle);
 
-            direcitonVector += movementAngle;
+            //directionVectorAngle += movementAngle;
 
             Vector3 newDirection = new Vector3(
-                (float)Math.Cos( movementAngle) * directionToCenter.x - (float)Math.Sin( movementAngle ) * directionToCenter.y,
-                (float)Math.Sin( movementAngle ) * directionToCenter.x + (float)Math.Cos( movementAngle ) * directionToCenter.y,
+                (float)Math.Cos(movementAngle) * directionToCenter.x - (float)Math.Sin(movementAngle) * directionToCenter.y,
+                (float)Math.Sin(movementAngle) * directionToCenter.x + (float)Math.Cos(movementAngle) * directionToCenter.y,
                 0);
 
             newDirection = newDirection.normalized;

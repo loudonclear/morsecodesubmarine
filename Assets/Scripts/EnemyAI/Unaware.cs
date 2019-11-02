@@ -9,7 +9,9 @@ public class UnAware : AIState
     private int currentDirection = 1;
     private Vector3 nextDestination;
     private float timer = 0f;
-    private float wanderTime = 5f;
+
+    
+    private float wanderTime = 5.0f;
     private float randomAwarenessTime = 5f;
     private float randomAwarenessTimer = 0f;
     // This returns the GameObject named Hand.
@@ -26,9 +28,9 @@ public class UnAware : AIState
         this.currentDirection = lastDirection;
     }
 
-    public UnAware(MonsterAI monster, Vector3 lastDirection) : base(monster)
+    public UnAware(MonsterAI monster, Vector3 nextDirection) : base(monster)
     {
-        this.wanderDirection = lastDirection;
+        this.wanderDirection = nextDirection;
     }
 
     public override void OnStateEnter()
@@ -50,17 +52,27 @@ public class UnAware : AIState
             }
         }
 
-
-
-        this.timer += Time.deltaTime;
-        this.randomAwarenessTimer += Time.deltaTime;
-
-
-        /*if (this.timer >= wanderTime)
+        if (!monster.getIsVisible())
         {
+            
+             monster.setState(new SelectDirectionState(monster));
+            
+        }
+
+
+
+        //this.timer += Time.deltaTime;
+        //this.randomAwarenessTimer += Time.deltaTime;
+
+
+        /*if (this.timer >= this.wanderTime)
+        {
+            Debug.Log("change destination");
             selectDestination();
-            timer = 0;
+            this.timer = 0;
         }*/
+        
+
 
         /*if (this.randomAwarenessTimer >= randomAwarenessTime)
         {
@@ -74,7 +86,12 @@ public class UnAware : AIState
 
     private void selectDestination()
     {
-        this.currentDirection *= -1;
-        this.nextDestination = this.direction * this.currentDirection;
+        monster.setState(new SelectDirectionState(monster));
     }
+
+    private bool ReachedDestination()
+    {
+        return Vector3.Distance(monster.transform.position, nextDestination) < 0.5f;
+    }
+    
 }
