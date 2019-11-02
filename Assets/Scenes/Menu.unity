@@ -418,7 +418,7 @@ GameObject:
   - component: {fileID: 391184336}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: audio
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1615,7 +1615,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volumeSlider: {fileID: 38302991}
-  volumeAudio: {fileID: 0}
 --- !u!1 &1537991987
 GameObject:
   m_ObjectHideFlags: 0
