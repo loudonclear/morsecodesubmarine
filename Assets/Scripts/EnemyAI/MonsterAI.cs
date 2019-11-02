@@ -2,10 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MonsterAI : MonoBehaviour
 {
     public float moveSpeed ;
+    public float chaseSpeed;
+
     public float radioOfVision ;
     private AIState currentState;
     GameObject submarine = null;
@@ -28,6 +31,11 @@ public class MonsterAI : MonoBehaviour
 
     private bool isVisible;
 
+    [SerializeField]
+    public Text collisionText;
+
+    private Vector3 currentDirection;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +44,7 @@ public class MonsterAI : MonoBehaviour
 
       //  Debug.DrawLine(transform.position, submarine.transform.position, Color.red, 2.5f);
 
-        setState(new SelectDirectionState(this));
+      // setState(new SelectDirectionState(this));
 
         //int lowerCount = 0;
         //int middleCount = 0;
@@ -147,12 +155,14 @@ public class MonsterAI : MonoBehaviour
     public void moveTo(Vector3 direction)
     {
         //var direction = getDirection(destination);
-        transform.Translate(direction * Time.deltaTime * moveSpeed);
+        this.currentDirection = direction;
+        transform.Translate(this.currentDirection * Time.deltaTime * moveSpeed);
     }
 
     public void moveTowards(Vector3 destination)
     {
         var direction = getDirection(destination);
+
         transform.Translate(direction * Time.deltaTime * moveSpeed);
     }
 
@@ -199,5 +209,25 @@ public class MonsterAI : MonoBehaviour
     public bool getIsVisible()
     {
         return isVisible;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (collisionText != null)
+        {
+            
+            if (other.gameObject.name == "mysubmarine")
+            {
+                setState(new CollisionMonsterState(this,this.currentDirection));
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collisionText != null)
+        {
+            collisionText.text = "";
+        }
     }
 }

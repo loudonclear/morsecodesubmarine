@@ -7,15 +7,20 @@ public class ChasePlayer : AIState
     GameObject submarine = null;
     float lastTimer;
     Vector3 lastDirection;
+    float chasingSpeed;
+    float moveSpeed;
 
-    public ChasePlayer(MonsterAI monster,float lastTimer, Vector3 lastDirection) : base(monster)
+    public ChasePlayer(MonsterAI monster, Vector3 lastDirection) : base(monster)
     {
-        this.lastTimer = lastTimer;
+        //this.lastTimer = lastTimer;
         this.lastDirection = lastDirection;
+        chasingSpeed = monster.chaseSpeed;
+        moveSpeed = monster.moveSpeed;
     }
 
     public override void OnStateEnter()
     {
+        monster.moveSpeed = this.chasingSpeed;
         submarine = GameObject.Find("mysubmarine");
     }
 
@@ -24,11 +29,13 @@ public class ChasePlayer : AIState
 
         if (submarine != null)
         {
+            
             monster.moveTowards(submarine.transform.position);
         }
-        //throw new System.NotImplementedException();
+        
         if (!monster.playerInRangeOfVision())
         {
+            monster.moveSpeed = this.moveSpeed;
             monster.setState(new UnAware(monster, this.lastDirection));
         }
 

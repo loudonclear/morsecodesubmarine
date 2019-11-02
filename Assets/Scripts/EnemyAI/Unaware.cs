@@ -49,14 +49,14 @@ public class UnAware : AIState
             if(monster.playerInRangeOfVision())
             {
                 // monster.setState(new ChasePlayer(monster,this.timer,this.currentDirection));
-                monster.setState(new ChasePlayer(monster, this.timer, this.nextDestination));
+                monster.setState(new ChasePlayer(monster, this.nextDestination));
             }
         }
 
         if (!monster.getIsVisible())
         {
             
-             monster.setState(new SelectDirectionState(monster));
+            // monster.setState(new SelectDirectionState(monster));
             
         }
 

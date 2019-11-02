@@ -24,10 +24,7 @@ class SelectDirectionState : AIState
         {
             Debug.Log("HERE");
             int numPossiblePositions = monster.getSpawnPositions().Count;
-           ;
-
-
-
+          
             Vector3 startSpawnPosition = monster.getSpawnPositions().
                 ElementAt((int)UnityEngine.Random.Range(0.0f, numPossiblePositions));
               
