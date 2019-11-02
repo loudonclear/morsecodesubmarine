@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(CommandInterpreter))]
 public class MorseCodeController : MonoBehaviour
 {
     public Text morseCodeText;
     public Text decodedText;
 
-    public float timeUnit = 0.1f;
+    public float timeUnit = 0.2f;
+    public int unitsBetweenCharacters = 3;
+    public int unitsBetweenCommands = 7;
 
     [Range(1, 20000)]
     public float frequency1 = 500;
@@ -24,6 +27,8 @@ public class MorseCodeController : MonoBehaviour
     private float inputTime;
     private float pauseTime;
     private bool typed = false;
+
+    private CommandInterpreter commandInterpreter;
 
     private static string dot = ".";
     private static string dash = "-";
@@ -69,6 +74,7 @@ public class MorseCodeController : MonoBehaviour
 
     void Start()
     {
+        commandInterpreter = GetComponent<CommandInterpreter>(); 
         morseCodeText.text = "";
         decodedText.text = "";
 
@@ -113,7 +119,7 @@ public class MorseCodeController : MonoBehaviour
             }
         }
 
-        if (typed && Time.time > pauseTime + 3 * timeUnit && Time.time <= pauseTime + 7 * timeUnit)
+        if (typed && Time.time > pauseTime + unitsBetweenCharacters * timeUnit && Time.time <= pauseTime + unitsBetweenCommands * timeUnit)
         {
             // New character
             char c = '?';
@@ -129,10 +135,13 @@ public class MorseCodeController : MonoBehaviour
             
             typed = false;
             
-        } else if (Time.time > pauseTime + 7 * timeUnit)
+        } else if (Time.time > pauseTime + unitsBetweenCommands * timeUnit)
         {
             // Space between words
+            commandInterpreter.InterpretCommand(decodedText.text);
+
             typed = false;
+            decodedText.text = "";
         }
     }
 
