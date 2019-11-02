@@ -1011,6 +1011,7 @@ GameObject:
   - component: {fileID: 1120079265}
   - component: {fileID: 1120079264}
   - component: {fileID: 1120079262}
+  - component: {fileID: 1120079268}
   m_Layer: 0
   m_Name: Submarine
   m_TagString: Untagged
@@ -1063,6 +1064,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   depthGauge: {fileID: 893608647}
   speedGauge: {fileID: 1660882260}
+  submarine: {fileID: 1120079268}
 --- !u!64 &1120079264
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1137,6 +1139,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1120079260}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1120079268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120079260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82bd1b471e854470a33ec517b3d6e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  temperature: 72
+  currentHullHealth: 1000
 --- !u!1 &1204794806
 GameObject:
   m_ObjectHideFlags: 0
@@ -1314,6 +1330,7 @@ MonoBehaviour:
   - uuu
   - lll
   enableTimer: 1
+  submarine: {fileID: 1120079268}
 --- !u!4 &1277381783
 Transform:
   m_ObjectHideFlags: 0

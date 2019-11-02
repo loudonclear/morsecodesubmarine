@@ -20,6 +20,10 @@ public class SubmarineMovement : MonoBehaviour
     public VerticalGauge depthGauge;
     public SpinningGauge speedGauge;
 
+    public SubmarineEntity submarine;
+
+    public const float emergencyHeatIncrease = 4.0f;    // Fahrenheit
+
     void Start()
     {
         desiredSpeed = FlankSpeed.OFF;
@@ -29,6 +33,11 @@ public class SubmarineMovement : MonoBehaviour
         desiredAngle = 0;
         leftDegrees = 0;
         rightDegrees = 0;
+    }
+
+    private void Update()
+    {
+        ventEngineHeat();
     }
 
     public void Port()
@@ -101,5 +110,27 @@ public class SubmarineMovement : MonoBehaviour
         {
             Destroy(collider.gameObject);
         }
+    }
+
+    private void ventEngineHeat() {
+        float heatDelta = 0.0f;
+        switch (desiredSpeed)
+        {
+            case FlankSpeed.OFF:
+                break;
+            case FlankSpeed.ONE_THIRD:
+            case FlankSpeed.TWO_THIRDS:
+            case FlankSpeed.STANDARD:
+                heatDelta = emergencyHeatIncrease * 0.25f;
+                break;
+            case FlankSpeed.FULL:
+                heatDelta = emergencyHeatIncrease * 0.5f;
+                break;
+            case FlankSpeed.EMERGENCY:
+                heatDelta = emergencyHeatIncrease;
+                break;
+        }
+        Debug.Log("HD: " + heatDelta);
+        submarine.temperature += heatDelta * Time.deltaTime;
     }
 }
