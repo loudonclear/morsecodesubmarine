@@ -4,11 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-<<<<<<< HEAD
-  - audio
-=======
   - Obstacle
->>>>>>> 559410cc720e1e87d51af02e13bbe2b26990eb94
   layers:
   - Default
   - TransparentFX
