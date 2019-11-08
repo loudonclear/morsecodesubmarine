@@ -22,7 +22,7 @@ public class MonsterAI : MonoBehaviour
 
     public float maximumChance;
     public float maximumChancePercentage ;
-    private float currentNoise = 0;
+    public float currentNoise;
 
     public List<Vector3> spawnPositions;
 
@@ -36,51 +36,39 @@ public class MonsterAI : MonoBehaviour
 
     private Vector3 currentDirection;
 
+    [SerializeField]
+    private LineRenderer lineOrientation;
+    private Vector3 orientationStart;
+    private Vector3 orientationEnd;
+
+    private float vision = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         
         submarine = GameObject.Find("mysubmarine");
 
-      //  Debug.DrawLine(transform.position, submarine.transform.position, Color.red, 2.5f);
-
-      // setState(new SelectDirectionState(this));
-
-        //int lowerCount = 0;
-        //int middleCount = 0;
-        //int higherCount = 0;
-
-        /*for (int i = 0; i < 10000; i++)
-        {
-            float number = UnityEngine.Random.Range(0.0f, 1.0f);
-            if (number < 0.025)
-            {
-                lowerCount++;
-            }
-            else if (number >= 0.475 && number < 0.525)
-            {
-                middleCount++;
-            }
-            else if (number >= 0.9975)
-            {
-                higherCount++;
-            }
-            
-        }*/
-
-        //Debug.Log("higherCount " + lowerCount);
-        //Debug.Log("middleCount" + middleCount);
-        //Debug.Log("higherCount" + higherCount);
+        lineOrientation.positionCount = 2;
+        orientationStart = transform.position;
+        orientationEnd = orientationStart;
+        vision = 0;
+        chaseSpeed = 1.4f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (submarine != null)
+        if (lineOrientation != null)
         {
-           // Debug.DrawLine(transform.position, submarine.transform.position, Color.red, 2.5f);
+            
+              orientationStart = transform.position;
+              lineOrientation.SetPosition(0, orientationStart);
+              lineOrientation.SetPosition(1, orientationEnd);
+            
         }
         
+
 
         if (Input.GetKeyDown("n"))
         {
@@ -152,18 +140,18 @@ public class MonsterAI : MonoBehaviour
     }
 
 
-    public void moveTo(Vector3 direction)
+    public void moveOnDirection(Vector3 direction)
     {
         //var direction = getDirection(destination);
         this.currentDirection = direction;
-        transform.Translate(this.currentDirection * Time.deltaTime * moveSpeed);
+        transform.Translate(this.currentDirection * Time.deltaTime * moveSpeed, Space.World);
     }
 
     public void moveTowards(Vector3 destination)
     {
         var direction = getDirection(destination);
 
-        transform.Translate(direction * Time.deltaTime * moveSpeed);
+        transform.Translate(direction * Time.deltaTime * moveSpeed, Space.World);
     }
 
     private Vector3 getDirection(Vector3 destination)
@@ -171,24 +159,45 @@ public class MonsterAI : MonoBehaviour
         return (destination - transform.position).normalized;
     }
 
+    public float checkPlayerInRangeOfVision()
+    {
+        this.vision = 0;
+        if (submarine != null) {
+
+            float distance = distanceFromPlayer();
+            //Debug.Log("radioOfVision: "+ radioOfVision + "Distance from player: " + distance);
+            if (distance < Mathf.Pow(2, 2))
+            {
+                //this.vision = 1 - (distance / radioOfVision);
+                return 1;
+            }
+
+        }
+        
+        return this.vision;
+    }
+
     public bool playerInRangeOfVision()
     {
-        if (submarine != null) {
-           
-            if ( distanceFromPlayer() < Mathf.Pow(radioOfVision, 2))
+        if (submarine != null)
+        {
+
+            float distance = distanceFromPlayer();
+            //Debug.Log("radioOfVision: " + radioOfVision + "Distance from player: " + distance);
+            if (distance < Mathf.Pow(2, 2))
             {
                 return true;
             }
+
         }
-        
+
         return false;
     }
 
+
     private float distanceFromPlayer()
     {
-        Vector3 center = transform.position;
-        return Mathf.Pow(submarine.transform.position.x - center.x, 2)
-                + Mathf.Pow(submarine.transform.position.y - center.y, 2);
+        return Vector3.Distance(transform.position, submarine.transform.position);  
     }
 
     public List<Vector3> getSpawnPositions()
@@ -209,9 +218,10 @@ public class MonsterAI : MonoBehaviour
     public bool getIsVisible()
     {
         return isVisible;
+        //return true;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
         if (collisionText != null)
         {
@@ -223,11 +233,16 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         if (collisionText != null)
         {
             collisionText.text = "";
         }
+    }
+
+    public void setOrientationEndPos(Vector3 endPos)
+    {
+        this.orientationEnd = endPos;
     }
 }

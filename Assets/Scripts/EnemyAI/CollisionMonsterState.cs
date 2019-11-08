@@ -29,7 +29,7 @@ public class CollisionMonsterState : AIState
     public override void Tick()
     {
         //throw new System.NotImplementedException();
-        monster.moveTo(normalizedReverseDirection);
+        monster.moveOnDirection(normalizedReverseDirection);
 
         timer += Time.deltaTime;
 

@@ -19,6 +19,7 @@ class SelectDirectionState : AIState
     public override void OnStateEnter()
     {
         CenterObject center = (CenterObject) GameObject.Find("centerObject").GetComponent<CenterObject>();
+        Debug.Log("CENTER POSITION "+center.transform.position);
 
         if (center != null)
         {
@@ -37,22 +38,26 @@ class SelectDirectionState : AIState
 
             //float directionVectorAngle =  (float)Math.Atan(directionToCenter.y  / directionToCenter.x  );
 
-            float minAngle = monster.minAngle * (float)Math.PI / 180;
-            float maxAngle = monster.maxAngle * (float)Math.PI / 180;
+            float minAngle = monster.minAngle;// * (float)Math.PI / 180;
+            float maxAngle = monster.maxAngle;// * (float)Math.PI / 180;
 
 
             float movementAngle = UnityEngine.Random.Range(  minAngle, maxAngle);
 
             //directionVectorAngle += movementAngle;
 
-            Vector3 newDirection = new Vector3(
+            /*Vector3 newDirection = new Vector3(
                 (float)Math.Cos(movementAngle) * directionToCenter.x - (float)Math.Sin(movementAngle) * directionToCenter.y,
-                (float)Math.Sin(movementAngle) * directionToCenter.x + (float)Math.Cos(movementAngle) * directionToCenter.y,
-                0);
+                0,
+                (float)Math.Sin(movementAngle) * directionToCenter.z + (float)Math.Cos(movementAngle) * directionToCenter.z);*/
 
-            newDirection = newDirection.normalized;
 
-            monster.setState(new UnAware(monster, newDirection));
+            Vector3 newDirection  = Quaternion.Euler(0, movementAngle, 0) * directionToCenter;
+
+            Vector3 normalizedNewDirection  = newDirection.normalized;
+
+            monster.setOrientationEndPos(normalizedNewDirection);
+            monster.setState(new UnAware(monster, normalizedNewDirection));
             
         }
 

@@ -33,7 +33,7 @@ public class ChasePlayer : AIState
             monster.moveTowards(submarine.transform.position);
         }
         
-        if (!monster.playerInRangeOfVision())
+        if (!monster.playerInRangeOfVision() )
         {
             monster.moveSpeed = this.moveSpeed;
             monster.setState(new UnAware(monster, this.lastDirection));

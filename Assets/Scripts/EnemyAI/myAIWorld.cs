@@ -19,7 +19,7 @@ public class myAIWorld : MonoBehaviour
 
     public float spawnTime;
     private float spawnTimer = 0.0f;
-    private Vector3 farAwayPosition = new Vector3(1000, 1000, 0);
+    private Vector3 farAwayPosition = new Vector3(1000,0 , 1000);
 
     private worldState currentWorldState;
     private float monsterSpeed;
@@ -33,6 +33,11 @@ public class myAIWorld : MonoBehaviour
     public float lowVision;
 
     public Text monsterTypeText;
+    public float monsterProbability;
+    public float fastDumbmonsterProbability;
+    public float fastSmartmonsterProbability;
+    public float slowDumbmonsterProbability;
+    public float slowFastermonsterProbability;
 
     // Start is called before the first frame update
     void Start()
@@ -40,12 +45,13 @@ public class myAIWorld : MonoBehaviour
         monster = GameObject.FindGameObjectWithTag("monster");
         monsterAi = (MonsterAI)monster.GetComponent<MonsterAI>();
 
-        monster.transform.Translate(farAwayPosition);
+        monster.transform.position = farAwayPosition;
         monsterAi.setState(new StandState(monsterAi, Vector3.zero));
 
         submarine = GameObject.Find("mysubmarine");
 
         currentWorldState = worldState.notSpawn;
+        monsterSpeed = 1;
     }
 
     // Update is called once per frame
@@ -62,24 +68,25 @@ public class myAIWorld : MonoBehaviour
                 {
 
                     float generateMonsterProbability = Random.Range(0.0f, 1.0f);
+                    generateMonsterProbability = 0.19f;
 
-                    if (generateMonsterProbability < 0.2)
+                    if (generateMonsterProbability < monsterProbability)
                     {
-                        if (generateMonsterProbability <= 0.05)
+                        if (generateMonsterProbability <= fastDumbmonsterProbability)
                         {
                             monsterAi.moveSpeed = fastCruisingSpeed;
                             monsterAi.chaseSpeed = fastChaseSpeed;
                             monsterAi.radioOfVision = lowVision;
                             monsterTypeText.text = "Fast/Dumb ";
                         }
-                        else if (generateMonsterProbability > 0.05 && generateMonsterProbability <= 0.10)
+                        else if (generateMonsterProbability > fastDumbmonsterProbability && generateMonsterProbability <= fastSmartmonsterProbability)
                         {
                             monsterAi.moveSpeed = fastCruisingSpeed;
                             monsterAi.chaseSpeed = fastChaseSpeed;
                             monsterAi.radioOfVision = highVision;
                             monsterTypeText.text = "Fast/Smart";
                         }
-                        else if (generateMonsterProbability > 0.10 && generateMonsterProbability <= 0.15)
+                        else if (generateMonsterProbability > fastSmartmonsterProbability && generateMonsterProbability <= slowDumbmonsterProbability)
                         {
                             monsterAi.moveSpeed = slowCruisingSpeed;
                             monsterAi.chaseSpeed = slowChaseSpeed;
@@ -87,7 +94,7 @@ public class myAIWorld : MonoBehaviour
                             monsterTypeText.text = "Slow/Dumb";
 
                         }
-                        else if (generateMonsterProbability > 0.15 && generateMonsterProbability <= 0.20)
+                        else if (generateMonsterProbability > slowDumbmonsterProbability && generateMonsterProbability <= slowFastermonsterProbability)
                         {
                             monsterAi.moveSpeed = slowCruisingSpeed;
                             monsterAi.chaseSpeed = slowChaseSpeed;
@@ -96,24 +103,17 @@ public class myAIWorld : MonoBehaviour
                         }
                         spawnTimer = 0;
                         monsterAi.moveSpeed = monsterSpeed;
+                        monsterAi.chaseSpeed = monsterSpeed;
                         monsterAi.setState(new SelectDirectionState(monsterAi));
+                        currentWorldState = worldState.Spawned;
                     }
                     else {
                         spawnTimer = 0;
                     }
-
-                    
-                    
+    
                 }
 
             }
-            else
-            {
-                currentWorldState = worldState.Spawned;
-            }
-
-
-            
 
         }
         else if (currentWorldState == worldState.Spawned)
