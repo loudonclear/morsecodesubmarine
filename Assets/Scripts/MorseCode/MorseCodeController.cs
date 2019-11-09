@@ -117,14 +117,18 @@ public class MorseCodeController : MonoBehaviour
                 //timeIndex = 0;  //resets timer before playing sound
                 audioSource.Stop();
 
-                if (Time.time <= inputTime + timeUnit)
+                if (morseCodeText.text.Length < 5)
                 {
-                    morseCodeText.text += dot;
-                } else
-                {
-                    morseCodeText.text += dash;
+                    if (Time.time <= inputTime + timeUnit)
+                    {
+                        morseCodeText.text += dot;
+                    }
+                    else
+                    {
+                        morseCodeText.text += dash;
+                    }
                 }
-
+                
                 pauseTime = Time.time;
                 typed = true;
             }

@@ -518,7 +518,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15.77, y: 21.82}
+  m_AnchoredPosition: {x: 1.1, y: 21.82}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &444925938
@@ -546,7 +546,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 80
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
@@ -731,7 +731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -1325,7 +1325,6 @@ GameObject:
   - component: {fileID: 1120079266}
   - component: {fileID: 1120079263}
   - component: {fileID: 1120079265}
-  - component: {fileID: 1120079264}
   - component: {fileID: 1120079262}
   - component: {fileID: 1120079268}
   m_Layer: 0
@@ -1381,20 +1380,6 @@ MonoBehaviour:
   depthGauge: {fileID: 893608647}
   speedGauge: {fileID: 1660882260}
   submarine: {fileID: 1120079268}
---- !u!64 &1120079264
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120079260}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!136 &1120079265
 CapsuleCollider:
   m_ObjectHideFlags: 0

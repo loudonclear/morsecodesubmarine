@@ -108,7 +108,7 @@ public class SubmarineMovement : MonoBehaviour
     {
         if (collider.CompareTag("Obstacle"))
         {
-            Destroy(collider.gameObject);
+            //Destroy(collider.gameObject);
         }
     }
 
