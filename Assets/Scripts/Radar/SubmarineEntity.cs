@@ -18,7 +18,6 @@ public class SubmarineEntity : MonoBehaviour
     {
         applyTemperatureControl();
         applyTemperatureDamage();
-        Debug.Log(temperature);
     }
 
     private void applyTemperatureControl() {
@@ -28,9 +27,9 @@ public class SubmarineEntity : MonoBehaviour
                                 temperatureControlPower) 
                                 * Time.deltaTime;
 
-        Debug.Log("APT: " + Mathf.Clamp(targetTemperature - temperature,
-                                -temperatureControlPower,
-                                temperatureControlPower));
+        //Debug.Log("APT: " + Mathf.Clamp(targetTemperature - temperature,
+        //                        -temperatureControlPower,
+        //                        temperatureControlPower));
     }
 
     private void applyTemperatureDamage() {

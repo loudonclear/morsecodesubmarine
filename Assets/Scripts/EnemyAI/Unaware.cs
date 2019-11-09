@@ -42,21 +42,23 @@ public class UnAware : AIState
     public override void Tick()
     {
         
-        monster.moveTo(this.nextDestination);
+        monster.moveOnDirection(this.wanderDirection);
 
         if (submarine != null)
         {
-            if(monster.playerInRangeOfVision())
+            float randomNumber = Random.Range(0.0f, 20.0f);
+
+            if (1 <= monster.checkPlayerInRangeOfVision() * monster.currentNoise)
             {
                 // monster.setState(new ChasePlayer(monster,this.timer,this.currentDirection));
-                monster.setState(new ChasePlayer(monster, this.timer, this.nextDestination));
+                monster.setState(new ChasePlayer(monster, this.nextDestination));
             }
         }
 
         if (!monster.getIsVisible())
         {
             
-             monster.setState(new SelectDirectionState(monster));
+            // monster.setState(new SelectDirectionState(monster));
             
         }
 

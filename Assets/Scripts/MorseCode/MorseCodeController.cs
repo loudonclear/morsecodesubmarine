@@ -137,7 +137,7 @@ public class MorseCodeController : MonoBehaviour
             if (decoder.TryGetValue(morseCodeText.text, out c))
             {
                 morseCodeText.text = "";
-                decodedText.text += c.ToString();
+                decodedText.text += c.ToString().ToUpper();
             } else
             {
                 morseCodeText.text = "";

@@ -8,7 +8,7 @@ public class submarine : MonoBehaviour
     public Text submarineText;
     
     // Start is called before the first frame update
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
         Debug.Log("hit detected");
         if (submarineText != null)
@@ -17,7 +17,7 @@ public class submarine : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         if (submarineText != null)
         {

@@ -130,7 +130,7 @@ public class SubmarineMovement : MonoBehaviour
                 heatDelta = emergencyHeatIncrease;
                 break;
         }
-        Debug.Log("HD: " + heatDelta);
+        //Debug.Log("HD: " + heatDelta);
         submarine.temperature += heatDelta * Time.deltaTime;
     }
 }

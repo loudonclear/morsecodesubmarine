@@ -15,8 +15,8 @@ public class WASDTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed,
-            Input.GetAxis("Vertical") * Time.deltaTime * moveSpeed, 0);
+        transform.Translate(Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed,0
+           , Input.GetAxis("Vertical") * Time.deltaTime * moveSpeed,Space.World);
 
     }
 }
