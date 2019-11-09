@@ -24,7 +24,7 @@ public class CommandInterpreter : MonoBehaviour
     public void InterpretCommand(string command)
     {
         string function;
-        if (commandDictionary.TryGetValue(command, out function)) {
+        if (commandDictionary.TryGetValue(command.ToLowerInvariant(), out function)) {
             Invoke(function, 0f);
         }
     }

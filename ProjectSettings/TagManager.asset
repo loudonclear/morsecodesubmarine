@@ -6,6 +6,7 @@ TagManager:
   tags:
   - monster
   - Obstacle
+  - GameManager
   layers:
   - Default
   - TransparentFX

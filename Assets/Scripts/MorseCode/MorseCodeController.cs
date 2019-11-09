@@ -76,7 +76,6 @@ public class MorseCodeController : MonoBehaviour
 
     void Start()
     {
-
         commandInterpreter = GetComponent<CommandInterpreter>(); 
         morseCodeText.text = "";
         decodedText.text = "";
@@ -84,8 +83,15 @@ public class MorseCodeController : MonoBehaviour
         sampleRate = AudioSettings.outputSampleRate;
 
         audioSource = gameObject.GetComponent<AudioSource>();
-        gameManager managerScript = GameObject.FindGameObjectWithTag("audio").GetComponent<gameManager>();
-        audioSource.volume = managerScript.volume;
+        if (GameObject.FindGameObjectWithTag("GameManager") != null)
+        {
+            gameManager managerScript = GameObject.FindGameObjectWithTag("GameManager").GetComponent<gameManager>();
+            audioSource.volume = managerScript.volume;
+        } else
+        {
+            audioSource.volume = 1;
+        }
+        
         audioSource.playOnAwake = false;
         audioSource.spatialBlend = 0; //force 2D sound
         audioSource.Stop();
@@ -111,14 +117,18 @@ public class MorseCodeController : MonoBehaviour
                 //timeIndex = 0;  //resets timer before playing sound
                 audioSource.Stop();
 
-                if (Time.time <= inputTime + timeUnit)
+                if (morseCodeText.text.Length < 5)
                 {
-                    morseCodeText.text += dot;
-                } else
-                {
-                    morseCodeText.text += dash;
+                    if (Time.time <= inputTime + timeUnit)
+                    {
+                        morseCodeText.text += dot;
+                    }
+                    else
+                    {
+                        morseCodeText.text += dash;
+                    }
                 }
-
+                
                 pauseTime = Time.time;
                 typed = true;
             }
@@ -131,7 +141,7 @@ public class MorseCodeController : MonoBehaviour
             if (decoder.TryGetValue(morseCodeText.text, out c))
             {
                 morseCodeText.text = "";
-                decodedText.text += c.ToString();
+                decodedText.text += c.ToString().ToUpper();
             } else
             {
                 morseCodeText.text = "";
