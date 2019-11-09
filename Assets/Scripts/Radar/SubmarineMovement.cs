@@ -19,6 +19,7 @@ public class SubmarineMovement : MonoBehaviour
 
     public VerticalGauge depthGauge;
     public SpinningGauge speedGauge;
+    public Compass compass;
 
     public SubmarineEntity submarine;
 
@@ -38,6 +39,10 @@ public class SubmarineMovement : MonoBehaviour
     private void Update()
     {
         ventEngineHeat();
+        float angle = Vector3.SignedAngle(this.transform.up, Vector3.forward, Vector3.up);
+        Debug.Log("CRZAY: " + this.transform.eulerAngles.y);
+        //compass.transform.rotation = Quaternion.FromToRotation(transform.up, Vector3.forward);
+        compass.rotate(this.transform.eulerAngles.y);
     }
 
     public void Port()
