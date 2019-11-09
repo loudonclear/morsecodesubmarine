@@ -9,6 +9,7 @@ public class MorseCodeController : MonoBehaviour
 {
     public Text morseCodeText;
     public Text decodedText;
+    public gameManager managerScript;
     public float timeUnit = 0.2f;
     public int unitsBetweenCharacters = 3;
     public int unitsBetweenCommands = 7;
@@ -84,7 +85,7 @@ public class MorseCodeController : MonoBehaviour
         sampleRate = AudioSettings.outputSampleRate;
 
         audioSource = gameObject.GetComponent<AudioSource>();
-        gameManager managerScript = GameObject.FindGameObjectWithTag("GameManager").GetComponent<gameManager>();
+        managerScript = GameObject.FindGameObjectWithTag("GameManager").GetComponent<gameManager>();
         if (managerScript != null)
         {
             audioSource.volume = managerScript.volume;
