@@ -15,7 +15,7 @@ public class optionmenu : MonoBehaviour
     }
     public void VolumeController()
     {
-        gameManager managerScript = GameObject.FindGameObjectWithTag("audio").GetComponent<gameManager>();
+        gameManager managerScript = GameObject.FindGameObjectWithTag("GameManager").GetComponent<gameManager>();
         managerScript.volume = volumeSlider.value;
     }
 }
