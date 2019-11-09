@@ -294,10 +294,11 @@ public class MonsterAI : MonoBehaviour
     {        
         if (collisionText != null)
         {
-            if (other.gameObject.name == "Submarine")
-            {
-                setState(new CollisionMonsterState(this,this.currentDirection));
-            }
+            collisionText.text = "COLLISION";   
+        }
+        if (other.gameObject.name == "Submarine")
+        {
+            setState(new CollisionMonsterState(this, this.currentDirection));
         }
     }
 
