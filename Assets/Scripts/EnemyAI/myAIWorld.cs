@@ -39,6 +39,10 @@ public class myAIWorld : MonoBehaviour
     public float slowDumbmonsterProbability;
     public float slowFastermonsterProbability;
 
+    public Vector3 topLeft;
+    public float width;
+    public float height;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -58,10 +62,11 @@ public class myAIWorld : MonoBehaviour
     void Update()
     {
 
+        
         if (currentWorldState == worldState.notSpawn)
         {
 
-            if (!monsterAi.getIsVisible())
+            if (!monsterAi.getIInSight())
             {
                 spawnTimer += Time.deltaTime;
                 if (spawnTimer >= spawnTime)
@@ -118,7 +123,7 @@ public class myAIWorld : MonoBehaviour
         }
         else if (currentWorldState == worldState.Spawned)
         {
-            if (monsterAi.getIsVisible())
+            if (monsterAi.GetWandering())
             {
                 monsterSpeed = monsterAi.moveSpeed;
                 currentWorldState = worldState.running;
@@ -126,7 +131,7 @@ public class myAIWorld : MonoBehaviour
         }
         else if (currentWorldState == worldState.running)
         {
-            if (!monsterAi.getIsVisible())
+            if (!monsterAi.GetWandering())
             {
                 monsterAi.moveSpeed = 0;
                 currentWorldState = worldState.notSpawn;

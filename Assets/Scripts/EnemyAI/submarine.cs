@@ -6,7 +6,10 @@ using UnityEngine.UI;
 public class submarine : MonoBehaviour
 {
     public Text submarineText;
-    
+
+    public float internalRadius;
+    public float externalRadius;
+
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other)
     {

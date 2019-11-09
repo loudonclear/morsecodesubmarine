@@ -7,7 +7,7 @@ public class StandState : AIState
     private Vector3 lastDirection;
     private float currentMoveSpeed;
 
-    public StandState(MonsterAI monster, Vector3 lastDirection) : base(monster)
+    public StandState(MonsterAI monster, Vector3 lastDirection) : base(monster, "StandState")
     {
         this.lastDirection = lastDirection;
     }

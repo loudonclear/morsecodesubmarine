@@ -9,7 +9,7 @@ class RandomChasePlayer : AIState
 {
     GameObject submarine = null;
 
-    public RandomChasePlayer(MonsterAI monster) : base(monster)
+    public RandomChasePlayer(MonsterAI monster) : base(monster, "RandomChasePlayer")
     {
 
     }

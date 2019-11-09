@@ -11,53 +11,37 @@ class SelectDirectionState : AIState
     private int startPosition = -1;
     private int endPosition = -1;
 
-    public SelectDirectionState(MonsterAI monster):base(monster)
+    private submarine mySubmarine;
+
+    public SelectDirectionState(MonsterAI monster):base(monster, "SelectDirectionState")
     {
 
     }
 
     public override void OnStateEnter()
     {
+        mySubmarine = (submarine)GameObject.Find("mysubmarine").GetComponent<submarine>();
         CenterObject center = (CenterObject) GameObject.Find("centerObject").GetComponent<CenterObject>();
         Debug.Log("CENTER POSITION "+center.transform.position);
 
-        if (center != null)
+        if (mySubmarine != null)
         {
-            Debug.Log("HERE");
-            int numPossiblePositions = monster.getSpawnPositions().Count;
-          
-            Vector3 startSpawnPosition = monster.getSpawnPositions().
-                ElementAt((int)UnityEngine.Random.Range(0.0f, numPossiblePositions));
-              
+           
+            float internalRadious = mySubmarine.internalRadius;
+            float externalRadious = mySubmarine.externalRadius;
 
-            monster.transform.position = startSpawnPosition;
+            float randomRadious = UnityEngine.Random.Range(internalRadious, externalRadious);
+            float randomAngle = UnityEngine.Random.Range(0, 360);
 
-
-            Vector3 directionToCenter = center.transform.position - monster.transform.position;
-            //directionToCenter;
-
-            //float directionVectorAngle =  (float)Math.Atan(directionToCenter.y  / directionToCenter.x  );
-
-            float minAngle = monster.minAngle;// * (float)Math.PI / 180;
-            float maxAngle = monster.maxAngle;// * (float)Math.PI / 180;
-
-
-            float movementAngle = UnityEngine.Random.Range(  minAngle, maxAngle);
-
-            //directionVectorAngle += movementAngle;
-
-            /*Vector3 newDirection = new Vector3(
-                (float)Math.Cos(movementAngle) * directionToCenter.x - (float)Math.Sin(movementAngle) * directionToCenter.y,
+            Vector3 randomPos = new Vector3(
+                mySubmarine.transform.position.x + randomRadious * (float)Math.Cos(Math.PI / 180.0) ,
                 0,
-                (float)Math.Sin(movementAngle) * directionToCenter.z + (float)Math.Cos(movementAngle) * directionToCenter.z);*/
+                mySubmarine.transform.position.z + randomRadious * (float)Math.Sin(Math.PI / 180.0));
 
 
-            Vector3 newDirection  = Quaternion.Euler(0, movementAngle, 0) * directionToCenter;
+            monster.transform.position = randomPos;
 
-            Vector3 normalizedNewDirection  = newDirection.normalized;
-
-            monster.setOrientationEndPos(normalizedNewDirection);
-            monster.setState(new UnAware(monster, normalizedNewDirection));
+            monster.setState(new UnAware(monster, Vector3.zero));
             
         }
 
