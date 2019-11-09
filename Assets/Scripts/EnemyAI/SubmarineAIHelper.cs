@@ -13,7 +13,7 @@ public class SubmarineAIHelper : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("hit detected");
+        //Debug.Log("hit detected");
         if (submarineText != null)
         {
             submarineText.text = "hit detected from SUBMARINE";
