@@ -19,8 +19,12 @@ public class LineDrawer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-     
-        line.positionCount = 2;
+
+        if (line != null)
+        {
+            line.positionCount = 2;
+        }
+        
         monster = (MonsterAI)GameObject.FindGameObjectWithTag("monster").GetComponent<MonsterAI>();
         
     }
@@ -31,14 +35,23 @@ public class LineDrawer : MonoBehaviour
 
         if (monster != null)
         {
-            start = monster.transform.position;
+            
 
+            if (other != null)
+            {
+                start = monster.transform.position;
+                end = other.transform.position;
 
+                if (line != null)
+                {
+                    line.SetPosition(0, start);
+                    line.SetPosition(1, end);
+                }
+            }
 
-            end = other.transform.position;
+            
 
-            line.SetPosition(0, start);
-            line.SetPosition(1, end);
+            
 
             if (distanceText != null)
             {
