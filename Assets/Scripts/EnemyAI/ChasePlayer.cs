@@ -10,7 +10,7 @@ public class ChasePlayer : AIState
     float chasingSpeed;
     float moveSpeed;
 
-    public ChasePlayer(MonsterAI monster, Vector3 lastDirection) : base(monster)
+    public ChasePlayer(MonsterAI monster, Vector3 lastDirection) : base(monster, "UnAware")
     {
         //this.lastTimer = lastTimer;
         this.lastDirection = lastDirection;

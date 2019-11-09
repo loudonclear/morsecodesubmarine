@@ -11,7 +11,9 @@ public class MonsterAI : MonoBehaviour
 
     public float radioOfVision ;
     private AIState currentState;
-    GameObject submarine = null;
+    GameObject mySubmarine = null;
+    submarine mySubmarineScript;
+    
 
     public float wanderTime;
     private float wanderTimer = 0;
@@ -34,6 +36,9 @@ public class MonsterAI : MonoBehaviour
     [SerializeField]
     public Text collisionText;
 
+    [SerializeField]
+    public Text stateText;
+
     private Vector3 currentDirection;
 
     [SerializeField]
@@ -43,22 +48,40 @@ public class MonsterAI : MonoBehaviour
 
     private float vision = 0;
 
+    public float maxDistanceToDesapear = 100;
+
+    private bool wandering;
+
+    public bool GetWandering()
+    {
+        return this.wandering;
+    }
+
+    public void SetWandering(bool wandering)
+    {
+        this.wandering = wandering;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         
-        submarine = GameObject.Find("mysubmarine");
+        mySubmarine = GameObject.Find("mysubmarine");
+        mySubmarineScript = mySubmarine.GetComponent<submarine>();
 
         lineOrientation.positionCount = 2;
         orientationStart = transform.position;
         orientationEnd = orientationStart;
         vision = 0;
         chaseSpeed = 1.4f;
+        wandering = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+
         if (lineOrientation != null)
         {
             
@@ -85,6 +108,7 @@ public class MonsterAI : MonoBehaviour
 
         if (currentState != null)
         {
+          stateText.text = currentState.StateName();
           currentState.Tick();
         }
 
@@ -95,7 +119,7 @@ public class MonsterAI : MonoBehaviour
     {
 
         Debug.Log("chanceToDetectPlayer");
-        if (submarine != null)
+        if (mySubmarine != null)
         {
             /*float chanceOfDistance = ((1 / distanceFromPlayer() ) * this.distanceWeigth) / this.maximumChance;
             float chanceOfVision = (this.radioOfVision * this.visionWeigth) / this.maximumChance;
@@ -162,7 +186,7 @@ public class MonsterAI : MonoBehaviour
     public float checkPlayerInRangeOfVision()
     {
         this.vision = 0;
-        if (submarine != null) {
+        if (mySubmarine != null) {
 
             float distance = distanceFromPlayer();
             //Debug.Log("radioOfVision: "+ radioOfVision + "Distance from player: " + distance);
@@ -179,7 +203,7 @@ public class MonsterAI : MonoBehaviour
 
     public bool playerInRangeOfVision()
     {
-        if (submarine != null)
+        if (mySubmarine != null)
         {
 
             float distance = distanceFromPlayer();
@@ -197,7 +221,7 @@ public class MonsterAI : MonoBehaviour
 
     private float distanceFromPlayer()
     {
-        return Vector3.Distance(transform.position, submarine.transform.position);  
+        return Vector3.Distance(transform.position, mySubmarine.transform.position);  
     }
 
     public List<Vector3> getSpawnPositions()
@@ -215,10 +239,47 @@ public class MonsterAI : MonoBehaviour
         isVisible = false;
     }
 
-    public bool getIsVisible()
+    public bool getIInSight()
     {
-        return isVisible;
-        //return true;
+        if ( Vector3.Distance(transform.position,mySubmarine.transform.position)  
+             < mySubmarineScript.internalRadius)
+        {
+            return true;
+        }
+        return false;
+        
+    }
+
+    public bool onInnerCircleSight()
+    {
+        if(Vector3.Distance(transform.position, mySubmarine.transform.position)
+             < mySubmarineScript.internalRadius)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool onExternalCircleSight()
+    {
+        if ((Vector3.Distance(transform.position, mySubmarine.transform.position) 
+            > mySubmarineScript.internalRadius) 
+            && (Vector3.Distance(transform.position, mySubmarine.transform.position)
+            < mySubmarineScript.externalRadius))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool outsideExternalRadious()
+    {
+        if (Vector3.Distance(transform.position, mySubmarine.transform.position)
+                     > mySubmarineScript.externalRadius)
+        {
+            return true;
+        }
+        return false;
     }
 
     private void OnTriggerEnter(Collider other)

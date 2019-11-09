@@ -17,18 +17,22 @@ public class UnAware : AIState
     // This returns the GameObject named Hand.
     GameObject submarine = null;
 
-    public UnAware(MonsterAI monster) : base(monster)
+    bool isWanderDirectionSet = false;
+    private float outsideTimer = 0;
+    private float outsideTime = 3;
+    
+    public UnAware(MonsterAI monster) : base(monster, "UnAware")
     {
-
+        
     }
 
-    public UnAware(MonsterAI monster,float lastTimer, int lastDirection) : base(monster)
+    public UnAware(MonsterAI monster,float lastTimer, int lastDirection) : base(monster, "UnAware")
     {
         this.timer = lastTimer;
         this.currentDirection = lastDirection;
     }
 
-    public UnAware(MonsterAI monster, Vector3 nextDirection) : base(monster)
+    public UnAware(MonsterAI monster, Vector3 nextDirection) : base(monster, "UnAware")
     {
         this.wanderDirection = nextDirection;
     }
@@ -37,30 +41,79 @@ public class UnAware : AIState
     {
         this.nextDestination = this.wanderDirection;
         submarine = GameObject.Find("mysubmarine");
+        isWanderDirectionSet = false;
     }
 
     public override void Tick()
     {
-        
-        monster.moveOnDirection(this.wanderDirection);
 
-        if (submarine != null)
+        if (monster.onExternalCircleSight())
         {
-            float randomNumber = Random.Range(0.0f, 20.0f);
-
-            if (1 <= monster.checkPlayerInRangeOfVision() * monster.currentNoise)
+            if (!monster.GetWandering())
             {
-                // monster.setState(new ChasePlayer(monster,this.timer,this.currentDirection));
-                monster.setState(new ChasePlayer(monster, this.nextDestination));
+                monster.moveTowards(submarine.transform.position);
+            }
+            else
+            {
+                outsideTimer+= Time.deltaTime;
+                if (outsideTimer < outsideTime)
+                {
+                    monster.moveOnDirection(this.wanderDirection);
+                }
+                else {
+                    monster.SetWandering(false);
+                }
             }
         }
+        else if (monster.onInnerCircleSight())
+        {
+            if (!isWanderDirectionSet)
+            {
 
-        if (!monster.getIsVisible())
+                Vector3 directionToCenter = submarine.transform.position 
+                    - monster.transform.position;
+
+
+                float minAngle = monster.minAngle;
+                float maxAngle = monster.maxAngle;
+
+
+                float movementAngle = UnityEngine.Random.Range(minAngle, maxAngle);
+
+                Vector3 newDirection = Quaternion.Euler(0, movementAngle, 0) * directionToCenter;
+
+                Vector3 normalizedNewDirection = newDirection.normalized;
+
+
+                this.wanderDirection = normalizedNewDirection;
+                isWanderDirectionSet = true;
+            }
+            else {
+                monster.SetWandering(true);
+                monster.moveOnDirection(this.wanderDirection);
+
+                if (submarine != null)
+                {
+                    float randomNumber = Random.Range(0.0f, 20.0f);
+
+                    if (1 <= monster.checkPlayerInRangeOfVision() * monster.currentNoise)
+                    {
+                        // monster.setState(new ChasePlayer(monster,this.timer,this.currentDirection));
+                        monster.setState(new ChasePlayer(monster, this.nextDestination));
+                    }
+                }
+            }
+            
+        }
+
+        
+
+        /*if (!monster.getIInSight())
         {
             
             // monster.setState(new SelectDirectionState(monster));
             
-        }
+        }*/
 
 
 

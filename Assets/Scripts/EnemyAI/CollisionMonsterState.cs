@@ -11,7 +11,7 @@ public class CollisionMonsterState : AIState
     private float backTime = 1.0f;
     private float monsterSpeed;
 
-    public CollisionMonsterState(MonsterAI monster, Vector3 lastDirection) : base(monster)
+   public CollisionMonsterState(MonsterAI monster, Vector3 lastDirection) : base(monster, "CollisionMonsterState")
     {
         //this.lastTimer = lastTimer;
         this.lastDirection = lastDirection;
