@@ -12,7 +12,7 @@ public class MonsterAI : MonoBehaviour
     public float radioOfVision ;
     private AIState currentState;
     GameObject mySubmarine = null;
-    submarine mySubmarineScript;
+    SubmarineAIHelper mySubmarineScript;
     
 
     public float wanderTime;
@@ -66,10 +66,14 @@ public class MonsterAI : MonoBehaviour
     void Start()
     {
         
-        mySubmarine = GameObject.Find("mysubmarine");
-        mySubmarineScript = mySubmarine.GetComponent<submarine>();
+        mySubmarine = GameObject.Find("Submarine");
+        mySubmarineScript = mySubmarine.GetComponent<SubmarineAIHelper>();
 
-        lineOrientation.positionCount = 2;
+        if (lineOrientation != null)
+        {
+            lineOrientation.positionCount = 2;
+        }
+        
         orientationStart = transform.position;
         orientationEnd = orientationStart;
         vision = 0;
@@ -108,7 +112,11 @@ public class MonsterAI : MonoBehaviour
 
         if (currentState != null)
         {
-          stateText.text = currentState.StateName();
+            if (stateText != null)
+            {
+                stateText.text = currentState.StateName();
+            }
+          
           currentState.Tick();
         }
 
@@ -283,11 +291,10 @@ public class MonsterAI : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
+    {        
         if (collisionText != null)
         {
-            
-            if (other.gameObject.name == "mysubmarine")
+            if (other.gameObject.name == "Submarine")
             {
                 setState(new CollisionMonsterState(this,this.currentDirection));
             }

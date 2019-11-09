@@ -17,7 +17,7 @@ class RandomChasePlayer : AIState
     public override void OnStateEnter()
     {
      
-        submarine = GameObject.Find("mysubmarine");
+        submarine = GameObject.Find("Submarine");
     }
 
     public override void Tick()

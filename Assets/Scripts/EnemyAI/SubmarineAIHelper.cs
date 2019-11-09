@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class submarine : MonoBehaviour
+public class SubmarineAIHelper : MonoBehaviour
 {
     public Text submarineText;
 
@@ -16,7 +16,7 @@ public class submarine : MonoBehaviour
         Debug.Log("hit detected");
         if (submarineText != null)
         {
-            submarineText.text = "hit detected";
+            submarineText.text = "hit detected from SUBMARINE";
         }
     }
 

@@ -11,7 +11,7 @@ class SelectDirectionState : AIState
     private int startPosition = -1;
     private int endPosition = -1;
 
-    private submarine mySubmarine;
+    private SubmarineAIHelper mySubmarine;
 
     public SelectDirectionState(MonsterAI monster):base(monster, "SelectDirectionState")
     {
@@ -20,9 +20,8 @@ class SelectDirectionState : AIState
 
     public override void OnStateEnter()
     {
-        mySubmarine = (submarine)GameObject.Find("mysubmarine").GetComponent<submarine>();
-        CenterObject center = (CenterObject) GameObject.Find("centerObject").GetComponent<CenterObject>();
-        Debug.Log("CENTER POSITION "+center.transform.position);
+        mySubmarine = (SubmarineAIHelper)GameObject.Find("Submarine").GetComponent<SubmarineAIHelper>();
+        
 
         if (mySubmarine != null)
         {

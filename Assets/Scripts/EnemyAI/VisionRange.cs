@@ -15,7 +15,7 @@ public class VisionRange : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        submarine = GameObject.Find("mysubmarine");
+        submarine = GameObject.Find("Submarine");
         line.positionCount = segments + 1;
         line.useWorldSpace = true;
         CreatePoints();

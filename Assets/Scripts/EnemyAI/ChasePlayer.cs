@@ -21,7 +21,7 @@ public class ChasePlayer : AIState
     public override void OnStateEnter()
     {
         monster.moveSpeed = this.chasingSpeed;
-        submarine = GameObject.Find("mysubmarine");
+        submarine = GameObject.Find("Submarine");
     }
 
     public override void Tick()

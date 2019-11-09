@@ -52,7 +52,7 @@ public class myAIWorld : MonoBehaviour
         monster.transform.position = farAwayPosition;
         monsterAi.setState(new StandState(monsterAi, Vector3.zero));
 
-        submarine = GameObject.Find("mysubmarine");
+        submarine = GameObject.Find("Submarine");
 
         currentWorldState = worldState.notSpawn;
         monsterSpeed = 1;
@@ -82,21 +82,24 @@ public class myAIWorld : MonoBehaviour
                             monsterAi.moveSpeed = fastCruisingSpeed;
                             monsterAi.chaseSpeed = fastChaseSpeed;
                             monsterAi.radioOfVision = lowVision;
-                            monsterTypeText.text = "Fast/Dumb ";
+                            if(monsterTypeText!= null)
+                              monsterTypeText.text = "Fast/Dumb ";
                         }
                         else if (generateMonsterProbability > fastDumbmonsterProbability && generateMonsterProbability <= fastSmartmonsterProbability)
                         {
                             monsterAi.moveSpeed = fastCruisingSpeed;
                             monsterAi.chaseSpeed = fastChaseSpeed;
                             monsterAi.radioOfVision = highVision;
-                            monsterTypeText.text = "Fast/Smart";
+                            if (monsterTypeText != null)
+                                monsterTypeText.text = "Fast/Smart";
                         }
                         else if (generateMonsterProbability > fastSmartmonsterProbability && generateMonsterProbability <= slowDumbmonsterProbability)
                         {
                             monsterAi.moveSpeed = slowCruisingSpeed;
                             monsterAi.chaseSpeed = slowChaseSpeed;
                             monsterAi.radioOfVision = lowVision;
-                            monsterTypeText.text = "Slow/Dumb";
+                            if (monsterTypeText != null)
+                                monsterTypeText.text = "Slow/Dumb";
 
                         }
                         else if (generateMonsterProbability > slowDumbmonsterProbability && generateMonsterProbability <= slowFastermonsterProbability)
@@ -104,7 +107,8 @@ public class myAIWorld : MonoBehaviour
                             monsterAi.moveSpeed = slowCruisingSpeed;
                             monsterAi.chaseSpeed = slowChaseSpeed;
                             monsterAi.radioOfVision = highVision;
-                            monsterTypeText.text = "Slow/Smart";
+                            if (monsterTypeText != null)
+                                monsterTypeText.text = "Slow/Smart";
                         }
                         spawnTimer = 0;
                         monsterAi.moveSpeed = monsterSpeed;
