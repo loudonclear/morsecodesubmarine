@@ -121,16 +121,15 @@ public class EventIncidentsSystem : MonoBehaviour
          myEventsTable.Add(EventConstants.PRESSURE_EVENT, new PressureEvent());
 
 
-        playerInfo.text = "Hull Integrity: " + (submarine.currentHullHealth / SubmarineEntity.HULL_HEALTH * 100).ToString("F1") + "%\n" +
-                            "Temperature: " + System.Math.Round(submarine.temperature, 1) + " °F";
+        playerInfo.text = "Hull: " + (submarine.currentHullHealth / SubmarineEntity.HULL_HEALTH * 100).ToString("F1") + "%\n";
         inputInfo.text = "";
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerInfo.text = "Hull Integrity: " + (submarine.currentHullHealth / SubmarineEntity.HULL_HEALTH * 100).ToString("F1") + "%\n" +
-                            "Temperature: " + submarine.temperature.ToString("F1") + " °F";
+        playerInfo.text = "Hull: " + (submarine.currentHullHealth / SubmarineEntity.HULL_HEALTH * 100).ToString("F1") + "%\n";
+
         if (currentState == State.noevent)
         {
             timeSinceLastIncident += Time.deltaTime;

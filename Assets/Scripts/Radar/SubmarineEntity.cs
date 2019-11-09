@@ -9,15 +9,30 @@ public class SubmarineEntity : MonoBehaviour
     public float temperature = targetTemperature;   // FAHRENHEIT
     public float currentHullHealth = HULL_HEALTH;
 
+    // ************** Temperature stuff **********************
     public const float temperatureControlPower = 1.5f;
     public const float targetTemperature = 72.0f;
-    public const float temperatureDamageThreshold = 100.0f;
-    public const float temperatureDamageMultiplier = 0.25f;
+    public const float temperatureDamageThreshold = 130.0f;
+    public const float temperatureDamageMultiplier = 0.1f;
+
+    public SpinningGauge temperatureGauge;
+    public const float maxGaugeTemp = 2 * targetTemperature;
+
+    private void Start()
+    {
+        setGaugeTemp(temperature);
+    }
+
+    private void setGaugeTemp(float temperature) {
+        temperatureGauge.percent = Mathf.Clamp(temperature / maxGaugeTemp, 0, 1);
+    }
 
     private void LateUpdate()
-    {
+    { 
         applyTemperatureControl();
         applyTemperatureDamage();
+        setGaugeTemp(temperature);
+        Debug.Log(temperature);
     }
 
     private void applyTemperatureControl() {

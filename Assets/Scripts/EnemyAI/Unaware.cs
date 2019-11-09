@@ -40,7 +40,7 @@ public class UnAware : AIState
     public override void OnStateEnter()
     {
         this.nextDestination = this.wanderDirection;
-        submarine = GameObject.Find("mysubmarine");
+        submarine = GameObject.Find("Submarine");
         isWanderDirectionSet = false;
     }
 

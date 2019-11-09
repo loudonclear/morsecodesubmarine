@@ -436,6 +436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volume: 1
+  timeUnit: 0
 --- !u!4 &391184337
 Transform:
   m_ObjectHideFlags: 0
@@ -1266,7 +1267,18 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1365039369}
+        m_MethodName: keyController
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1294002201
 GameObject:
   m_ObjectHideFlags: 0
@@ -1616,6 +1628,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volumeSlider: {fileID: 38302991}
+  keyPressSlider: {fileID: 1227377034}
+  managerScript: {fileID: 391184336}
 --- !u!1 &1537991987
 GameObject:
   m_ObjectHideFlags: 0
