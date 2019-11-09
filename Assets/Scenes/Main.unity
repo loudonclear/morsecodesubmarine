@@ -2566,8 +2566,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Accelerate: a\r\nDecelerate: d\r\nStarboard: s\r\nPort: p\r\nEngines Off:
-    o\r\nFire: f"
+  m_Text: "Accelerate: A\nDecelerate: D\r\nStarboard: S\nPort: P\nEngines Off: O\r\nFire:
+    F"
 --- !u!222 &1823003403
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -14,6 +14,8 @@ public class MorseCodeController : MonoBehaviour
     public int unitsBetweenCharacters = 3;
     public int unitsBetweenCommands = 7;
 
+    public bool clearDecode = true;
+
     [Range(1, 20000)]
     public float frequency1 = 500;
 
@@ -156,7 +158,10 @@ public class MorseCodeController : MonoBehaviour
             commandInterpreter.InterpretCommand(decodedText.text);
 
             typed = false;
-            decodedText.text = "";
+            if (clearDecode)
+            {
+                decodedText.text = "";
+            }
         }
     }
 
