@@ -19,4 +19,8 @@ public class LevelChanger : MonoBehaviour
     {
         SceneManager.LoadScene(levelToLoad);
     }
+    public void ToTheMain()
+    {
+        SceneManager.LoadScene("Main");
+    }
 }
