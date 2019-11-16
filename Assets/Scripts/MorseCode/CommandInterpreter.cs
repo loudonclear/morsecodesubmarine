@@ -23,36 +23,51 @@ public class CommandInterpreter : MonoBehaviour
 
     public void InterpretCommand(string command)
     {
-        string function;
-        if (commandDictionary.TryGetValue(command.ToLowerInvariant(), out function)) {
-            Invoke(function, 0f);
+        if (command != "")
+        {
+            string function;
+            if (commandDictionary.TryGetValue(command.ToLowerInvariant(), out function))
+            {
+                GameObject.FindGameObjectWithTag("Interpreter").GetComponent<UIFlash>().Flash(Color.green);
+                Invoke(function, 0f);
+            }
+            else
+            {
+                GameObject.FindGameObjectWithTag("Interpreter").GetComponent<UIFlash>().Flash(Color.red);
+            }
         }
+        
     }
 
     // TODO: Attach all commands to other scripts
     private void Starboard()
     {
         submarineMovement.Starboard();
+        GameObject.FindGameObjectWithTag("Compass").GetComponent<UIFlash>().Flash(Color.green);
     }
 
     private void Port()
     {
         submarineMovement.Port();
+        GameObject.FindGameObjectWithTag("Compass").GetComponent<UIFlash>().Flash(Color.green);
     }
 
     private void Accelerate()
     {
         submarineMovement.Accelerate();
+        GameObject.FindGameObjectWithTag("SpeedGauge").GetComponent<UIFlash>().Flash(Color.green);
     }
 
     private void Decelerate()
     {
         submarineMovement.Decelerate();
+        GameObject.FindGameObjectWithTag("SpeedGauge").GetComponent<UIFlash>().Flash(Color.green);
     }
 
     private void EnginesOff()
     {
         submarineMovement.EnginesOff();
+        GameObject.FindGameObjectWithTag("SpeedGauge").GetComponent<UIFlash>().Flash(Color.green);
     }
 
     private void Fire()

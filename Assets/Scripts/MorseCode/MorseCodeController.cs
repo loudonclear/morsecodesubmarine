@@ -31,6 +31,7 @@ public class MorseCodeController : MonoBehaviour
     private float inputTime;
     private float pauseTime;
     private bool typed = false;
+    private bool typing = false;
 
     private CommandInterpreter commandInterpreter;
 
@@ -85,6 +86,10 @@ public class MorseCodeController : MonoBehaviour
         sampleRate = AudioSettings.outputSampleRate;
 
         audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 0; //force 2D sound
+        audioSource.Stop();
+
         managerScript = GameObject.FindGameObjectWithTag("GameManager").GetComponent<gameManager>();
         if (managerScript != null)
         {
@@ -95,9 +100,6 @@ public class MorseCodeController : MonoBehaviour
             audioSource.volume = 1;
         }
         
-        audioSource.playOnAwake = false;
-        audioSource.spatialBlend = 0; //force 2D sound
-        audioSource.Stop();
     }
 
     void Update()
@@ -111,6 +113,7 @@ public class MorseCodeController : MonoBehaviour
             }
 
             pauseTime = Time.time;
+            typing = true;
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
@@ -134,10 +137,11 @@ public class MorseCodeController : MonoBehaviour
                 
                 pauseTime = Time.time;
                 typed = true;
+                typing = false;
             }
         }
 
-        if (typed && Time.time > pauseTime + unitsBetweenCharacters * timeUnit && Time.time <= pauseTime + unitsBetweenCommands * timeUnit)
+        if (!typing && typed && Time.time > pauseTime + unitsBetweenCharacters * timeUnit && Time.time <= pauseTime + unitsBetweenCommands * timeUnit)
         {
             // New character
             char c = '?';
@@ -153,7 +157,7 @@ public class MorseCodeController : MonoBehaviour
             
             typed = false;
             
-        } else if (Time.time > pauseTime + unitsBetweenCommands * timeUnit)
+        } else if (!typing && Time.time > pauseTime + unitsBetweenCommands * timeUnit)
         {
             // Space between words
             commandInterpreter.InterpretCommand(decodedText.text);

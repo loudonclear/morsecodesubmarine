@@ -7,6 +7,11 @@ TagManager:
   - monster
   - Obstacle
   - GameManager
+  - Interpreter
+  - DepthGauge
+  - SpeedGauge
+  - TemperatureGauge
+  - Compass
   layers:
   - Default
   - TransparentFX
