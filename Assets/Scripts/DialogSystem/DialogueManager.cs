@@ -5,11 +5,14 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
+    
+    
     public Text nameText;
     public Text dialogText;
     public Animator animator;
-
-
+    public bool dialogEnded;
+   
+    
     private Queue<string> sentences;
 
     // Start is called before the first frame update
@@ -20,11 +23,11 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialog(Dialogue dialogue)
     {
+        dialogEnded = false;
         animator.SetBool("isOpen", true);
-        Debug.Log("Star conversation with " + dialogue.name);
         sentences.Clear();
         nameText.text = dialogue.name;
-
+      
         foreach (string sentece in dialogue.sentences)
         {
             sentences.Enqueue(sentece);
@@ -42,12 +45,23 @@ public class DialogueManager : MonoBehaviour
         }
 
         string sentence = sentences.Dequeue();
-        dialogText.text = sentence;
+        StopAllCoroutines();
+        StartCoroutine(TypeSentece(sentence));
+    }
+
+    IEnumerator TypeSentece(string sentence)
+    {
+        dialogText.text = "";
+        foreach (char letter in sentence.ToCharArray())
+        {
+            dialogText.text += letter;
+            yield return null;
+        }
     }
 
     public void EndDialog()
     {
         animator.SetBool("isOpen", false);
-        Debug.Log("End of conversation");
+        dialogEnded = true;
     }
 }

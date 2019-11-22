@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
+
     public Dialogue dialogue;
 
     public void TriggerDialog()
     {
-        FindObjectOfType < DialogueManager >().StartDialog(dialogue);
+        FindObjectOfType<DialogueManager>().StartDialog(dialogue);
     }
 }

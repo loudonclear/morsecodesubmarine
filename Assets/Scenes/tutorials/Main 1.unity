@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 16197072}
   - component: {fileID: 16197075}
   m_Layer: 5
-  m_Name: Button
+  m_Name: StartTutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -334,18 +334,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 16197073}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 16197075}
-        m_MethodName: TriggerDialog
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &16197073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1826,8 +1815,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 5.5, y: -40}
+  m_SizeDelta: {x: 203.8, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &899855374
 MonoBehaviour:
@@ -1849,14 +1838,14 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
+    m_MinSize: 0
+    m_MaxSize: 150
+    m_Alignment: 3
+    m_AlignByGeometry: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -2282,9 +2271,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: tutorial
   sentences:
-  - Welcome a board submarine-er
-  - of a nice way to ..
-  - place text in a textbox
+  - 'Hello submarine-er.
+
+    Welcome a board the USS (NAME). '
+  - 'An old ship navigating the south pacific ocean,  known for its deep waters, its
+    unbeatable climate and the lost city of R''lyeh.
+
+'
+  - This submarine is part of an old experimental fleet which is controlled usign
+    the old Morse Code System. Although  obsolete, it works like charm.
+  - You wll be part of a series of exercises to help you getting familiar with the
+    system.
+  - What? you dont remember your Morse Code training?
+  - Have no fear. Besides the contol panel, you can find the best seller "Captains
+    Logbook". An easy to read book with all the simbols you need to know.
+  - Let's practice for a while. Open (Right Click) the book located at the right bottom
+    of the screen.
 --- !u!4 &1124144481
 Transform:
   m_ObjectHideFlags: 0
@@ -2330,6 +2332,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 1286647651}
   dialogText: {fileID: 899855374}
+  animator: {fileID: 1545287446}
+  dialogEnded: 0
 --- !u!4 &1169753234
 Transform:
   m_ObjectHideFlags: 0
@@ -2568,10 +2572,10 @@ RectTransform:
   m_Father: {fileID: 1545287443}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -235, y: 139}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 130, y: -87}
+  m_SizeDelta: {x: 171.9, y: 33.299988}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1286647651
 MonoBehaviour:
@@ -2593,12 +2597,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 23
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -3347,6 +3351,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1515981068}
   m_CullTransparentMesh: 0
+--- !u!1 &1521093207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1521093208}
+  - component: {fileID: 1521093209}
+  m_Layer: 0
+  m_Name: Tutorial1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1521093208
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521093207}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 368.42993, y: 157.42087, z: 257.02957}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1521093209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521093207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5b122a9ba9bda4fbc47de3760a0c03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueManager: {fileID: 1169753233}
+  continueButton: {fileID: 1649294049}
+  starButton: {fileID: 16197072}
+  tutorialDialogs:
+  - {fileID: 1124144480}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1543559977
 GameObject:
   m_ObjectHideFlags: 0
@@ -3494,8 +3548,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -150}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 3.2999878, y: -150}
+  m_SizeDelta: {x: 105.8, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1545287444
 MonoBehaviour:
@@ -3953,8 +4007,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 239, y: -140}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 269.3, y: -252}
+  m_SizeDelta: {x: 164.3, y: 56.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1649294049
 MonoBehaviour:
@@ -5040,10 +5094,10 @@ RectTransform:
   m_Father: {fileID: 1649294048}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -0.10000038}
+  m_SizeDelta: {x: 164, y: 63.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2114717290
 MonoBehaviour:
@@ -5065,10 +5119,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
