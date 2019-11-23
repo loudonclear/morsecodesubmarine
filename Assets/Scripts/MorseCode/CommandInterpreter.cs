@@ -26,14 +26,17 @@ public class CommandInterpreter : MonoBehaviour
         if (command != "")
         {
             string function;
-            if (commandDictionary.TryGetValue(command.ToLowerInvariant(), out function))
-            {
-                GameObject.FindGameObjectWithTag("Interpreter").GetComponent<UIFlash>().Flash(Color.green);
-                Invoke(function, 0f);
-            }
-            else
-            {
-                GameObject.FindGameObjectWithTag("Interpreter").GetComponent<UIFlash>().Flash(Color.red);
+            if (GameObject.FindGameObjectWithTag("Interpreter") != null)
+            { 
+                if (commandDictionary.TryGetValue(command.ToLowerInvariant(), out function))
+                {
+                    GameObject.FindGameObjectWithTag("Interpreter").GetComponent<UIFlash>().Flash(Color.green);
+                    Invoke(function, 0f);
+                }
+                else
+                {
+                    GameObject.FindGameObjectWithTag("Interpreter").GetComponent<UIFlash>().Flash(Color.red);
+                }
             }
         }
         
