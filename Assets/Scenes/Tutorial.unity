@@ -750,6 +750,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  managerScript: {fileID: 1138135511}
+  texty: {fileID: 501083023}
 --- !u!95 &838953302
 Animator:
   serializedVersion: 3
@@ -1945,7 +1947,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Start the game
+  m_Text: Start
 --- !u!222 &1872060623
 CanvasRenderer:
   m_ObjectHideFlags: 0

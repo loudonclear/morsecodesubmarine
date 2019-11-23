@@ -14,5 +14,5 @@ public class shipName : MonoBehaviour
         managerScript = GameObject.FindGameObjectWithTag("GameManager").GetComponent<gameManager>();
         decodedText.text = managerScript.shipName;
     }
-
+    
 }
