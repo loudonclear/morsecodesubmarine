@@ -61,6 +61,15 @@ public class InitialDialogue : DialogueState
             {
                 Button btn1 = tutorial.Logbook.GetComponent<Button>();
                 btn1.transform.position = new Vector3(Screen.width / 2, Screen.height / 2 + 50, 0);
+                btn1.interactable = false;
+
+                tutorial.falseLogbook.SetActive(true);
+
+                Color myColor = tutorial.Logbook.GetComponent<Image>().material.color;
+                myColor.a = 255;
+
+                //tutorial.Logbook.GetComponent<Image>().material.color = myColor;
+
                 btn1.onClick.RemoveListener(this.LogBookClick);
                 Button btn = tutorial.continueButton.GetComponent<Button>();
                 btn.interactable = true;
@@ -79,8 +88,14 @@ public class InitialDialogue : DialogueState
 
             if (this.totalSentences - tutorial.dialogueManager.currentSentence() == 2)
             {
+
+                tutorial.falseLogbook.SetActive(false);
+
+
                 Button btn1 = tutorial.Logbook.GetComponent<Button>();
                 btn1.transform.position = new Vector3(Screen.width / 2, Screen.height / 2 + 50, 0);
+                btn1.interactable = true;
+
                 Button btn = tutorial.continueButton.GetComponent<Button>();
                 btn.interactable = false;
                 this.stage = DialogStages.BOOK_OPENED;

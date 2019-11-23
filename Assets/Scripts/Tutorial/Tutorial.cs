@@ -11,6 +11,7 @@ public class Tutorial : MonoBehaviour
     public Button continueButton;
     public Button starButton;
     public Button Logbook;
+    public GameObject falseLogbook;
     public GameObject dialogPanel;
     public Dialogue[] tutorialDialogs;
     private Dialogue currentDialog;
@@ -26,6 +27,10 @@ public class Tutorial : MonoBehaviour
 
         Button btn1 = Logbook.GetComponent<Button>();
         Logbook.interactable = false;
+
+        ((GameObject)falseLogbook).SetActive(false);
+        
+
 
         indexCurrentDialog = 0;
     }
