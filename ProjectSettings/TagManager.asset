@@ -12,6 +12,7 @@ TagManager:
   - SpeedGauge
   - TemperatureGauge
   - Compass
+  - Background
   layers:
   - Default
   - TransparentFX

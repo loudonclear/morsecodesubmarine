@@ -56,12 +56,14 @@ public class CommandInterpreter : MonoBehaviour
     {
         submarineMovement.Accelerate();
         GameObject.FindGameObjectWithTag("SpeedGauge").GetComponent<UIFlash>().Flash(Color.green);
+        GameObject.FindGameObjectWithTag("Background").GetComponent<ScreenShaker>().ScreenShakeForTime(2, 2);
     }
 
     private void Decelerate()
     {
         submarineMovement.Decelerate();
         GameObject.FindGameObjectWithTag("SpeedGauge").GetComponent<UIFlash>().Flash(Color.green);
+        GameObject.FindGameObjectWithTag("Background").GetComponent<ScreenShaker>().ScreenShakeForTime(2, 2);
     }
 
     private void EnginesOff()
