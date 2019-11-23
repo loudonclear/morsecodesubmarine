@@ -1808,15 +1808,15 @@ RectTransform:
   m_GameObject: {fileID: 899855372}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1545287443}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.5, y: -40}
-  m_SizeDelta: {x: 203.8, y: 100}
+  m_AnchoredPosition: {x: 5.5, y: -35}
+  m_SizeDelta: {x: 800, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &899855374
 MonoBehaviour:
@@ -1838,7 +1838,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 15
+    m_FontSize: 64
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2115,7 +2115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depthGauge: {fileID: 893608647}
-  speedGauge: {fileID: 1660882260}
+  speedGauge: {fileID: 0}
   compass: {fileID: 455633809}
   submarine: {fileID: 1120079268}
 --- !u!114 &1120079264
@@ -2278,14 +2278,14 @@ MonoBehaviour:
     ring of fire, and the lost city of R''lyeh.
 
 '
-  - This submarine is part of an old experimental fleet which is controlled usign
-    the old Morse Code System. Although  obsolete, it works like charm.
+  - This submarine is part of an old experimental fleet known as CMCS, a short for
+    Controlled by Morse Code System. Although  obsolete, it works like charm.
   - You wll be part of a series of exercises to help you getting familiar with the
     system.
   - What? you dont remember your Morse Code training?
-  - Have no fear. Besides the contol panel, you can find the best seller "Captains
+  - Have no fear. Beside the contol panel, you can find the best seller "Captains
     Logbook". An easy to read book with all the simbols you need to know.
-  - Let's practice for a while. Open (Right Click) the book located at the right bottom
+  - Let's practice for a while. Open (Click On) the book located at the bottom right
     of the screen.
   - Good.
   - The book teaches you how to translate Morse code to the English alphabet
@@ -2650,15 +2650,15 @@ RectTransform:
   m_GameObject: {fileID: 1286647649}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1545287443}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 130, y: -87}
-  m_SizeDelta: {x: 171.9, y: 33.299988}
+  m_AnchoredPosition: {x: 170, y: -60}
+  m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1286647651
 MonoBehaviour:
@@ -2680,16 +2680,16 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
+    m_FontSize: 64
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 40
+    m_MinSize: 0
+    m_MaxSize: 300
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 
 --- !u!222 &1286647652
@@ -2734,8 +2734,8 @@ MonoBehaviour:
   - You can access the captain's book at anytime, in case you need to remember some
     codes.
   - Now, for your first excersise, accelerate the submarine using morse code.
-  - Use the space bar to iinteract with the morse code decoder. On this case, you
-    need to type the code for letter A.
+  - Use the space bar to interact with the morse code decoder. On this case, you need
+    to type the code for letter A.
   - Let's try it! Input the morse code for letter A.
   - Excellent
   - Look at the speed gauge. It shows our current speed.
@@ -4396,18 +4396,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1649294047}
   m_CullTransparentMesh: 0
---- !u!114 &1660882260 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6084245411890799047, guid: 398b01cd3a5b9c04594b132b428b476c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1588192526}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e637811ea7181c40baa28271d5740d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1698886722
 PrefabInstance:
   m_ObjectHideFlags: 0
