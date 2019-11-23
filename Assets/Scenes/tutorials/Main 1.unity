@@ -2734,8 +2734,8 @@ MonoBehaviour:
   - You can access the captain's book at anytime, in case you need to remember some
     codes.
   - Now, for your first excersise, accelerate the submarine using morse code.
-  - Use the space bar to input the morse code. On this case, you need to type the
-    code for letter A.
+  - Use the space bar to iinteract with the morse code decoder. On this case, you
+    need to type the code for letter A.
   - Let's try it! Input the morse code for letter A.
   - Excellent
 --- !u!4 &1306722041
