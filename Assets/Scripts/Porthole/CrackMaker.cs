@@ -27,6 +27,8 @@ public class CrackMaker : MonoBehaviour
     void Update()
     {
         float hullPercent = submarine.currentHullHealth / SubmarineEntity.HULL_HEALTH;
+        if (hullPercent <= 0.00f)
+            setImage(image0);
         if (hullPercent < 0.25f)
             setImage(image25);
         else if (hullPercent < 0.5f)
