@@ -15,6 +15,7 @@ public class Tutorial : MonoBehaviour
     public Dialogue[] tutorialDialogs;
     private Dialogue currentDialog;
     public int indexCurrentDialog;
+    public GameObject morseCodeMachine;
 
     private DialogueState currentState;
 

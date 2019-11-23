@@ -2659,6 +2659,7 @@ MonoBehaviour:
   - Use the space bar to input the morse code. On this case, you need to type the
     code for letter A.
   - Let's try it! Input the morse code for letter A.
+  - Excellent
 --- !u!4 &1306722041
 Transform:
   m_ObjectHideFlags: 0
@@ -3460,6 +3461,7 @@ MonoBehaviour:
   - {fileID: 1306722040}
   - {fileID: 0}
   indexCurrentDialog: 0
+  morseCodeMachine: {fileID: 2001395845}
 --- !u!1 &1543559977
 GameObject:
   m_ObjectHideFlags: 0
