@@ -32,7 +32,7 @@ public class SubmarineEntity : MonoBehaviour
         applyTemperatureControl();
         applyTemperatureDamage();
         setGaugeTemp(temperature);
-        Debug.Log(temperature);
+        //Debug.Log(temperature);
     }
 
     private void applyTemperatureControl() {
