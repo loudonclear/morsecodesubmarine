@@ -10,9 +10,11 @@ public class Tutorial : MonoBehaviour
     public DialogueManager dialogueManager;
     public Button continueButton;
     public Button starButton;
+    public Button Logbook;
+    public GameObject dialogPanel;
     public Dialogue[] tutorialDialogs;
     private Dialogue currentDialog;
-    private int indexCurrentDialog;
+    public int indexCurrentDialog;
 
     private DialogueState currentState;
 
@@ -20,13 +22,16 @@ public class Tutorial : MonoBehaviour
     {
         Button btn = starButton.GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
+
+        Button btn1 = Logbook.GetComponent<Button>();
+        Logbook.interactable = false;
+
         indexCurrentDialog = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (currentState != null)
         {
             
@@ -53,6 +58,8 @@ public class Tutorial : MonoBehaviour
 
     void TaskOnClick()
     {
+        Button btn = starButton.GetComponent<Button>();
+        btn.transform.position = new Vector3(2000, 2000, 0);
         currentDialog  = tutorialDialogs[indexCurrentDialog];
         setState(new InitialDialogue(this, currentDialog));
         

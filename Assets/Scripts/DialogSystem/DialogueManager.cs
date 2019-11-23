@@ -11,8 +11,8 @@ public class DialogueManager : MonoBehaviour
     public Text dialogText;
     public Animator animator;
     public bool dialogEnded;
-   
-    
+    private int dialogSentences;
+    private int currentSentece;
     private Queue<string> sentences;
 
     // Start is called before the first frame update
@@ -23,6 +23,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialog(Dialogue dialogue)
     {
+        this.currentSentece = 0;
         dialogEnded = false;
         animator.SetBool("isOpen", true);
         sentences.Clear();
@@ -32,7 +33,7 @@ public class DialogueManager : MonoBehaviour
         {
             sentences.Enqueue(sentece);
         }
-
+       
         DisplayNextSentence();
     }
 
@@ -45,6 +46,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         string sentence = sentences.Dequeue();
+        this.currentSentece++;
         StopAllCoroutines();
         StartCoroutine(TypeSentece(sentence));
     }
@@ -64,4 +66,10 @@ public class DialogueManager : MonoBehaviour
         animator.SetBool("isOpen", false);
         dialogEnded = true;
     }
+
+    public int currentSentence()
+    {
+        return this.currentSentece;
+    }
+
 }

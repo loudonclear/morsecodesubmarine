@@ -2274,8 +2274,8 @@ MonoBehaviour:
   - 'Hello submarine-er.
 
     Welcome a board the USS (NAME). '
-  - 'An old ship navigating the south pacific ocean,  known for its deep waters, its
-    unbeatable climate and the lost city of R''lyeh.
+  - 'An old ship navigating the south pacific ocean,  known for its deep waters, the
+    ring of fire, and the lost city of R''lyeh.
 
 '
   - This submarine is part of an old experimental fleet which is controlled usign
@@ -2287,6 +2287,11 @@ MonoBehaviour:
     Logbook". An easy to read book with all the simbols you need to know.
   - Let's practice for a while. Open (Right Click) the book located at the right bottom
     of the screen.
+  - Good.
+  - The book teaches you how to translate Morse code to the English alphabet
+  - Click On the book again to change the pague
+  - Good. Now click again to close it.
+  - 
 --- !u!4 &1124144481
 Transform:
   m_ObjectHideFlags: 0
@@ -2617,6 +2622,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1286647649}
   m_CullTransparentMesh: 0
+--- !u!1 &1306722039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1306722041}
+  - component: {fileID: 1306722040}
+  m_Layer: 0
+  m_Name: Dialogue2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1306722040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306722039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b987111027ba5d7419086b6031bc1579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Tutorial
+  sentences:
+  - You can access the captain's book at anytime, in case you need to remember some
+    codes.
+  - Now, for your first excersise, accelerate the submarine using morse code.
+  - Use the space bar to input the morse code. On this case, you need to type the
+    code for letter A.
+  - Let's try it! Input the morse code for letter A.
+--- !u!4 &1306722041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306722039}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 395.14957, y: 366.13458, z: -505.46326}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1359209706
 GameObject:
   m_ObjectHideFlags: 0
@@ -3397,10 +3453,13 @@ MonoBehaviour:
   dialogueManager: {fileID: 1169753233}
   continueButton: {fileID: 1649294049}
   starButton: {fileID: 16197072}
+  Logbook: {fileID: 608331104}
+  dialogPanel: {fileID: 1545287442}
   tutorialDialogs:
   - {fileID: 1124144480}
+  - {fileID: 1306722040}
   - {fileID: 0}
-  - {fileID: 0}
+  indexCurrentDialog: 0
 --- !u!1 &1543559977
 GameObject:
   m_ObjectHideFlags: 0

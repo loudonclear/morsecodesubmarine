@@ -11,7 +11,7 @@ public class ImageChange : MonoBehaviour
     private Button btn;
     private RectTransform rt;
 
-    int index = 0;
+    private int index = 0;
 
     public Vector2 largeSize;
     public Vector2 largePos;
@@ -40,12 +40,12 @@ public class ImageChange : MonoBehaviour
 
         btn.onClick.AddListener(() =>
         {
-            pages[2*index].enabled = false;
-            pages[2*index+1].enabled = false;
+            pages[2 * index].enabled = false;
+            pages[2 * index + 1].enabled = false;
             index = (index + 1) % _allSprites.Length;
             _image.sprite = _allSprites[index];
-            pages[2*index].enabled = true;
-            pages[2*index+1].enabled = true;
+            pages[2 * index].enabled = true;
+            pages[2 * index + 1].enabled = true;
 
             if (index == 0)
             {
@@ -58,4 +58,21 @@ public class ImageChange : MonoBehaviour
             }
         });
     }
+
+    public int GetPageIndex()
+    {
+        return index;
+    }
+
+    public void SetPageIndex(int indx)
+    {
+        this.index = indx;
+    }
+
+    public int GetAllSpritesLength()
+    {
+        return _allSprites.Length;
+    }
+
+
 }
