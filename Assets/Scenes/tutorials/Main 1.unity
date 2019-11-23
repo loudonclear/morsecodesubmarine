@@ -2738,6 +2738,11 @@ MonoBehaviour:
     need to type the code for letter A.
   - Let's try it! Input the morse code for letter A.
   - Excellent
+  - Look at the speed gauge. It shows our current speed.
+  - Now, Let's stop the submarine. Input the code for letter S.
+  - Awesome!
+  - That concludes our first excersice.
+  - Click on continue to go to the next one.
 --- !u!4 &1306722041
 Transform:
   m_ObjectHideFlags: 0

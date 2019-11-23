@@ -25,6 +25,12 @@ public class SubmarineMovement : MonoBehaviour
 
     public const float emergencyHeatIncrease = 4.0f;    // Fahrenheit
 
+    public const float depthDelta = 4.0f;
+    private float desiredDepth;
+    public const float maxDiveSpeed = 0.5f;
+
+    public const float maxDepthDelta = 3 * depthDelta;
+
     void Start()
     {
         desiredSpeed = FlankSpeed.OFF;
@@ -34,14 +40,26 @@ public class SubmarineMovement : MonoBehaviour
         desiredAngle = 0;
         leftDegrees = 0;
         rightDegrees = 0;
+
+        desiredDepth = 0.0f;
     }
 
     private void Update()
     {
+        Debug.Log("WT: " + this.transform.position.y);
         ventEngineHeat();
         float angle = Vector3.SignedAngle(this.transform.up, Vector3.forward, Vector3.up);
         //compass.transform.rotation = Quaternion.FromToRotation(transform.up, Vector3.forward);
         compass.rotate(this.transform.eulerAngles.y);
+        depthGauge.gaugeheight = this.transform.position.y / maxDepthDelta / 2 + 0.5f;
+    }
+
+    public void Descend() {
+        desiredDepth = Mathf.Clamp(desiredDepth - depthDelta, -maxDepthDelta, maxDepthDelta);
+    }
+
+    public void Ascend() {
+        desiredDepth = Mathf.Clamp(desiredDepth + depthDelta, -maxDepthDelta, maxDepthDelta);
     }
 
     public void Port()
@@ -85,8 +103,12 @@ public class SubmarineMovement : MonoBehaviour
             float effectiveMaxThrust = desiredSpeed == FlankSpeed.EMERGENCY ? 2.0f * maxThrust : maxThrust;
             float thrust = Mathf.Clamp(thrustMultiplier * (desiredSpeedValue - localVelocity.y), -effectiveMaxThrust, effectiveMaxThrust);
        
-
             rb.AddRelativeForce(Vector3.up * thrust);
+
+            Vector3 v = rb.velocity;
+            v.y = Mathf.Clamp(desiredDepth - this.transform.position.y, -maxDiveSpeed, maxDiveSpeed);
+            rb.velocity = v;
+
 
             // Rotation calculations
             desiredAngle = rightDegrees - leftDegrees;
