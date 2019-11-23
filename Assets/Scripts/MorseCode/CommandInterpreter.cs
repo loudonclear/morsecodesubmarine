@@ -9,7 +9,7 @@ public class CommandInterpreter : MonoBehaviour
     public string[] morseCodeCommands = new string[] { "p", "s", "a", "d", "o", "f" };
 
     public Dictionary<string, string> commandDictionary;
-
+    public gameManager managerScript;
     public SubmarineMovement submarineMovement;
 
     public void Start()

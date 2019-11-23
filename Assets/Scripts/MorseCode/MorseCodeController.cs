@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-
-[RequireComponent(typeof(CommandInterpreter))]
+//[RequireComponent(typeof(CommandInterpreter))]
 public class MorseCodeController : MonoBehaviour
 {
     public Text morseCodeText;
@@ -13,7 +13,6 @@ public class MorseCodeController : MonoBehaviour
     public float timeUnit = 0.2f;
     public int unitsBetweenCharacters = 3;
     public int unitsBetweenCommands = 7;
-
     public bool clearDecode = true;
 
     [Range(1, 20000)]
@@ -33,10 +32,13 @@ public class MorseCodeController : MonoBehaviour
     private bool typed = false;
     private bool typing = false;
 
+    private TutorialCommand tutorialCommand;
     private CommandInterpreter commandInterpreter;
 
     private static string dot = ".";
     private static string dash = "-";
+
+    string currentScene;
 
     Dictionary<string, char> decoder = new Dictionary<string, char>() {
         {string.Concat(dot, dash), 'a'},
@@ -79,10 +81,16 @@ public class MorseCodeController : MonoBehaviour
 
     void Start()
     {
-        commandInterpreter = GetComponent<CommandInterpreter>(); 
+        currentScene = SceneManager.GetActiveScene().name;
+        if (currentScene == "Tutorial")
+        {
+            tutorialCommand = GetComponent<TutorialCommand>();
+        } else
+        {
+            commandInterpreter = GetComponent<CommandInterpreter>();
+        }
         morseCodeText.text = "";
         decodedText.text = "";
-
         sampleRate = AudioSettings.outputSampleRate;
 
         audioSource = gameObject.GetComponent<AudioSource>();
@@ -95,6 +103,7 @@ public class MorseCodeController : MonoBehaviour
         {
             audioSource.volume = managerScript.volume;
             timeUnit = managerScript.timeUnit;
+            Debug.Log(managerScript.shipName);
         } else
         {
             audioSource.volume = 1;
@@ -160,7 +169,13 @@ public class MorseCodeController : MonoBehaviour
         } else if (!typing && Time.time > pauseTime + unitsBetweenCommands * timeUnit)
         {
             // Space between words
-            commandInterpreter.InterpretCommand(decodedText.text);
+            if (currentScene == "Tutorial")
+            {
+                tutorialCommand.InterpretCommand(decodedText.text);
+            }else
+            {
+                commandInterpreter.InterpretCommand(decodedText.text);
+            }
 
             typed = false;
             if (clearDecode)
