@@ -329,6 +329,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 164186164}
   m_CullTransparentMesh: 0
+--- !u!1 &173352528 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6084245411890799067, guid: 398b01cd3a5b9c04594b132b428b476c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1588192526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &173352532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173352528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b31b7483036904d02b34328feaa7ded0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  percent: 0
+  targetPercent: 0
+  min: 140
+  max: -175
 --- !u!1 &256097596
 GameObject:
   m_ObjectHideFlags: 0
@@ -1999,7 +2021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depthGauge: {fileID: 893608647}
-  speedGauge: {fileID: 1660882260}
+  speedGauge: {fileID: 173352532}
   compass: {fileID: 455633809}
   submarine: {fileID: 1120079268}
 --- !u!114 &1120079264
@@ -3250,7 +3272,8 @@ PrefabInstance:
       propertyPath: percent
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6084245411890799047, guid: 398b01cd3a5b9c04594b132b428b476c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 398b01cd3a5b9c04594b132b428b476c, type: 3}
 --- !u!224 &1588192527 stripped
 RectTransform:
@@ -3468,18 +3491,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1609412223}
   m_CullTransparentMesh: 0
---- !u!114 &1660882260 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6084245411890799047, guid: 398b01cd3a5b9c04594b132b428b476c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1588192526}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e637811ea7181c40baa28271d5740d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1698886722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3496,6 +3507,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: DepthGauge
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688601744587920518, guid: eac8badb6a4c3b946991989311d20b66,
+        type: 3}
+      propertyPath: gaugeheight
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5688601745509832738, guid: eac8badb6a4c3b946991989311d20b66,
         type: 3}
@@ -4221,6 +4237,8 @@ MonoBehaviour:
   - d
   - o
   - f
+  - h
+  - l
   submarineMovement: {fileID: 1120079263}
 --- !u!82 &2001395849
 AudioSource:

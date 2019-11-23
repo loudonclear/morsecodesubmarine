@@ -17,6 +17,10 @@ public class SubmarineEntity : MonoBehaviour
 
     public SpinningGauge temperatureGauge;
     public const float maxGaugeTemp = 2 * targetTemperature;
+    public const float maxTemp = 1.05f * maxGaugeTemp;
+
+    public const float depthThreshold = -2 * SubmarineMovement.depthDelta;
+    public const float depthDamageMultiplier = 0.5f;
 
     private void Start()
     {
@@ -31,7 +35,9 @@ public class SubmarineEntity : MonoBehaviour
     { 
         applyTemperatureControl();
         applyTemperatureDamage();
+        temperature = Mathf.Clamp(temperature, -maxTemp, maxTemp);
         setGaugeTemp(temperature);
+        applyDepthDamage();
     }
 
     private void applyTemperatureControl() {
@@ -49,6 +55,15 @@ public class SubmarineEntity : MonoBehaviour
     private void applyTemperatureDamage() {
         if (temperature >= temperatureDamageThreshold) {
             float hullDamage = temperatureDamageMultiplier * ((int)(temperature - temperatureDamageThreshold / 10.0f) + 1);
+            currentHullHealth -= hullDamage * Time.deltaTime;
+        }
+    }
+
+    private void applyDepthDamage()
+    {
+        float deltaFromThreshold = this.transform.position.y - depthThreshold;
+        if (deltaFromThreshold < 0) {
+            float hullDamage = depthDamageMultiplier * Mathf.Abs(deltaFromThreshold);
             currentHullHealth -= hullDamage * Time.deltaTime;
         }
     }

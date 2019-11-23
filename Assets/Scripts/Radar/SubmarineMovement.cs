@@ -18,7 +18,7 @@ public class SubmarineMovement : MonoBehaviour
     public const float turnDelta = 45.0f;
 
     public VerticalGauge depthGauge;
-    public SpinningGauge speedGauge;
+    public SpinningGaugeSmooth speedGauge;
     public Compass compass;
 
     public SubmarineEntity submarine;
@@ -35,6 +35,7 @@ public class SubmarineMovement : MonoBehaviour
     {
         desiredSpeed = FlankSpeed.OFF;
         speedGauge.percent = (float)desiredSpeed / 5;
+        speedGauge.targetPercent = (float)desiredSpeed / 5;
         rb = GetComponent<Rigidbody>();
 
         desiredAngle = 0;
@@ -76,21 +77,21 @@ public class SubmarineMovement : MonoBehaviour
     {
         desiredSpeed = (FlankSpeed)Mathf.Clamp((int)(desiredSpeed + 1), 0, (int)FlankSpeed.EMERGENCY);
 
-        speedGauge.percent = (float)desiredSpeed / 5;
+        speedGauge.targetPercent = (float)desiredSpeed / 5;
     }
 
     public void Decelerate()
     {
         desiredSpeed = (FlankSpeed)Mathf.Clamp((int)(desiredSpeed - 1), 0, (int)FlankSpeed.EMERGENCY);
  
-        speedGauge.percent = (float)desiredSpeed / 5;
+        speedGauge.targetPercent = (float)desiredSpeed / 5;
     }
 
     public void EnginesOff()
     {
         desiredSpeed = 0;
 
-        speedGauge.percent = (float)desiredSpeed / 5;
+        speedGauge.targetPercent = (float)desiredSpeed / 5;
     }
 
     private void FixedUpdate()
