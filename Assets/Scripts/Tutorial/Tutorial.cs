@@ -14,11 +14,11 @@ public class Tutorial : MonoBehaviour
     public GameObject falseLogbook;
     public GameObject dialogPanel;
     public Dialogue[] tutorialDialogs;
-    private Dialogue currentDialog;
+    protected Dialogue currentDialog;
     public int indexCurrentDialog;
     public GameObject morseCodeMachine;
 
-    private DialogueState currentState;
+    protected DialogueState currentState;
 
     void Start()
     {

@@ -3,26 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Tutorial3 : MonoBehaviour
+public class Tutorial3 : Tutorial
 {
     // Start is called before the first frame update
-
-    public DialogueManager dialogueManager;
-    public Button continueButton;
-    public Dialogue[] tutorialDialogs;
-    private Dialogue currentDialog;
-    public int indexCurrentDialog;
-    public GameObject morseCodeMachine;
-
-    private DialogueState currentState;
+    
 
     void Start()
     {
         indexCurrentDialog = 0;
+        Button btn = starButton.GetComponent<Button>();
+        btn.onClick.AddListener(InitTutorialOnClick);
     }
 
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
         if (currentState != null)
         {
@@ -46,11 +40,14 @@ public class Tutorial3 : MonoBehaviour
             currentState.OnStateEnter();
         }
 
-    }
+    }*/
 
-    void TaskOnClick()
+    void InitTutorialOnClick()
     {
-       
-       // setState(new InitialDialogue(this, currentDialog));
+
+        Button btn = starButton.GetComponent<Button>();
+        btn.transform.position = new Vector3(2000, 2000, 0);
+        currentDialog = tutorialDialogs[indexCurrentDialog];
+        setState(new MonsterTuTorialInitialDialogue(this, currentDialog));
     }
 }
