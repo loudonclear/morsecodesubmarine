@@ -1394,6 +1394,28 @@ MonoBehaviour:
   - {fileID: 164186166}
   largeSize: {x: 5, y: 5}
   largePos: {x: 146.2, y: -82.4}
+--- !u!1 &703625946 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6084245411890799067, guid: 398b01cd3a5b9c04594b132b428b476c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1588192526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &703625950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 703625946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b31b7483036904d02b34328feaa7ded0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  percent: 0
+  targetPercent: 0
+  min: 140
+  max: -175
 --- !u!1001 &772326873
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2115,7 +2137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depthGauge: {fileID: 893608647}
-  speedGauge: {fileID: 1626539903}
+  speedGauge: {fileID: 703625950}
   compass: {fileID: 455633809}
   submarine: {fileID: 1120079268}
 --- !u!114 &1120079264
@@ -4049,12 +4071,8 @@ PrefabInstance:
       propertyPath: percent
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6084245411890799047, guid: 398b01cd3a5b9c04594b132b428b476c,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6084245411890799047, guid: 398b01cd3a5b9c04594b132b428b476c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 398b01cd3a5b9c04594b132b428b476c, type: 3}
 --- !u!224 &1588192527 stripped
 RectTransform:
