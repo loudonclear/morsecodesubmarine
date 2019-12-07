@@ -15,7 +15,8 @@ public class MonsterTuTorialInitialDialogue : DialogueState
     };
 
     DialogStages currentStage;
-    ShakeGUI shakePanel;
+    
+    private bool monsterClipSounded;
 
     public MonsterTuTorialInitialDialogue(Tutorial3 tutorial, Dialogue dialogue) : base(tutorial, dialogue, "MonsterInitDialogue")
     {
@@ -24,13 +25,11 @@ public class MonsterTuTorialInitialDialogue : DialogueState
 
     public override void OnStateEnter()
     {
-        this.shakePanel = GameObject.Find("SubControlPanel").GetComponent<ShakeGUI>();
-        if (this.shakePanel == null)
-        {
-            Debug.Log("error");
-        }
+        
+        monsterClipSounded = false;
         currentStage = DialogStages.BEFORE_MONSTER_ATTACKS;
         tutorial.dialogueManager.StartDialog(dialogue);
+
     }
 
     public override void OnStateExit()
@@ -44,23 +43,62 @@ public class MonsterTuTorialInitialDialogue : DialogueState
         if (currentStage == DialogStages.BEFORE_MONSTER_ATTACKS)
         {
             int sentence = tutorial.dialogueManager.currentSentence();
-            if (sentence == 3 && !this.shakePanel.isShaking())
+            if (sentence == 3 && !((Tutorial3)tutorial).getShakeGUI().isShaking())
             {
-                shakePanel.Shake();
+                ((Tutorial3)tutorial).getShakeGUI().Shake();
                 currentStage = DialogStages.GUI_SHAKING;
                 Button btn = tutorial.continueButton.GetComponent<Button>();
                 btn.interactable = false;
             }
-            
-            
+
+
         }
         else if (currentStage == DialogStages.GUI_SHAKING)
         {
-            if (!this.shakePanel.isShaking())
+            if (!((Tutorial3)tutorial).getShakeGUI().isShaking())
             {
+             
                 Button btn = tutorial.continueButton.GetComponent<Button>();
                 btn.interactable = true;
+                currentStage = DialogStages.MONSTER_ATTACKS;
             }
+        }
+        else if (currentStage == DialogStages.MONSTER_ATTACKS)
+        {
+            int sentence = tutorial.dialogueManager.currentSentence();
+            if (sentence == 5)
+            {
+                if (!monsterClipSounded)
+                {
+                    ((Tutorial3)tutorial).PlayMonsterSound();
+                    monsterClipSounded = true;
+                    Button btn = tutorial.continueButton.GetComponent<Button>();
+                    btn.interactable = false;
+                }
+                else if(!((Tutorial3)tutorial).PlayMonsterSoundIsPlaying())
+                {
+                    ((Tutorial3)tutorial).ShowMonsterEye();
+                    Button btn = tutorial.continueButton.GetComponent<Button>();
+                    btn.interactable = true;
+                }
+            }
+            if (sentence == 7)
+            {
+                Rigidbody submarineRigidBody = ((Tutorial3)tutorial).getSubmarine().GetComponent<Rigidbody>();
+                if (submarineRigidBody.velocity.magnitude < 10)
+                {
+                    Button btn = tutorial.continueButton.GetComponent<Button>();
+                    btn.interactable = false;
+                }
+                else
+                {
+                    Button btn = tutorial.continueButton.GetComponent<Button>();
+                    btn.interactable = true;
+                }
+
+               
+            }
+            
         }
     }
 }

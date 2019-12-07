@@ -314,4 +314,9 @@ public class MonsterAI : MonoBehaviour
     {
         this.orientationEnd = endPos;
     }
+
+    public string getCurrentStateName()
+    {
+        return currentState.StateName();
+    }
 }
