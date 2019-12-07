@@ -1394,6 +1394,25 @@ MonoBehaviour:
   - {fileID: 164186166}
   largeSize: {x: 5, y: 5}
   largePos: {x: 146.2, y: -82.4}
+--- !u!1 &724143085 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6084245411238880342, guid: 398b01cd3a5b9c04594b132b428b476c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1588192526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &724143088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724143085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3142f03251ffa1a4aa09d63faeba738d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashSpeed: 3
 --- !u!1001 &772326873
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3400,6 +3419,7 @@ MonoBehaviour:
   dialogPanel: {fileID: 1545287442}
   tutorialDialogs:
   - {fileID: 1124144480}
+  - {fileID: 2047970928}
   indexCurrentDialog: 0
   morseCodeMachine: {fileID: 0}
   monsterSound: {fileID: 1592764910}
@@ -3609,6 +3629,11 @@ PrefabInstance:
     - target: {fileID: 6084245411238880342, guid: 398b01cd3a5b9c04594b132b428b476c,
         type: 3}
       propertyPath: m_Name
+      value: SpeedGauge
+      objectReference: {fileID: 0}
+    - target: {fileID: 6084245411238880342, guid: 398b01cd3a5b9c04594b132b428b476c,
+        type: 3}
+      propertyPath: m_TagString
       value: SpeedGauge
       objectReference: {fileID: 0}
     - target: {fileID: 6084245411238880341, guid: 398b01cd3a5b9c04594b132b428b476c,
@@ -5233,9 +5258,10 @@ GameObject:
   - component: {fileID: 2026639321}
   - component: {fileID: 2026639323}
   - component: {fileID: 2026639322}
+  - component: {fileID: 2026639324}
   m_Layer: 0
   m_Name: Interpreter
-  m_TagString: Untagged
+  m_TagString: Interpreter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5297,6 +5323,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2026639320}
   m_CullTransparentMesh: 0
+--- !u!114 &2026639324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026639320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3142f03251ffa1a4aa09d63faeba738d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashSpeed: 3
+--- !u!1 &2047970927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2047970929}
+  - component: {fileID: 2047970928}
+  m_Layer: 0
+  m_Name: Dialog2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2047970928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047970927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b987111027ba5d7419086b6031bc1579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 
+  sentences:
+  - try turning away form the monster. It is too close!!
+  - It looks we lost it
+  - 
+--- !u!4 &2047970929
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047970927}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0000009536743, y: 0, z: 42.24418}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2066560944
 GameObject:
   m_ObjectHideFlags: 0

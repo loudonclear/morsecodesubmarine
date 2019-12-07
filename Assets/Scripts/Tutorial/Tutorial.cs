@@ -17,11 +17,14 @@ public class Tutorial : MonoBehaviour
     protected Dialogue currentDialog;
     public int indexCurrentDialog;
     public GameObject morseCodeMachine;
+    //protected GameObject monster;
+    //protected bool monsterCanAttack;
 
     protected DialogueState currentState;
 
     void Start()
     {
+
         Button btn = starButton.GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
 
@@ -36,8 +39,9 @@ public class Tutorial : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
+        //Debug.Log("Tutorial::Update()");
         if (currentState != null)
         {
             

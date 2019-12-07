@@ -13,9 +13,13 @@ public class Tutorial3 : Tutorial
     private GameObject submarine;
     private GameObject monster;
     private ShakeGUI shakePanel;
+    private bool monsterCanAttack;
+    private bool mosterAttacked;
 
     void Start()
     {
+        monsterCanAttack = false;
+        mosterAttacked = false;
         Button LogbookBtn = Logbook.GetComponent<Button>();
         LogbookBtn.interactable = false;
         indexCurrentDialog = 0;
@@ -29,7 +33,34 @@ public class Tutorial3 : Tutorial
         btn.onClick.AddListener(InitTutorialOnClick);
         monsterEye.SetActive(false);
         submarine = GameObject.Find("Submarine");
-        monster = GameObject.Find("myMonster");
+        monster = GameObject.FindGameObjectWithTag("monster");
+    }
+
+    public override void Update()
+    {
+        
+        if (monsterCanAttack)
+        {
+            if (!mosterAttacked)
+            {
+                Debug.Log("away");
+                if (monster.GetComponent<MonsterAI>().getCurrentStateName() == "CollisionMonsterState")
+                {
+                    Debug.Log("attacked");
+                    this.shakePanel.Shake();
+                    mosterAttacked = true;
+                }
+
+            }
+            else if (mosterAttacked && monster.GetComponent<MonsterAI>().getCurrentStateName() == "ChasePlayer"
+                || mosterAttacked && monster.GetComponent<MonsterAI>().getCurrentStateName() == "UnAware")
+            {
+                mosterAttacked = false;
+            }
+        }
+
+        base.Update();
+
     }
 
     void InitTutorialOnClick()
@@ -42,6 +73,7 @@ public class Tutorial3 : Tutorial
         currentDialog = tutorialDialogs[indexCurrentDialog];
         setState(new MonsterTuTorialInitialDialogue(this, currentDialog));
     }
+
 
     public void PlayMonsterSound()
     {
@@ -89,5 +121,10 @@ public class Tutorial3 : Tutorial
     public ShakeGUI getShakeGUI()
     {
         return this.shakePanel;
+    }
+
+    public void SetmonsterAttack(bool attack)
+    {
+        this.monsterCanAttack = attack;
     }
 }
