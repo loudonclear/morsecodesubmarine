@@ -85,19 +85,28 @@ public class MonsterTuTorialInitialDialogue : DialogueState
             if (sentence == 7)
             {
                 Rigidbody submarineRigidBody = ((Tutorial3)tutorial).getSubmarine().GetComponent<Rigidbody>();
-                if (submarineRigidBody.velocity.magnitude < 10)
+                
+                if (submarineRigidBody.velocity.magnitude < 0.9)
                 {
                     Button btn = tutorial.continueButton.GetComponent<Button>();
                     btn.interactable = false;
+                    ((Tutorial3)tutorial).SetmonsterAttack(true);
                 }
                 else
                 {
                     Button btn = tutorial.continueButton.GetComponent<Button>();
-                    btn.interactable = true;
+                    btn.onClick.Invoke();
+                    
+                    int currentIndex = tutorial.indexCurrentDialog;
+                    Dialogue nextDialog = tutorial.tutorialDialogs[++currentIndex];
+                    tutorial.setState(new MonsterChaseDialogTutorial(tutorial, nextDialog));
+                    
                 }
 
                
             }
+
+
             
         }
     }
