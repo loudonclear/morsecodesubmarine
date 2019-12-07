@@ -15,7 +15,6 @@ public class CommandInterpreter : MonoBehaviour
     public void Start()
     {
         commandDictionary = new Dictionary<string, string>();
-        Debug.Log("Length: " + morseCodeCommands.Length);
         for (int i = 0; i < morseCodeCommands.Length; i++)
         {
             commandDictionary.Add(morseCodeCommands[i], commandFunctions[i]);
@@ -28,7 +27,7 @@ public class CommandInterpreter : MonoBehaviour
         {
             string function;
             if (GameObject.FindGameObjectWithTag("Interpreter") != null)
-            { 
+            {
                 if (commandDictionary.TryGetValue(command.ToLowerInvariant(), out function))
                 {
                     GameObject.FindGameObjectWithTag("Interpreter").GetComponent<UIFlash>().Flash(Color.green);

@@ -125,8 +125,6 @@ public class MonsterAI : MonoBehaviour
 
     public bool chanceToDetectPlayer()
     {
-
-        Debug.Log("chanceToDetectPlayer");
         if (mySubmarine != null)
         {
             /*float chanceOfDistance = ((1 / distanceFromPlayer() ) * this.distanceWeigth) / this.maximumChance;
@@ -140,11 +138,8 @@ public class MonsterAI : MonoBehaviour
             float totalChance = chanceOfDistance * chanceOfVision * chanceOfNoise;
             float randomNumber = UnityEngine.Random.Range(0.0f, 1.0f);
 
-            //Debug.Log("randomNumber: "+ randomNumber+", totalChance: " + totalChance);
-
             if (totalChance < randomNumber  )
             {
-              //  Debug.Log( "EVENT TRIGGERS");
                 return true;
             }
 
@@ -197,7 +192,6 @@ public class MonsterAI : MonoBehaviour
         if (mySubmarine != null) {
 
             float distance = distanceFromPlayer();
-            //Debug.Log("radioOfVision: "+ radioOfVision + "Distance from player: " + distance);
             if (distance < Mathf.Pow(2, 2))
             {
                 //this.vision = 1 - (distance / radioOfVision);
@@ -215,7 +209,6 @@ public class MonsterAI : MonoBehaviour
         {
 
             float distance = distanceFromPlayer();
-            //Debug.Log("radioOfVision: " + radioOfVision + "Distance from player: " + distance);
             if (distance < Mathf.Pow(2, 2))
             {
                 return true;

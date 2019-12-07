@@ -47,7 +47,6 @@ public class SubmarineMovement : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("WT: " + this.transform.position.y);
         ventEngineHeat();
         float angle = Vector3.SignedAngle(this.transform.up, Vector3.forward, Vector3.up);
         //compass.transform.rotation = Quaternion.FromToRotation(transform.up, Vector3.forward);
@@ -157,7 +156,6 @@ public class SubmarineMovement : MonoBehaviour
                 heatDelta = emergencyHeatIncrease;
                 break;
         }
-        //Debug.Log("HD: " + heatDelta);
         submarine.temperature += heatDelta * Time.deltaTime;
     }
 }

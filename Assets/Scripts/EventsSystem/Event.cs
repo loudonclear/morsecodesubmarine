@@ -32,7 +32,6 @@ public class Event
 
         if (Input.anyKeyDown)
         {
-            //Debug.Log("Event::GOT KEY");
             if (Input.GetKeyDown(myAction.actionCodes[myIndex]))
             {
                 myIndex++;

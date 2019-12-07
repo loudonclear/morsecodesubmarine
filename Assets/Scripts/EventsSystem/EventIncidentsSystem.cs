@@ -233,7 +233,6 @@ public class EventIncidentsSystem : MonoBehaviour
                         }
                         if (Input.GetKeyDown(KeyCode.Return))
                         {
-                           // Debug.Log("Return key was pressed.");
                             string code = inputInfo.text;
                             resolveCode(code);
                             inputInfo.text = "";
