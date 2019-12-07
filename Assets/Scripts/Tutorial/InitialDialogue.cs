@@ -135,7 +135,7 @@ public class InitialDialogue : DialogueState
         {
             int currentIndex = tutorial.indexCurrentDialog;
             Dialogue nextDialog = tutorial.tutorialDialogs[++currentIndex];
-            tutorial.setState(new FirstExcercise(tutorial, nextDialog));
+            tutorial.setState(new TutorialTurning(tutorial, nextDialog));
         }
 
 
