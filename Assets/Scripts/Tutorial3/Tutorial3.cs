@@ -43,12 +43,19 @@ public class Tutorial3 : Tutorial
         {
             if (!mosterAttacked)
             {
+                Debug.Log("away");
                 if (monster.GetComponent<MonsterAI>().getCurrentStateName() == "CollisionMonsterState")
                 {
+                    Debug.Log("attacked");
                     this.shakePanel.Shake();
                     mosterAttacked = true;
                 }
-                
+
+            }
+            else if (mosterAttacked && monster.GetComponent<MonsterAI>().getCurrentStateName() == "ChasePlayer"
+                || mosterAttacked && monster.GetComponent<MonsterAI>().getCurrentStateName() == "UnAware")
+            {
+                mosterAttacked = false;
             }
         }
 
