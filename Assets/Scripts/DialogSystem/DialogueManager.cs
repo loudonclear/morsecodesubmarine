@@ -5,21 +5,13 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-    
-    
     public Text nameText;
     public Text dialogText;
     public Animator animator;
     public bool dialogEnded;
     private int dialogSentences;
     private int currentSentece;
-    private Queue<string> sentences;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        sentences = new Queue<string>();
-    }
+    private Queue<string> sentences = new Queue<string>();
 
     public void StartDialog(Dialogue dialogue)
     {
@@ -27,8 +19,12 @@ public class DialogueManager : MonoBehaviour
         dialogEnded = false;
         animator.SetBool("isOpen", true);
         sentences.Clear();
-        nameText.text = dialogue.name;
-      
+
+        if (nameText != null)
+        {
+            nameText.text = dialogue.name;
+        }
+
         foreach (string sentece in dialogue.sentences)
         {
             sentences.Enqueue(sentece);

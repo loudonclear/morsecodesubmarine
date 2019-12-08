@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class myAIWorld : MonoBehaviour
 {
-
     enum worldState
     {
         notSpawn,
@@ -43,10 +42,9 @@ public class myAIWorld : MonoBehaviour
     public float width;
     public float height;
     
-    // Start is called before the first frame update
     void Start()
     {
-        monster = GameObject.FindGameObjectWithTag("monster");
+        monster = GameObject.FindGameObjectWithTag("Monster");
         monsterAi = (MonsterAI)monster.GetComponent<MonsterAI>();
 
         monster.transform.position = farAwayPosition;
@@ -58,14 +56,10 @@ public class myAIWorld : MonoBehaviour
         monsterSpeed = 1;
     }
 
-    // Update is called once per frame
     void Update()
     {
-
-        
         if (currentWorldState == worldState.notSpawn)
         {
-
             if (!monsterAi.getIInSight())
             {
                 spawnTimer += Time.deltaTime;

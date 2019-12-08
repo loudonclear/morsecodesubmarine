@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class MonsterAI : MonoBehaviour
 {
-    public float moveSpeed ;
+    public float moveSpeed;
     public float chaseSpeed;
 
     public float radioOfVision ;
     private AIState currentState;
-    GameObject mySubmarine = null;
+    GameObject mySubmarine;
     SubmarineAIHelper mySubmarineScript;
     
 
@@ -62,11 +62,9 @@ public class MonsterAI : MonoBehaviour
         this.wandering = wandering;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        
-        mySubmarine = GameObject.Find("Submarine");
+        mySubmarine = GameObject.FindGameObjectWithTag("Submarine");
         mySubmarineScript = mySubmarine.GetComponent<SubmarineAIHelper>();
 
         if (lineOrientation != null)
@@ -81,22 +79,15 @@ public class MonsterAI : MonoBehaviour
         wandering = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
-
         if (lineOrientation != null)
         {
-            
               orientationStart = transform.position;
               lineOrientation.SetPosition(0, orientationStart);
               lineOrientation.SetPosition(1, orientationEnd);
-            
         }
         
-
-
         if (Input.GetKeyDown("n"))
         {
             currentNoise++;
@@ -242,8 +233,7 @@ public class MonsterAI : MonoBehaviour
 
     public bool getIInSight()
     {
-        if ( Vector3.Distance(transform.position,mySubmarine.transform.position)  
-             < mySubmarineScript.internalRadius)
+        if ( Vector3.Distance(transform.position,mySubmarine.transform.position) < mySubmarineScript.internalRadius)
         {
             return true;
         }

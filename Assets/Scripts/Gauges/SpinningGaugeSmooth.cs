@@ -14,7 +14,7 @@ public class SpinningGaugeSmooth : MonoBehaviour
 
     private RectTransform rectTransform;
 
-    public const float needleSpeed = 0.5f;
+    public float needleSpeed = 0.5f;
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class SpinningGaugeSmooth : MonoBehaviour
         Vector2 percentPivot = new Vector2(pixelPivot.x / size.x, pixelPivot.y / size.y);
         GetComponent<RectTransform>().pivot = percentPivot;
 
-        rectTransform.rotation = Quaternion.AngleAxis(Mathf.Lerp(min, max, percent), Vector3.forward);
+        rectTransform.localRotation = Quaternion.Euler(0, 0, Mathf.Lerp(min, max, percent));
     }
 
     void Update()
@@ -35,7 +35,7 @@ public class SpinningGaugeSmooth : MonoBehaviour
             int direction = (int)((float)(targetPercent - percent) / Mathf.Abs(targetPercent - percent));
 
             percent += direction * needleSpeed * Time.deltaTime;
-            rectTransform.rotation = Quaternion.AngleAxis(Mathf.Lerp(min, max, percent), Vector3.forward);
+            rectTransform.localRotation = Quaternion.Euler(0, 0, Mathf.Lerp(min, max, percent));
         }
     }
 }

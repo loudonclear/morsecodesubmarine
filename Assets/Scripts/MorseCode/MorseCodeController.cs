@@ -9,10 +9,11 @@ public class MorseCodeController : MonoBehaviour
 {
     public Text morseCodeText;
     public Text decodedText;
-    public gameManager managerScript;
     public float timeUnit = 0.2f;
     public int unitsBetweenCharacters = 3;
     public int unitsBetweenCommands = 7;
+
+    public Image tapper;
 
     public bool clearDecode = true;
 
@@ -26,7 +27,7 @@ public class MorseCodeController : MonoBehaviour
     public float waveLengthInSeconds = 5.0f;
 
     private AudioSource audioSource;
-    
+
     int timeIndex = 0;
     private float inputTime;
     private float pauseTime;
@@ -79,27 +80,30 @@ public class MorseCodeController : MonoBehaviour
 
     void Start()
     {
-        commandInterpreter = GetComponent<CommandInterpreter>(); 
+        commandInterpreter = GetComponent<CommandInterpreter>();
         morseCodeText.text = "";
         decodedText.text = "";
 
         sampleRate = AudioSettings.outputSampleRate;
 
+
+        GameObject manager = GameObject.FindGameObjectWithTag("SoundManager");
+        if (manager != null)
+        {
+            //managerScript = manager.GetComponent<GameManager>();
+            //audioSource.volume = managerScript.volume;
+            //timeUnit = managerScript.timeUnit;
+            audioSource = manager.GetComponent<AudioSource>();
+        } else
+        {
+            audioSource = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
+        }
+
         audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.playOnAwake = false;
         audioSource.spatialBlend = 0; //force 2D sound
+        audioSource.volume = 1;
         audioSource.Stop();
-
-        managerScript = GameObject.FindGameObjectWithTag("GameManager").GetComponent<gameManager>();
-        if (managerScript != null)
-        {
-            audioSource.volume = managerScript.volume;
-            timeUnit = managerScript.timeUnit;
-        } else
-        {
-            audioSource.volume = 1;
-        }
-        
     }
 
     void Update()
@@ -114,6 +118,7 @@ public class MorseCodeController : MonoBehaviour
 
             pauseTime = Time.time;
             typing = true;
+            tapper.enabled = false;
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
@@ -134,14 +139,15 @@ public class MorseCodeController : MonoBehaviour
                         morseCodeText.text += dash;
                     }
                 }
-                
+
                 pauseTime = Time.time;
                 typed = true;
                 typing = false;
             }
+            tapper.enabled = true;
         }
 
-        if (!typing && typed && Time.time > pauseTime + unitsBetweenCharacters * timeUnit && Time.time <= pauseTime + unitsBetweenCommands * timeUnit)
+        if (!typing && typed && decodedText.text.Length < 5 && Time.time > pauseTime + unitsBetweenCharacters * timeUnit && Time.time <= pauseTime + unitsBetweenCommands * timeUnit)
         {
             // New character
             char c = '?';
@@ -149,15 +155,17 @@ public class MorseCodeController : MonoBehaviour
             {
                 morseCodeText.text = "";
                 decodedText.text += c.ToString().ToUpper();
-            } else
+            }
+            else
             {
                 morseCodeText.text = "";
                 decodedText.text += "?";
             }
-            
+
             typed = false;
-            
-        } else if (!typing && Time.time > pauseTime + unitsBetweenCommands * timeUnit)
+
+        }
+        else if (!typing && Time.time > pauseTime + unitsBetweenCommands * timeUnit)
         {
             // Space between words
             commandInterpreter.InterpretCommand(decodedText.text);

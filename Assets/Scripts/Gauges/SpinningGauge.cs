@@ -24,6 +24,6 @@ public class SpinningGauge : MonoBehaviour
 
     void Update()
     {
-        rectTransform.rotation = Quaternion.AngleAxis(Mathf.Lerp(min, max, percent), Vector3.forward);
+        rectTransform.localRotation = Quaternion.Euler(0, 0, Mathf.Lerp(min, max, percent));
     }
 }

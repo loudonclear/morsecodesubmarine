@@ -4,15 +4,18 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - monster
-  - Obstacle
-  - GameManager
+  - Submarine
   - Interpreter
-  - DepthGauge
+  - GameManager
+  - Compass
   - SpeedGauge
   - TemperatureGauge
-  - Compass
-  - Background
+  - DepthGauge
+  - Porthole
+  - Obstacle
+  - SoundManager
+  - Monster
+  - SubControlPanel
   layers:
   - Default
   - TransparentFX

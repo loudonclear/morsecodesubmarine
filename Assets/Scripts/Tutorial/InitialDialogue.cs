@@ -11,6 +11,7 @@ public class InitialDialogue : DialogueState
         BOOK_OPENED,
         BOOK_CLOSED
     };
+
     private int totalSentences;
     private bool firstClickLogBook;
     private bool flag1 = true;
@@ -25,13 +26,11 @@ public class InitialDialogue : DialogueState
         firstClickLogBook = false;
     }
 
-
     public override void OnStateEnter()
     {
         this.totalSentences = dialogue.sentences.Length;
         Button btn = tutorial.Logbook.GetComponent<Button>();
         btn.interactable = false;
-        bookOriginalPos = btn.transform.position;
         
         tutorial.dialogueManager.StartDialog(dialogue);
     }
@@ -41,10 +40,6 @@ public class InitialDialogue : DialogueState
         Button btn1 = tutorial.Logbook.GetComponent<Button>();
         btn1.interactable = true;
         firstClickLogBook = true;
-
-       
-
-        //tutorial.setState();
     }
 
     public override void OnStateExit()
@@ -54,21 +49,15 @@ public class InitialDialogue : DialogueState
 
     public override void Tick()
     {
-
         if (this.stage == DialogStages.BEFORE_OPEN_BOOK)
         {
             if (firstClickLogBook && flag1)
             {
                 Button btn1 = tutorial.Logbook.GetComponent<Button>();
-                btn1.transform.position = new Vector3(Screen.width / 2, Screen.height / 2 + 50, 0);
                 btn1.interactable = false;
-
-                tutorial.falseLogbook.SetActive(true);
 
                 Color myColor = tutorial.Logbook.GetComponent<Image>().material.color;
                 myColor.a = 255;
-
-                //tutorial.Logbook.GetComponent<Image>().material.color = myColor;
 
                 btn1.onClick.RemoveListener(this.LogBookClick);
                 Button btn = tutorial.continueButton.GetComponent<Button>();
@@ -77,7 +66,7 @@ public class InitialDialogue : DialogueState
                 flag1 = false;
             }
 
-            if (this.totalSentences - tutorial.dialogueManager.currentSentence() == 5)
+            if (tutorial.dialogueManager.currentSentence() == 6)
             {
                 Button btn = tutorial.continueButton.GetComponent<Button>();
                 btn.interactable = false;
@@ -86,61 +75,44 @@ public class InitialDialogue : DialogueState
                 btn1.onClick.AddListener(LogBookClick);
             }
 
-            if (this.totalSentences - tutorial.dialogueManager.currentSentence() == 2)
+            if (tutorial.dialogueManager.currentSentence() == 7)
             {
-
-                tutorial.falseLogbook.SetActive(false);
-
-
                 Button btn1 = tutorial.Logbook.GetComponent<Button>();
-                btn1.transform.position = new Vector3(Screen.width / 2, Screen.height / 2 + 50, 0);
                 btn1.interactable = true;
 
                 Button btn = tutorial.continueButton.GetComponent<Button>();
                 btn.interactable = false;
                 this.stage = DialogStages.BOOK_OPENED;
-             
             }
         }
 
         if (this.stage == DialogStages.BOOK_OPENED)
         {
-            Button btn1 = tutorial.Logbook.GetComponent<Button>();
-            btn1.transform.position = new Vector3(Screen.width / 2, Screen.height / 2 + 50, 0);
-            int pague = tutorial.Logbook.GetComponent<ImageChange>().GetPageIndex();
-            if (pague == 2 && flag2)
+            int page = tutorial.LogbookPage.GetComponent<ImageChange>().GetPageIndex();
+
+            if (page == 0 && flag2)
             {
-                
                 Button btn = tutorial.continueButton.GetComponent<Button>();
                 btn.onClick.Invoke();
                 flag2 = false;
-                
             }
-            if (pague == 3 && !flag2)
+            if (page == 1 && !flag2)
             {
-
-                tutorial.Logbook.GetComponent<ImageChange>().SetPageIndex(
-                    tutorial.Logbook.GetComponent<ImageChange>().GetAllSpritesLength() -1 );
-                btn1.onClick.Invoke();
-                btn1.transform.position = bookOriginalPos;
-
-                this.stage = DialogStages.BOOK_CLOSED;
-
+                Button btn = tutorial.continueButton.GetComponent<Button>();
+                btn.onClick.Invoke();
             }
-
-
-
+            if (!tutorial.LogbookPage.activeInHierarchy && !flag2)
+            {
+                this.stage = DialogStages.BOOK_CLOSED;
+            }
         }
+
         if (this.stage == DialogStages.BOOK_CLOSED)
         {
             int currentIndex = tutorial.indexCurrentDialog;
             Dialogue nextDialog = tutorial.tutorialDialogs[++currentIndex];
-            tutorial.setState(new TutorialTurning(tutorial, nextDialog));
+            tutorial.setState(new Naming(tutorial, nextDialog));
         }
-
-
-
-
 
     }
 
