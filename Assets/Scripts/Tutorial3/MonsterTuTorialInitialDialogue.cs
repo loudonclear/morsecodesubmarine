@@ -45,7 +45,9 @@ public class MonsterTuTorialInitialDialogue : DialogueState
             int sentence = tutorial.dialogueManager.currentSentence();
             if (sentence == 3 && !((Tutorial3)tutorial).getShakeGUI().isShaking())
             {
+                ((Tutorial3)tutorial).PlayExplosionSound();
                 ((Tutorial3)tutorial).getShakeGUI().Shake();
+                
                 currentStage = DialogStages.GUI_SHAKING;
                 Button btn = tutorial.continueButton.GetComponent<Button>();
                 btn.interactable = false;
@@ -71,6 +73,7 @@ public class MonsterTuTorialInitialDialogue : DialogueState
                 if (!monsterClipSounded)
                 {
                     ((Tutorial3)tutorial).PlayMonsterSound();
+                    ((Tutorial3)tutorial).SetMonsterInRadar();
                     monsterClipSounded = true;
                     Button btn = tutorial.continueButton.GetComponent<Button>();
                     btn.interactable = false;
@@ -90,7 +93,7 @@ public class MonsterTuTorialInitialDialogue : DialogueState
                 {
                     Button btn = tutorial.continueButton.GetComponent<Button>();
                     btn.interactable = false;
-                    ((Tutorial3)tutorial).SetmonsterAttack(true);
+                    ((Tutorial3)tutorial).SetMonsterCanAttack(true);
                 }
                 else
                 {

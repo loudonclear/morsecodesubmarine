@@ -7,17 +7,28 @@ public class Tutorial3 : Tutorial
 {
     // Start is called before the first frame update
 
-    public GameObject monsterSound;
+    enum MonsterTutorialEvent {
+        NONE,
+        SHAKE,
+        SCREEAM
+    };
+
     private AudioSource monsterSoundClip;
+    private AudioSource explosionSoundClip;
     public GameObject monsterEye;
     private GameObject submarine;
     private GameObject monster;
     private ShakeGUI shakePanel;
     private bool monsterCanAttack;
     private bool mosterAttacked;
+    private int numCollisionsWithMonster;
+    private MonsterTutorialEvent nextMonsterTutorialEvent;
+    private SubmarineRadar mySubmarineRadar;
 
     void Start()
     {
+        numCollisionsWithMonster = 0;
+        nextMonsterTutorialEvent = MonsterTutorialEvent.SHAKE;
         monsterCanAttack = false;
         mosterAttacked = false;
         Button LogbookBtn = Logbook.GetComponent<Button>();
@@ -28,12 +39,16 @@ public class Tutorial3 : Tutorial
         {
             Debug.Log("error");
         }
-        monsterSoundClip = monsterSound.GetComponent<AudioSource>();
+
+        this.mySubmarineRadar = GameObject.Find("Radar").GetComponent<SubmarineRadar>();
+        monsterSoundClip = GameObject.Find("MonsterClip").GetComponent<AudioSource>();
         Button btn = starButton.GetComponent<Button>();
         btn.onClick.AddListener(InitTutorialOnClick);
         monsterEye.SetActive(false);
         submarine = GameObject.Find("Submarine");
         monster = GameObject.FindGameObjectWithTag("monster");
+        explosionSoundClip = GameObject.Find("CrashClip").GetComponent<AudioSource>();
+
     }
 
     public override void Update()
@@ -41,13 +56,27 @@ public class Tutorial3 : Tutorial
         
         if (monsterCanAttack)
         {
+            
             if (!mosterAttacked)
             {
-                Debug.Log("away");
+                
                 if (monster.GetComponent<MonsterAI>().getCurrentStateName() == "CollisionMonsterState")
                 {
-                    Debug.Log("attacked");
-                    this.shakePanel.Shake();
+
+                    if (numCollisionsWithMonster % 3 == 0)
+                    {
+                        PlayMonsterSound();
+                        nextMonsterTutorialEvent = MonsterTutorialEvent.SHAKE;
+
+                    }
+                    else {
+                        
+                        PlayExplosionSound();
+                        this.shakePanel.Shake();
+                        nextMonsterTutorialEvent = MonsterTutorialEvent.SCREEAM;    
+                         
+                    }
+                    numCollisionsWithMonster++;
                     mosterAttacked = true;
                 }
 
@@ -92,6 +121,14 @@ public class Tutorial3 : Tutorial
         return false;
     }
 
+    public void PlayExplosionSound()
+    {
+        if (explosionSoundClip != null)
+        {
+            explosionSoundClip.Play();
+        }    
+    }
+
     public void ShowMonsterEye()
     {
         if (monsterEye != null)
@@ -123,8 +160,18 @@ public class Tutorial3 : Tutorial
         return this.shakePanel;
     }
 
-    public void SetmonsterAttack(bool attack)
+    public void SetMonsterCanAttack(bool attack)
     {
         this.monsterCanAttack = attack;
+    }
+
+    public void SetMonsterInRadar()
+    {
+        this.mySubmarineRadar.SetMonsterRadarSize();
+    }
+
+    public void UnSetMonsterInRadar()
+    {
+        this.mySubmarineRadar.UnSetMonsterRadarSize();
     }
 }

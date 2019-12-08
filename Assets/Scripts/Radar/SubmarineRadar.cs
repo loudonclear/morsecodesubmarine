@@ -8,6 +8,8 @@ public class SubmarineRadar : MonoBehaviour
     public float sweepAngle = 0.0f;
     public float sweepSpeed = 30.0f;
     public float sweepRange = 90.0f;
+    //private Vector3 monsterRadarSize = new Vector3.z(3.5f, 3.5f, 3.5f);
+    private Vector3 monsterRadarSize =  Vector3.zero;
 
     private HashSet<GameObject> seen = new HashSet<GameObject>();
 
@@ -17,8 +19,9 @@ public class SubmarineRadar : MonoBehaviour
         this.sweepAngle = sweepAngle % 360;
     }
 
-    private void createGameObjectAtPositionDelta(Vector3 delta, GameObject obj) {
-        Instantiate(obj, delta + this.gameObject.transform.position, Quaternion.identity);
+    private void createGameObjectAtPositionDelta(Vector3 delta, GameObject obj, Vector3 scale) {
+        GameObject newObject = Instantiate(obj, delta + this.gameObject.transform.position, Quaternion.identity);
+        newObject.transform.localScale = scale;
     }
 
     public void CollisionDetected(Collider collider, GameObject submarine)
@@ -30,12 +33,28 @@ public class SubmarineRadar : MonoBehaviour
 
         if(angle < sweepAngleModded && angle > sweepAngleModded - this.sweepRange && !seen.Contains(seenObject)) {
             seen.Add(seenObject);
-
-            createGameObjectAtPositionDelta(positionDelta, blip);
+            if (seenObject.tag == "monster")
+            {
+                createGameObjectAtPositionDelta(positionDelta, blip, this.monsterRadarSize);
+            }
+            else {
+                createGameObjectAtPositionDelta(positionDelta, blip, Vector3.one);
+            }
+            
         }
         else if(!(angle < sweepAngleModded && angle > sweepAngleModded - this.sweepRange)) {
             seen.Remove(seenObject);
         }
 
+    }
+
+    public void SetMonsterRadarSize()
+    {
+        this.monsterRadarSize = new Vector3(3.5f, 3.5f, 3.5f);
+    }
+
+    public void UnSetMonsterRadarSize()
+    {
+        this.monsterRadarSize = Vector3.zero;
     }
 }

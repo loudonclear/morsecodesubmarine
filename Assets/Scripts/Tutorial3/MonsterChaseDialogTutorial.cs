@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class MonsterChaseDialogTutorial : DialogueState
 {
+    private float chaseTime = 17;
+    private float chaseTimer = 0;
+    private bool chaseTimeFinish = false;
+
     public MonsterChaseDialogTutorial(Tutorial tutorial, Dialogue dialogue) : base(tutorial, dialogue, "MonsterChaseDialogTutorial")
     {
 
@@ -14,7 +18,7 @@ public class MonsterChaseDialogTutorial : DialogueState
     {
         
         Button btn = tutorial.continueButton.GetComponent<Button>();
-        btn.interactable = true;
+        btn.interactable = false;
         tutorial.dialogueManager.StartDialog(dialogue);
     }
 
@@ -25,6 +29,14 @@ public class MonsterChaseDialogTutorial : DialogueState
 
     public override void Tick()
     {
-        
+        chaseTimer += Time.deltaTime;
+        if (chaseTimer > chaseTime && !chaseTimeFinish)
+        {
+            Button btn = tutorial.continueButton.GetComponent<Button>();
+            btn.interactable = true;
+            btn.onClick.Invoke();
+            chaseTimeFinish = true;
+            ((Tutorial3)tutorial).UnSetMonsterInRadar();
+        }
     }
 }
